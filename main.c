@@ -4,7 +4,7 @@ int	main(int argc, char **argv)
 {
 	t_data	*head_data;
 
-	//head_data = init_data();
+	head_data = init_data();
 	while (1)
 	{
 		//handle_signal();
