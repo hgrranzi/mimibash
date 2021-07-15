@@ -18,7 +18,8 @@ t_data	*init_data(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		system_error(errno);
-	data->cmd = NULL;
+	data->builtin = 0;
+	data->path = NULL;
 	data->args = NULL;
 	data->fd = 1;
 	data->next = NULL;

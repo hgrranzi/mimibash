@@ -9,7 +9,8 @@
 
 typedef struct s_data
 {
-	char			*cmd;
+	int				builtin;
+	char			**path;
 	char			**args;
 	int				fd;
 	struct s_data	*next;
