@@ -5,8 +5,11 @@ int	cmd_error(char *cmd, int error_code)
 	char	*error_message;
 
 	error_message = strerror(error_code);
-	write(2, cmd, strlen(cmd));
-	write(2, ": ", 2);
+	if (cmd)
+	{
+		write(2, cmd, strlen(cmd));
+		write(2, ": ", 2);
+	}
 	write(2, error_message, strlen(error_message));
 	write(2, "\n", 1);
 	return (1);
