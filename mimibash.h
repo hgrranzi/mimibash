@@ -21,6 +21,6 @@ typedef struct s_data
 t_data	*init_data(void);
 void	system_error(int error_code);
 
-int		exec_cmd(t_data *head_data);
+int		exec_cmd(t_data *head_data, char **envp);
 
 #endif
