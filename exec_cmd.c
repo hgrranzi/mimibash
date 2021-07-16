@@ -12,51 +12,19 @@ int	cmd_error(char *cmd, int error_code)
 	return (1);
 }
 
-char	*aka_getenv(char *key, char **envp)
-{
-	char	*value;
-	int		key_len;
-	int		i;
-
-	value = NULL;
-	key_len = strlen(key);
-	i = 0;
-	while (envp[i])
-	{
-		if (strncmp(envp[i], key, key_len) == 0 && envp[i][key_len] == '=')
-		{
-			value = &envp[i][key_len + 1];
-			break ;
-		}
-		i++;
-	}
-	return (value);
-}
-
-int	exec_pwd(int fd, char **envp) // With aka_getenv function and envp
+int	exec_pwd(int fd)
 {
 	char	*wd;
 
-	wd = aka_getenv("PWD", envp);
+	wd = getcwd(NULL, 0);
 	if (!wd)
 		return (cmd_error("pwd", errno));
 	write(fd, wd, strlen(wd));
 	write(fd, "\n", 1);
+	free(wd);
+	wd = NULL;
 	return (0);
 }
-
-/*
-int	exec_pwd(int fd) // With C getenv function from stdlib.h
-{
-	char	*wd;
-
-	wd = getenv("PWD");
-	if (!wd)
-		return (cmd_error("pwd", errno));
-	write(fd, wd, strlen(wd));
-	write(fd, "\n", 1);
-	return (0);
-}*/
 
 int	exec_cmd(t_data *head_data, char **envp)
 {
@@ -64,6 +32,6 @@ int	exec_cmd(t_data *head_data, char **envp)
 
 	head_data_p = head_data;
 	if (head_data_p->builtin == PWD) // this is a test, wanna try an array of pointers to functions
-		return (exec_pwd(head_data_p->fd, envp));
+		return (exec_pwd(head_data_p->fd));
 	return (0);
 }
