@@ -8,6 +8,7 @@
 # include <stdio.h>
 
 # include "cmd_defines.h"
+# include "builtins.h"
 
 typedef struct s_data
 {

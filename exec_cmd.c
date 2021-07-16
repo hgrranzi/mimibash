@@ -15,20 +15,6 @@ int	cmd_error(char *cmd, int error_code)
 	return (1);
 }
 
-int	exec_pwd(int fd)
-{
-	char	*wd;
-
-	wd = getcwd(NULL, 0);
-	if (!wd)
-		return (cmd_error("pwd", errno));
-	write(fd, wd, strlen(wd));
-	write(fd, "\n", 1);
-	free(wd);
-	wd = NULL;
-	return (0);
-}
-
 int	exec_cmd(t_data *head_data, char **envp)
 {
 	t_data	*head_data_p;
