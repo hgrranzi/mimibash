@@ -20,6 +20,8 @@ int	exec_cmd(t_data *head_data, char **envp)
 	t_data	*head_data_p;
 
 	head_data_p = head_data;
+	if (head_data_p->builtin == ECHO)
+		return (exec_echo(head_data_p->fd, head_data_p->args));
 	if (head_data_p->builtin == PWD) // this is a test, wanna try an array of pointers to functions
 		return (exec_pwd(head_data_p->fd));
 	return (0);

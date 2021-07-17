@@ -1,9 +1,9 @@
 #include "mimibash.h"
 
-int	exec_echo(int fd, char *arg)
+int	exec_echo(int fd, char **arg)
 {
 	if (arg)
-		write(fd, arg, strlen(arg));
+		write(fd, *arg, strlen(*arg));
 	else
 		write(fd, "\n", 1);
 	return (0);
