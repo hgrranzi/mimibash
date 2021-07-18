@@ -9,6 +9,11 @@ int	exec_echo(int fd, char **arg)
 	return (0);
 }
 
+int	exec_cd(int fd, char **arg)
+{
+	return (0);
+}
+
 int	exec_pwd(int fd)
 {
 	char	*wd;
@@ -20,5 +25,25 @@ int	exec_pwd(int fd)
 	write(fd, "\n", 1);
 	free(wd);
 	wd = NULL;
+	return (0);
+}
+
+int	exec_export(int fd, char **arg)
+{
+	return (0);
+}
+
+int	exec_unset(int fd, char **arg)
+{
+	return (0);
+}
+
+int	exec_env(int fd, char **arg)
+{
+	return (0);
+}
+
+int	exec_exit(int fd, char **arg)
+{
 	return (0);
 }

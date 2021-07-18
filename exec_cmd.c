@@ -19,7 +19,12 @@ void	init_builtin_functions(int (**cmd_functions)(int, char **))
 {
 	cmd_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
 	cmd_functions[ECHO] = exec_echo;
+	cmd_functions[CD] = exec_cd;
 	cmd_functions[PWD] = exec_pwd;
+	cmd_functions[EXPORT] = exec_export;
+	cmd_functions[UNSET] = exec_unset;
+	cmd_functions[ENV] = exec_env;
+	cmd_functions[EXIT] = exec_exit;
 }
 
 int	exec_cmd(t_data *head_data, char **envp)
