@@ -6,6 +6,7 @@
 # include <errno.h>
 # include <string.h>
 # include <stdio.h>
+# include <signal.h>
 
 # include "builtins.h"
 
@@ -30,6 +31,7 @@ typedef struct s_data
 	struct s_data	*next;
 }				t_data;
 
+int		handle_signal(void);
 t_data	*init_data(void);
 void	system_error(int error_code);
 
