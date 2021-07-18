@@ -12,7 +12,7 @@ int	main(int argc, char **argv, char **envp)
 	head_data = init_data();
 	while (1)
 	{
-		input = readline ("mimibash 💬 ");
+		input = readline (PROMPT);
 		if (!input) // or "exit"
 			head_data->builtin = EXIT;
 		//else

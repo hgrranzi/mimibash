@@ -12,6 +12,8 @@
 
 # include "builtins.h"
 
+# define PROMPT "mimibash 💬 "
+
 typedef enum e_builtin
 {
 	NO_BUILTIN,
