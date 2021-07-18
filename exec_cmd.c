@@ -15,26 +15,24 @@ int	cmd_error(char *cmd, int error_code)
 	return (1);
 }
 
-void	init_builtin_functions(int (**cmd_functions)(int, char **))
+void	init_builtin_functions(int (**builtin_functions)(int, char **))
 {
-	cmd_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
-	cmd_functions[ECHO] = exec_echo;
-	cmd_functions[CD] = exec_cd;
-	cmd_functions[PWD] = exec_pwd;
-	cmd_functions[EXPORT] = exec_export;
-	cmd_functions[UNSET] = exec_unset;
-	cmd_functions[ENV] = exec_env;
-	cmd_functions[EXIT] = exec_exit;
+	builtin_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
+	builtin_functions[ECHO] = exec_echo;
+	builtin_functions[CD] = exec_cd;
+	builtin_functions[PWD] = exec_pwd;
+	builtin_functions[EXPORT] = exec_export;
+	builtin_functions[UNSET] = exec_unset;
+	builtin_functions[ENV] = exec_env;
+	builtin_functions[EXIT] = exec_exit;
 }
 
-int	exec_cmd(t_data *head_data, char **envp)
+int	exec_cmd(t_data *head_data, int (**builtin_functions)(int, char **), char **envp)
 {
 	t_data	*head_data_p;
-	int		(*cmd_functions[8])(int, char **);
 
 	head_data_p = head_data;
-	init_builtin_functions(cmd_functions); // that probably should be in main
 	if (head_data_p->builtin)
-		return(cmd_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args));
+		return(builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args));
 	return (0);
 }

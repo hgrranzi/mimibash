@@ -2,16 +2,26 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	char	*input;
 	t_data	*head_data;
+	int		(*builtin_functions[8])(int, char **);
 
 	handle_signal();
+	init_builtin_functions(builtin_functions);
 	//copy_envp();
 	head_data = init_data();
 	while (1)
 	{
-		//fill_history();
-		//parse_data();
-		//exec_cmd(head_data, envp);
+		input = readline ("mimibash 💬 ");
+		if (!input) // or "exit"
+			head_data->builtin = EXIT;
+		//else
+		//{
+			//fill_history();
+			//parse_data();
+		//}
+		free(input);
+		exec_cmd(head_data, builtin_functions, envp);
 		//free_data();
 		;
 	}

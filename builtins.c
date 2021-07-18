@@ -45,5 +45,7 @@ int	exec_env(int fd, char **arg)
 
 int	exec_exit(int fd, char **arg)
 {
-	return (0);
+	write(fd, "\b\b", 2); // temporary
+	write(fd, "exit\n", 6); // temporary
+	exit(0);
 }
