@@ -15,14 +15,21 @@ int	cmd_error(char *cmd, int error_code)
 	return (1);
 }
 
+void	init_builtin_functions(int (**cmd_functions)(int, char **))
+{
+	cmd_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
+	cmd_functions[ECHO] = exec_echo;
+	cmd_functions[PWD] = exec_pwd;
+}
+
 int	exec_cmd(t_data *head_data, char **envp)
 {
 	t_data	*head_data_p;
+	int		(*cmd_functions[8])(int, char **);
 
 	head_data_p = head_data;
-	if (head_data_p->builtin == ECHO)
-		return (exec_echo(head_data_p->fd, head_data_p->args));
-	if (head_data_p->builtin == PWD) // this is a test, wanna try an array of pointers to functions
-		return (exec_pwd(head_data_p->fd));
+	init_builtin_functions(cmd_functions); // that probably should be in main
+	if (head_data_p->builtin)
+		return(cmd_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args));
 	return (0);
 }
