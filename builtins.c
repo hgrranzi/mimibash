@@ -45,7 +45,12 @@ int	exec_env(int fd, char **arg)
 
 int	exec_exit(int fd, char **arg)
 {
+	int	return_code;
+
+	return_code = 0;//need to take the last return code
 	write(fd, "\b\b", 2); // temporary
 	write(fd, "exit\n", 6); // temporary
-	exit(0);
+	if (arg)
+		return_code = atoi(*arg); // need an arg checker for errors
+	exit(return_code);
 }
