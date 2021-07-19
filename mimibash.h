@@ -39,6 +39,9 @@ int		handle_signal(void);
 t_data	*init_data(void);
 void	system_error(int error_code);
 
-int	exec_cmd(t_data *head_data, int (**cmd_functions)(int, char **), char **envp);
+char	**copy_arr(char **arr);
+int		count_arr_size(char **arr);
+
+int		exec_cmd(t_data *head_data, int (**cmd_functions)(int, char **), char **envp);
 
 #endif
