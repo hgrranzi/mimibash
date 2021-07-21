@@ -19,7 +19,7 @@ t_data	*init_data(void)
 	if (!data)
 		system_error(errno);
 	data->builtin = NO_BUILTIN;
-	data->path = NULL;
+	//data->path = NULL;
 	data->args = NULL;
 	data->fd = 1;
 	data->next = NULL;

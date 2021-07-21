@@ -29,8 +29,8 @@ typedef enum e_builtin
 typedef struct s_data
 {
 	int				builtin;
-	char			**path;
-	char			**args;
+	//char			**path; // no need
+	char			**args; // args[0] - path to the binary, the rest are arguments
 	int				fd;
 	struct s_data	*next;
 }				t_data;
