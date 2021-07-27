@@ -13,6 +13,8 @@
 # include "builtins.h"
 
 # define PROMPT "mimibash 💬 "
+# define IN 0
+# define OUT 1
 
 typedef enum e_builtin
 {
@@ -31,7 +33,7 @@ typedef struct s_data
 	int				builtin;
 	char			**path;
 	char			**args;
-	int				fd;
+	int				fd[2];
 	struct s_data	*next;
 }				t_data;
 
