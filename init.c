@@ -21,7 +21,8 @@ t_data	*init_data(void)
 	data->builtin = NO_BUILTIN;
 	//data->path = NULL;
 	data->args = NULL;
-	data->fd = 1;
+	data->fd[IN] = IN;
+	data->fd[OUT] = OUT;
 	data->next = NULL;
 	return (data);
 }

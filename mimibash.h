@@ -13,6 +13,8 @@
 # include "builtins.h"
 
 # define PROMPT "mimibash 💬 "
+# define IN 0
+# define OUT 1
 
 typedef enum e_builtin
 {
