@@ -33,15 +33,17 @@ typedef enum e_builtin
 typedef struct s_data
 {
 	int				builtin;
-	char			**path;
 	char			**args;
 	int				fd[2];
 	struct s_data	*next;
 }				t_data;
 
 int		handle_signal(void);
+
 t_data	*init_data(void);
-void	system_error(int error_code);
+void	init_builtin_functions(int (**builtin_functions)(int *, char **));
+pid_t	*init_pids(int cmd_count);
+int		**init_pipes(int cmd_count);
 
 char	**copy_arr(char **arr);
 int		count_arr_size(char **arr);

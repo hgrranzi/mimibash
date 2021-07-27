@@ -1,17 +1,5 @@
 #include "mimibash.h"
 
-void	init_builtin_functions(int (**builtin_functions)(int *, char **))
-{
-	builtin_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
-	builtin_functions[ECHO] = exec_echo;
-	builtin_functions[CD] = exec_cd;
-	builtin_functions[PWD] = exec_pwd;
-	builtin_functions[EXPORT] = exec_export;
-	builtin_functions[UNSET] = exec_unset;
-	builtin_functions[ENV] = exec_env;
-	builtin_functions[EXIT] = exec_exit;
-}
-
 int	count_cmd(t_data **head_data)
 {
 	t_data	*head_data_p;
@@ -25,44 +13,6 @@ int	count_cmd(t_data **head_data)
 		head_data_p = head_data_p->next;
 	}
 	return (i);
-}
-
-pid_t	*init_pids(int cmd_count)
-{
-	int		i;
-	pid_t	*pid;
-
-	pid = malloc(cmd_count * sizeof(int));
-	if (!pid)
-		error_and_exit(NULL, NULL, 1);
-	i = 0;
-	while (i < cmd_count)
-	{
-		pid[i] = 1;
-		i++;
-	}
-	return (pid);
-}
-
-int	**init_pipes(int cmd_count)
-{
-	int		i;
-	int		**pipe_fd;
-
-	pipe_fd = malloc((cmd_count - 1) * sizeof(int *));
-	if (!pipe_fd)
-		error_and_exit(NULL, NULL, 1);
-	i = 0;
-	while (i < cmd_count - 1)
-	{
-		pipe_fd[i] = malloc(2 * sizeof(int));
-		if (!pipe_fd[i])
-			error_and_exit(NULL, NULL, 1);
-		if (pipe(pipe_fd[i]) == -1)
-			error_and_exit(NULL, NULL, 1);
-		i++;
-	}
-	return (pipe_fd);
 }
 
 void	distribute_fd(t_data **head_data, int **pipe_fd)
@@ -127,9 +77,10 @@ int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_f
 		{
 			close_unused_pipe_fd(pipe_fd, i, cmd_count);
 			duplicate_fd(head_data_p->fd);
+			// builtin?
 			if (head_data_p->args[CMD_PATH] && head_data_p->fd[IN] != -1 && head_data_p->fd[OUT] != -1)
 				execve(head_data_p->args[CMD_PATH], head_data_p->args, NULL);
-			return (0);
+			return (0); // error ?
 		}
 		head_data_p = head_data_p->next;
 		i++;
