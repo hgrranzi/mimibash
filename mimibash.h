@@ -38,17 +38,37 @@ typedef struct s_data
 	struct s_data	*next;
 }				t_data;
 
+/* handle_signal */
+
 int		handle_signal(void);
+
+/* init.c */
 
 t_data	*init_data(void);
 void	init_builtin_functions(int (**builtin_functions)(int *, char **));
 pid_t	*init_pids(int cmd_count);
 int		**init_pipes(int cmd_count);
 
+/* arr.c */
+
 char	**copy_arr(char **arr);
 int		count_arr_size(char **arr);
 
+/* exec_cmd.c */
+
 int		exec_cmd(t_data **head_data, int (**cmd_functions)(int *, char **), char **envp);
+int		exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp);
+int		create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_fd);
+
+/* exec_cmd_utils.c */
+
+int		count_cmd(t_data **head_data);
+void	distribute_fd(t_data **head_data, int **pipe_fd);
+void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count);
+void	duplicate_fd(int *fd);
+void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
+
+/* error.c */
 
 void	error_and_exit(char *reason, char *error_message, int end);
 int		cmd_error(char *cmd, int error_code);
