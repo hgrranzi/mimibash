@@ -4,7 +4,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_data	*head_data;
-	int		(*builtin_functions[8])(int, char **);
+	int		(*builtin_functions[8])(int *, char **);
 	char	**envp_copy;
 
 	handle_signal();
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 			//parse_data();
 		//}
 		free(input);
-		exec_cmd(head_data, builtin_functions, envp);
+		exec_cmd(&head_data, builtin_functions, envp);
 		//free_data();
 		;
 	}

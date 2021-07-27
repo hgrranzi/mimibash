@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-void	init_builtin_functions(int (**builtin_functions)(int, char **))
+void	init_builtin_functions(int (**builtin_functions)(int *, char **))
 {
 	builtin_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
 	builtin_functions[ECHO] = exec_echo;
@@ -153,7 +153,7 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 	}
 }
 
-int	exec_pipes(t_data *head_data, int (**builtin_functions)(int, char **), char **envp)
+int	exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp)
 {
 	pid_t	*pid;
 	int		**pipe_fd;
@@ -168,14 +168,14 @@ int	exec_pipes(t_data *head_data, int (**builtin_functions)(int, char **), char 
 	return (0);
 }
 
-int	exec_cmd(t_data *head_data, int (**builtin_functions)(int, char **), char **envp)
+int	exec_cmd(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp)
 {
 	t_data	*head_data_p;
 
-	head_data_p = head_data;
+	head_data_p = *head_data;
 	if (head_data_p->next || !head_data_p->builtin)
 		return (exec_pipes(head_data, builtin_functions, envp));
 	if (head_data_p->builtin)
-		return(builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args));
+		return((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
 	return (0);
 }
