@@ -78,7 +78,7 @@ void	take_cmd_path(t_data **head_data, char **possible_path)
 
 	i = 1;
 	head_data_p = *head_data;
-	if (!head_data_p->args) //probably no need
+	if (!head_data_p->args || head_data_p->builtin) //probably no need
 		return ;
 	while (head_data_p)
 	{

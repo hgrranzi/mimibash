@@ -45,11 +45,13 @@ int	exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), ch
 int	exec_cmd(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp)
 {
 	t_data	*head_data_p;
+	char	**possible_path;
 
 	head_data_p = *head_data;
-	if (head_data_p->next || !head_data_p->builtin)
-		return (exec_pipes(head_data, builtin_functions, envp));
-	if (head_data_p->builtin)
-		return((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
-	return (0);
+	if (head_data_p->builtin && !head_data_p->next)
+		return ((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
+	possible_path = take_env_path(envp);
+	take_cmd_path(head_data, possible_path);
+	free_arr(possible_path);
+	return (exec_pipes(head_data, builtin_functions, envp));
 }

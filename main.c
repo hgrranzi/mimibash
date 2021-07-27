@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 			//parse_data();
 		//}
 		free(input);
-		exec_cmd(&head_data, builtin_functions, envp);
+		exec_cmd(&head_data, builtin_functions, envp_copy);
 		//free_data();
 		;
 	}
