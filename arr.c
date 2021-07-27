@@ -31,3 +31,18 @@ char	**copy_arr(char **arr)
 	arr_copy[i] = NULL;
 	return (arr_copy);
 }
+
+char	**free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr && arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	arr = NULL;
+	return (NULL);
+}

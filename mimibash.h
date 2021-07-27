@@ -16,6 +16,7 @@
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
+# define CURRENT_DIR "."
 # define IS_CHILD 0
 
 typedef enum e_builtin
@@ -53,6 +54,15 @@ int		**init_pipes(int cmd_count);
 
 char	**copy_arr(char **arr);
 int		count_arr_size(char **arr);
+char	**free_arr(char **arr);
+
+/* split_line.c */
+
+char	**split_line(char *s, char c);
+char	*trim_line(char *s, char c);
+int		words_count(const char *s, char delimiter);
+char	*aka_strjoin(char const *s1, char const *s2);
+int		index_char(char *str, char c);
 
 /* exec_cmd.c */
 
