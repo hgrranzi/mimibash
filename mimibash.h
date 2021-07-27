@@ -13,6 +13,7 @@
 # include "builtins.h"
 
 # define PROMPT "mimibash 💬 "
+# define ERR_CMD "command not found"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
@@ -63,6 +64,13 @@ char	*trim_line(char *s, char c);
 int		words_count(const char *s, char delimiter);
 char	*aka_strjoin(char const *s1, char const *s2);
 int		index_char(char *str, char c);
+
+/* take_cmd_path.c */
+
+char	**take_env_path(char **envp);
+char	**update_path(char **env_path);
+void	take_cmd_path(t_data **head_data, char **possible_path);
+char	*check_cmd_path(char *cmd_name, char **possible_path);
 
 /* exec_cmd.c */
 
