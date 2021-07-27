@@ -46,4 +46,6 @@ int		count_arr_size(char **arr);
 
 int		exec_cmd(t_data *head_data, int (**cmd_functions)(int, char **), char **envp);
 
+void	error_and_exit(char *reason, char *error_message, int end);
+
 #endif
