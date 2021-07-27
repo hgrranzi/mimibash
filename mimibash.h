@@ -15,6 +15,8 @@
 # define PROMPT "mimibash 💬 "
 # define IN 0
 # define OUT 1
+# define CMD_PATH 0
+# define IS_CHILD 0
 
 typedef enum e_builtin
 {

@@ -12,12 +12,12 @@ void	init_builtin_functions(int (**builtin_functions)(int, char **))
 	builtin_functions[EXIT] = exec_exit;
 }
 
-int	count_cmd(t_data **head_cmd)
+int	count_cmd(t_data **head_data)
 {
 	t_data	*head_data_p;
 	int		i;
 
-	head_data_p = *head_cmd;
+	head_data_p = *head_data;
 	i = 0;
 	while (head_data_p)
 	{
@@ -65,12 +65,12 @@ int	**init_pipes(int cmd_count)
 	return (pipe_fd);
 }
 
-void	distribute_fd(t_data **head_cmd, int **pipe_fd)
+void	distribute_fd(t_data **head_data, int **pipe_fd)
 {
 	t_data	*head_data_p;
 	int		i;
 
-	head_data_p = *head_cmd;
+	head_data_p = *head_data;
 	i = 0;
 	while (head_data_p)
 	{
@@ -85,6 +85,70 @@ void	distribute_fd(t_data **head_cmd, int **pipe_fd)
 				head_data_p->fd[OUT] = pipe_fd[i][OUT];
 		}
 		head_data_p = head_data_p->next;
+		i++;
+	}
+}
+
+void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count)
+{
+	int	j;
+
+	j = 0;
+	while (j < cmd_count - 1)
+	{
+		if (j != i - 1)
+			close(pipe_fd[j][IN]);
+		if (j != i)
+			close(pipe_fd[j][OUT]);
+		j++;
+	}
+}
+
+void	duplicate_fd(int *fd)
+{
+	dup2(fd[IN], STDIN_FILENO);
+	dup2(fd[OUT], STDOUT_FILENO);
+	return ;
+}
+
+int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_fd)
+{
+	t_data	*head_data_p;
+	int		i;
+
+	head_data_p = *head_data;
+	i = 0;
+	while (i < cmd_count)
+	{
+		pid[i] = fork();
+		if (pid[i] == -1)
+			error_and_exit(NULL, NULL, 0);
+		if (pid[i] == IS_CHILD)
+		{
+			close_unused_pipe_fd(pipe_fd, i, cmd_count);
+			duplicate_fd(head_data_p->fd);
+			if (head_data_p->args[CMD_PATH] && head_data_p->fd[IN] != -1 && head_data_p->fd[OUT] != -1)
+				execve(head_data_p->args[CMD_PATH], head_data_p->args, NULL);
+			return (0);
+		}
+		head_data_p = head_data_p->next;
+		i++;
+	}
+	return (0);
+}
+
+void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_count)
+	{
+		waitpid(pid[i], NULL, 0);
+		if (i > 0)
+			close(pipe_fd[i - 1][IN]);
+		if (i < cmd_count - 1)
+			close(pipe_fd[i][OUT]);
 		i++;
 	}
 }
