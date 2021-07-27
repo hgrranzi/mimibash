@@ -89,7 +89,5 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
 /* error.c */
 
 void	error_and_exit(char *reason, char *error_message, int end);
-int		cmd_error(char *cmd, int error_code);
-void	system_error(int error_code);
 
 #endif

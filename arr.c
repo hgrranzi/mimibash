@@ -20,12 +20,12 @@ char	**copy_arr(char **arr)
 	i = 0;
 	arr_copy = malloc((arr_size + 1) * sizeof(char *));
 	if (!arr_copy)
-		system_error(errno);
+		error_and_exit(NULL, NULL, 1);
 	while (arr[i])
 	{
 		arr_copy[i] = strdup(arr[i]);
 		if (!arr_copy[i])
-			system_error(errno);
+			error_and_exit(NULL, NULL, 1);
 		i++;
 	}
 	arr_copy[i] = NULL;

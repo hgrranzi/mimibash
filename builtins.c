@@ -20,7 +20,7 @@ int	exec_pwd(int *fd, char **arg)
 
 	wd = getcwd(NULL, 0);
 	if (!wd)
-		return (cmd_error("pwd", errno));
+		error_and_exit("pwd", NULL, 0);
 	write(fd[OUT], wd, strlen(wd));
 	write(fd[OUT], "\n", 1);
 	free(wd);

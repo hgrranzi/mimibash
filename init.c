@@ -6,7 +6,7 @@ t_data	*init_data(void)
 
 	data = malloc(sizeof(t_data));
 	if (!data)
-		system_error(errno);
+		error_and_exit(NULL, NULL, 1);
 	data->builtin = NO_BUILTIN;
 	data->args = NULL;
 	data->fd[IN] = IN;
