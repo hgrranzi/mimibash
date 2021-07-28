@@ -2,10 +2,16 @@
 
 int	exec_echo(int *fd, char **arg)
 {
-	if (arg)
-		write(fd[OUT], *arg, strlen(*arg));
-	else
-		write(fd[OUT], "\n", 1);
+	int	i;
+
+	i = 0;
+	while (arg && arg[i])
+	{
+		if (i)
+			write(fd[OUT], " ", 1);
+		write(fd[OUT], arg[i], strlen(arg[i]));
+		i++;
+	}
 	return (0);
 }
 
