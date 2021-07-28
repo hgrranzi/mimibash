@@ -46,6 +46,15 @@ int	exec_unset(int *fd, char **arg, char **envp)
 
 int	exec_env(int *fd, char **arg, char **envp)
 {
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		write(fd[OUT], envp[i], strlen(envp[i]));
+		write(fd[OUT], "\n", 1);
+		i++;
+	}
 	return (0);
 }
 
