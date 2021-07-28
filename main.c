@@ -4,7 +4,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_data	*head_data;
-	int		(*builtins[8])(int *, char **);
+	int		(*builtins[8])(int *, char **, char **);
 	char	**envp_copy;
 
 	handle_signal();

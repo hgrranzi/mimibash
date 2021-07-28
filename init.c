@@ -16,7 +16,7 @@ t_data	*init_data(void)
 	return (data);
 }
 
-void	init_builtins(int (**builtins)(int *, char **))
+void	init_builtins(int (**builtins)(int *, char **, char **))
 {
 	builtins[NO_BUILTIN] = NULL; // probably need an empty or error function
 	builtins[ECHO] = exec_echo;

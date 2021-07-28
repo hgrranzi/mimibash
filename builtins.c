@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-int	exec_echo(int *fd, char **arg)
+int	exec_echo(int *fd, char **arg, char **envp)
 {
 	int	i;
 
@@ -15,12 +15,12 @@ int	exec_echo(int *fd, char **arg)
 	return (0);
 }
 
-int	exec_cd(int *fd, char **arg)
+int	exec_cd(int *fd, char **arg, char **envp)
 {
 	return (0);
 }
 
-int	exec_pwd(int *fd, char **arg)
+int	exec_pwd(int *fd, char **arg, char **envp)
 {
 	char	*wd;
 
@@ -34,22 +34,22 @@ int	exec_pwd(int *fd, char **arg)
 	return (0);
 }
 
-int	exec_export(int *fd, char **arg)
+int	exec_export(int *fd, char **arg, char **envp)
 {
 	return (0);
 }
 
-int	exec_unset(int *fd, char **arg)
+int	exec_unset(int *fd, char **arg, char **envp)
 {
 	return (0);
 }
 
-int	exec_env(int *fd, char **arg)
+int	exec_env(int *fd, char **arg, char **envp)
 {
 	return (0);
 }
 
-int	exec_exit(int *fd, char **arg)
+int	exec_exit(int *fd, char **arg, char **envp)
 {
 	int	exit_code;
 
