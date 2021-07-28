@@ -1,6 +1,18 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
+typedef enum e_builtin
+{
+	NO_BUILTIN,
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT
+}			t_builtin;
+
 int		cmd_error(char *cmd, int error_code);
 void	init_builtin_functions(int (**cmd_functions)(int *, char **));
 

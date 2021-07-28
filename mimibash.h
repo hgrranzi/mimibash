@@ -20,18 +20,6 @@
 # define CURRENT_DIR "."
 # define IS_CHILD 0
 
-typedef enum e_builtin
-{
-	NO_BUILTIN,
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT
-}			t_builtin;
-
 typedef struct s_data
 {
 	int				builtin;
