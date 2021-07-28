@@ -11,6 +11,7 @@ t_data	*init_data(void)
 	data->args = NULL;
 	data->fd[IN] = IN;
 	data->fd[OUT] = OUT;
+	data->exit_status = 0;
 	data->next = NULL;
 	return (data);
 }

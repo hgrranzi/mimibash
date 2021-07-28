@@ -45,12 +45,17 @@ int	exec_env(int *fd, char **arg)
 
 int	exec_exit(int *fd, char **arg)
 {
-	int	return_code;
+	int	exit_code;
 
-	return_code = 0;//need to take the last return code
+	exit_code = 0;//need to take the last return code
 	write(fd[OUT], "\b\b", 2); // temporary
 	write(fd[OUT], "exit\n", 6); // temporary
 	if (arg)
-		return_code = atoi(*arg); // need an arg checker for errors
-	exit(return_code);
+	{
+		if (only_digits(*arg))
+			exit_code = atoi(*arg); // need an arg checker for errors
+		else
+			exit_code = 255;
+	}
+	exit((exit_code + 256) % 256);
 }

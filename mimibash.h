@@ -25,6 +25,7 @@ typedef struct s_data
 	int				builtin;
 	char			**args;
 	int				fd[2];
+	int				exit_status;
 	struct s_data	*next;
 }				t_data;
 
@@ -77,5 +78,10 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
 /* error.c */
 
 void	error_and_exit(char *reason, char *error_message, int end);
+
+/* utils.c */
+
+int		aka_isdigit(int c);
+int		only_digits(char *str);
 
 #endif

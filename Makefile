@@ -3,7 +3,7 @@ NAME = mimibash
 COMPILE = gcc -lreadline # -Wall -Wextra -Werror
 
 SRCS = main.c init.c handle_signal.c exec_cmd.c builtins.c arr.c error.c \
-		exec_cmd_utils.c split_line.c take_cmd_path.c
+		exec_cmd_utils.c split_line.c take_cmd_path.c utils.c
 
 OBJS =	$(SRCS:.c=.o)
 
