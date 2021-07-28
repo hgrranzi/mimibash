@@ -76,7 +76,7 @@ char	*check_cmd_path(char *cmd_name, char **possible_path);
 
 int		exec_cmd(t_data **head_data, int (**cmd_functions)(int *, char **), char **envp);
 int		exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp);
-int		create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **));
+int		create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **), char **envp);
 
 /* exec_cmd_utils.c */
 

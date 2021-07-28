@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-int	create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **))
+int	create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **), char **envp)
 {
 	t_data	*head_data_p;
 	int		i;
@@ -47,7 +47,7 @@ int	exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), ch
 	info.pid = init_pids(info.cmd_count);
 	info.pipe_fd = init_pipes(info.cmd_count);
 	distribute_fd(head_data, info.pipe_fd);
-	create_processes(head_data, &info, builtin_functions);
+	create_processes(head_data, &info, builtin_functions, envp);
 	wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
 	return (0);
 }
