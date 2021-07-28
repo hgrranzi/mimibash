@@ -16,11 +16,11 @@ int	main(int argc, char **argv, char **envp)
 		input = readline (PROMPT);
 		if (!input) // or "exit"
 			head_data->builtin = EXIT;
-		//else
-		//{
+		else
+		{
 			//fill_history();
-			//parse_data();
-		//}
+			parser(input, envp_copy, &head_data);
+		}
 		free(input);
 		exec_cmd(&head_data, builtin_functions, envp_copy);
 		//free_data();

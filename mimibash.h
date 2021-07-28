@@ -5,15 +5,19 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# include "Libft/libft.h"
+
 # include "builtins.h"
 
 # define PROMPT "mimibash 💬 "
 # define ERR_CMD "command not found"
+# define ERR_SYNTAX "syntax error"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
@@ -90,5 +94,14 @@ void	error_and_exit(char *reason, char *error_message, int end);
 
 int		aka_isdigit(int c);
 int		only_digits(char *str);
+
+/* */
+
+void	parser(char *input, char **envp, t_data **data);
+char	*parse_redir(char *str, int *fd);
+char	*parse_single_quote(char *str, int *i);
+char	**new_split(char const *s, char c);
+void	get_builtins(char *str, int *built);
+int		ft_key(char c);
 
 #endif

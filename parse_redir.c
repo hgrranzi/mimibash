@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "mimibash.h"
 int create_fd(char *str, int flag)
 {
 	int fd;
@@ -61,7 +61,7 @@ char *parse_redir(char *str, int *fd)
 		if (str[i] == '<' && str[i + 1] != '<')
 			str = redir(str, &i, &fd[0], 3);
 		i++;
-	}		
+	}
 	printf("redir: %s\n", str);
 	return (str);
 }

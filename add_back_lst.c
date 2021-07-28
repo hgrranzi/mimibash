@@ -1,15 +1,18 @@
-#include "minishell.h"
+#include "mimibash.h"
 
 t_data *newlst(int built, char **args, int fd)
 {
 	t_data *new;
 
-	new = (t_list *)malloc(sizeof(t_data))
+	new = (t_data *)malloc(sizeof(t_data));
+	if (!new)
+		error_and_exit(NULL, NULL, 1);
 	if (new)
 	{
-		new->builtin = built;
-		new->args = args;
-		new->fd = fd;
+		new->builtin = 0;
+		new->args = NULL;
+		new->fd[0] = 0;
+		new->fd[1] = 1;
 		new->next = NULL;
 	}
 	return (new);
@@ -22,7 +25,7 @@ t_data	*lastlst(t_data *lst)
 		lst = lst->next;
 	return (lst);
 }
-t_data add_back_lst(t_data **lst, t_data *new)
+void	add_back_lst(t_data **lst, t_data *new)
 {
 	t_data *tmp;
 

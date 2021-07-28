@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "mimibash.h"
 char *make_same(char *str)
 {
 	int i;
@@ -20,7 +20,7 @@ char *make_same(char *str)
 // 	if (b == 0)
 // 	{
 // 		if (str[0] == '/')
-			
+
 // 	}
 // 	while (str[i] != '\0')
 // }

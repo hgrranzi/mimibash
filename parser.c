@@ -1,4 +1,6 @@
-#include "minishell.h"
+#include "mimibash.h"
+#include "mimibash.h"
+
 int ft_key(char c)
 {
 	if (c == '_' || ft_isalnum(c))
@@ -103,7 +105,9 @@ char *parse_double_quote(char *str, int *i, char **env)
 	}
 	if (str[(*i)] == '\0')
 	{
-		write(1, "Syntax error: double quotes are not closed\n", 43);
+		error_and_exit(NULL, ERR_SYNTAX, 0);
+		write(1, "syntax error: double quotes are not closed\n", 43);
+
 		return("err");
 	}
 	else
@@ -150,7 +154,7 @@ char *shielding(char *input, char **envp)
 // 	while (tmp[i] != NULL)
 // 	{
 // 		tmp[i]=shielding(tmp[i], envp);
-// 		printf("tmp:%s\n", tmp[i]);		
+// 		printf("tmp:%s\n", tmp[i]);
 // 		i++;
 // 	}
 // 	parse_first_arg(tmp);
@@ -168,7 +172,7 @@ void parser(char *input, char **envp, t_data **data)
 	free(input);
 	while(str[i] !=NULL)
 	{
-		str[i] = parse_redir(str[i], data->fd);
+		str[i] = parse_redir(str[i], head->fd);
 		tmp = new_split(str[i], ' ');
 		// puttostruct(tmp, data, envp);
 		free(tmp);
