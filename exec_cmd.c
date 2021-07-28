@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_fd)
+int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_fd, int (**builtin_functions)(int *, char **))
 {
 	t_data	*head_data_p;
 	int		i;
@@ -16,10 +16,22 @@ int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_f
 		{
 			close_unused_pipe_fd(pipe_fd, i, cmd_count);
 			duplicate_fd(head_data_p->fd);
-			// builtin?
-			if (head_data_p->args[CMD_PATH] && head_data_p->fd[IN] != -1 && head_data_p->fd[OUT] != -1)
+			if (head_data_p->builtin)
+				return ((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
+			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
+				return (1);
+			else if (!head_data_p->args[CMD_PATH])
+				return (127);
+			else
+			{
 				execve(head_data_p->args[CMD_PATH], head_data_p->args, NULL);
-			return (0); // error ?
+				error_and_exit(NULL, NULL, 0);
+				if (errno == ENOENT)
+					return (127);
+				else
+					return (126);
+			}
+			return (1); // draft
 		}
 		head_data_p = head_data_p->next;
 		i++;
