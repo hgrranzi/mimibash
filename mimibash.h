@@ -29,7 +29,14 @@ typedef struct s_data
 	struct s_data	*next;
 }				t_data;
 
-/* handle_signal */
+typedef struct s_info
+{
+	pid_t	*pid;
+	int		**pipe_fd;
+	int		cmd_count;
+}				t_info;
+
+/* handle_signal.c */
 
 int		handle_signal(void);
 
@@ -65,7 +72,7 @@ char	*check_cmd_path(char *cmd_name, char **possible_path);
 
 int		exec_cmd(t_data **head_data, int (**cmd_functions)(int *, char **), char **envp);
 int		exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp);
-int		create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_fd);
+int		create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **));
 
 /* exec_cmd_utils.c */
 

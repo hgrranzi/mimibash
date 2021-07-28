@@ -1,20 +1,20 @@
 #include "mimibash.h"
 
-int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_fd, int (**builtin_functions)(int *, char **))
+int	create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **))
 {
 	t_data	*head_data_p;
 	int		i;
 
 	head_data_p = *head_data;
 	i = 0;
-	while (i < cmd_count)
+	while (i < info->cmd_count)
 	{
-		pid[i] = fork();
-		if (pid[i] == -1)
+		info->pid[i] = fork();
+		if (info->pid[i] == -1)
 			error_and_exit(NULL, NULL, 0);
-		if (pid[i] == IS_CHILD)
+		if (info->pid[i] == IS_CHILD)
 		{
-			close_unused_pipe_fd(pipe_fd, i, cmd_count);
+			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
 			if (head_data_p->builtin)
 				return ((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
@@ -41,16 +41,14 @@ int	create_processes(t_data **head_data, int cmd_count, pid_t *pid, int **pipe_f
 
 int	exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp)
 {
-	pid_t	*pid;
-	int		**pipe_fd;
-	int		cmd_count;
+	t_info	info;
 
-	cmd_count = count_cmd(head_data);
-	pid = init_pids(cmd_count);
-	pipe_fd = init_pipes(cmd_count);
-	distribute_fd(head_data, pipe_fd);
-	create_processes(head_data, cmd_count, pid, pipe_fd);
-	wait_and_close(pid, pipe_fd, cmd_count);
+	info.cmd_count = count_cmd(head_data);
+	info.pid = init_pids(info.cmd_count);
+	info.pipe_fd = init_pipes(info.cmd_count);
+	distribute_fd(head_data, info.pipe_fd);
+	create_processes(head_data, &info, builtin_functions);
+	wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
 	return (0);
 }
 
