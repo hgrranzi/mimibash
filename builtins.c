@@ -17,6 +17,35 @@ int	exec_echo(int *fd, char **arg, char **envp)
 
 int	exec_cd(int *fd, char **arg, char **envp)
 {
+	char	*new_wd;
+	int		i;
+
+	i = 0;
+	if (chdir(arg[1]) == 0)
+	{
+		new_wd = getcwd(NULL, 0);
+		if (new_wd)
+		{
+			while (envp[i])
+			{
+				if (strncmp(envp[i], "PWD=", 4) == 0)
+				{
+					free(envp[i]);
+					envp[i] = aka_strjoin("PWD=", new_wd);
+					if (!envp[i])
+						error_and_exit(NULL, NULL, 1);
+					break ;
+				}
+				i++;
+			}
+		}
+		else
+			error_and_exit("cd", NULL, 0);
+	}
+	else
+		error_and_exit("cd", NULL, 0);
+	printf("%s\n", envp[i]);
+	printf("%s\n", new_wd);
 	return (0);
 }
 
