@@ -13,9 +13,6 @@ typedef enum e_builtin
 	EXIT
 }			t_builtin;
 
-int		cmd_error(char *cmd, int error_code);
-void	init_builtin_functions(int (**cmd_functions)(int *, char **));
-
 int		exec_echo(int *fd, char **arg);
 int		exec_cd(int *fd, char **arg);
 int		exec_pwd(int *fd, char **arg);
