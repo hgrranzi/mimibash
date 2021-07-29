@@ -4,11 +4,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_data	*head_data;
-	int		(*builtin_functions[8])(int *, char **);
+	int		(*builtins[8])(int *, char **, char **);
 	char	**envp_copy;
 
 	handle_signal();
-	init_builtin_functions(builtin_functions);
+	init_builtins(builtins);
 	envp_copy = copy_arr(envp);
 	head_data = init_data();
 	while (1)
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 			parser(input, envp_copy, head_data);
 		}
 		free(input);
-		exec_cmd(&head_data, builtin_functions, envp_copy);
+		exec_cmd(&head_data, builtins, envp_copy);
 		//free_data();
 		;
 	}

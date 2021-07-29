@@ -82,7 +82,7 @@ void	take_cmd_path(t_data **head_data, char **possible_path)
 		return ;
 	while (head_data_p)
 	{
-		if (!strchr(head_data_p->args[CMD_PATH], '/'))
+		if (!head_data_p->builtin && !strchr(head_data_p->args[CMD_PATH], '/'))
 		{
 			cmd_path = check_cmd_path(head_data_p->args[CMD_PATH], possible_path);
 			free(head_data_p->args[CMD_PATH]);

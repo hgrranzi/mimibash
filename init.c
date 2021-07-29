@@ -16,16 +16,16 @@ t_data	*init_data(void)
 	return (data);
 }
 
-void	init_builtin_functions(int (**builtin_functions)(int *, char **))
+void	init_builtins(int (**builtins)(int *, char **, char **))
 {
-	builtin_functions[NO_BUILTIN] = NULL; // probably need an empty or error function
-	builtin_functions[ECHO] = exec_echo;
-	builtin_functions[CD] = exec_cd;
-	builtin_functions[PWD] = exec_pwd;
-	builtin_functions[EXPORT] = exec_export;
-	builtin_functions[UNSET] = exec_unset;
-	builtin_functions[ENV] = exec_env;
-	builtin_functions[EXIT] = exec_exit;
+	builtins[NO_BUILTIN] = NULL; // probably need an empty or error function
+	builtins[ECHO] = exec_echo;
+	builtins[CD] = exec_cd;
+	builtins[PWD] = exec_pwd;
+	builtins[EXPORT] = exec_export;
+	builtins[UNSET] = exec_unset;
+	builtins[ENV] = exec_env;
+	builtins[EXIT] = exec_exit;
 }
 
 pid_t	*init_pids(int cmd_count)

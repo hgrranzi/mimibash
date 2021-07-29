@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-int	create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **))
+int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char **), char **envp)
 {
 	t_data	*head_data_p;
 	int		i;
@@ -17,7 +17,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtin_functions)
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
 			if (head_data_p->builtin)
-				return ((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
+				return ((builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp)));
 			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
 				return (1);
 			else if (!head_data_p->args[CMD_PATH])
@@ -39,7 +39,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtin_functions)
 	return (0);
 }
 
-int	exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp)
+int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char **), char **envp)
 {
 	t_info	info;
 
@@ -47,21 +47,21 @@ int	exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), ch
 	info.pid = init_pids(info.cmd_count);
 	info.pipe_fd = init_pipes(info.cmd_count);
 	distribute_fd(head_data, info.pipe_fd);
-	create_processes(head_data, &info, builtin_functions);
+	create_processes(head_data, &info, builtins, envp);
 	wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
 	return (0);
 }
 
-int	exec_cmd(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp)
+int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char **), char **envp)
 {
 	t_data	*head_data_p;
 	char	**possible_path;
 
 	head_data_p = *head_data;
 	if (head_data_p->builtin && !head_data_p->next)
-		return ((builtin_functions[head_data_p->builtin](head_data_p->fd, head_data_p->args)));
+		return ((builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp)));
 	possible_path = take_env_path(envp);
 	take_cmd_path(head_data, possible_path);
 	free_arr(possible_path);
-	return (exec_pipes(head_data, builtin_functions, envp));
+	return (exec_pipes(head_data, builtins, envp));
 }

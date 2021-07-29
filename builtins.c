@@ -1,20 +1,53 @@
 #include "mimibash.h"
 
-int	exec_echo(int *fd, char **arg)
+int	exec_echo(int *fd, char **arg, char **envp)
 {
-	if (arg)
-		write(fd[OUT], *arg, strlen(*arg));
+	int	i;
+
+	i = 0;
+	while (arg && arg[i])
+	{
+		if (i)
+			write(fd[OUT], " ", 1);
+		write(fd[OUT], arg[i], strlen(arg[i]));
+		i++;
+	}
+	return (0);
+}
+
+int	exec_cd(int *fd, char **arg, char **envp)
+{
+	char	*new_wd;
+	int		i;
+
+	i = 0;
+	if (chdir(arg[1]) == 0)
+	{
+		new_wd = getcwd(NULL, 0);
+		if (new_wd)
+		{
+			while (envp[i])
+			{
+				if (strncmp(envp[i], "PWD=", 4) == 0)
+				{
+					free(envp[i]);
+					envp[i] = aka_strjoin("PWD=", new_wd);
+					if (!envp[i])
+						error_and_exit(NULL, NULL, 1);
+					break ;
+				}
+				i++;
+			}
+		}
+		else
+			error_and_exit("cd", NULL, 0);
+	}
 	else
-		write(fd[OUT], "\n", 1);
+		error_and_exit("cd", NULL, 0);
 	return (0);
 }
 
-int	exec_cd(int *fd, char **arg)
-{
-	return (0);
-}
-
-int	exec_pwd(int *fd, char **arg)
+int	exec_pwd(int *fd, char **arg, char **envp)
 {
 	char	*wd;
 
@@ -28,22 +61,31 @@ int	exec_pwd(int *fd, char **arg)
 	return (0);
 }
 
-int	exec_export(int *fd, char **arg)
+int	exec_export(int *fd, char **arg, char **envp)
 {
 	return (0);
 }
 
-int	exec_unset(int *fd, char **arg)
+int	exec_unset(int *fd, char **arg, char **envp)
 {
 	return (0);
 }
 
-int	exec_env(int *fd, char **arg)
+int	exec_env(int *fd, char **arg, char **envp)
 {
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		write(fd[OUT], envp[i], strlen(envp[i]));
+		write(fd[OUT], "\n", 1);
+		i++;
+	}
 	return (0);
 }
 
-int	exec_exit(int *fd, char **arg)
+int	exec_exit(int *fd, char **arg, char **envp)
 {
 	int	exit_code;
 

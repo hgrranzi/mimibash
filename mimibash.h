@@ -47,7 +47,7 @@ int		handle_signal(void);
 /* init.c */
 
 t_data	*init_data(void);
-void	init_builtin_functions(int (**builtin_functions)(int *, char **));
+void	init_builtins(int (**builtins)(int *, char **, char **));
 pid_t	*init_pids(int cmd_count);
 int		**init_pipes(int cmd_count);
 
@@ -74,9 +74,9 @@ char	*check_cmd_path(char *cmd_name, char **possible_path);
 
 /* exec_cmd.c */
 
-int		exec_cmd(t_data **head_data, int (**cmd_functions)(int *, char **), char **envp);
-int		exec_pipes(t_data **head_data, int (**builtin_functions)(int *, char **), char **envp);
-int		create_processes(t_data **head_data, t_info *info, int (**builtin_functions)(int *, char **));
+int		exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char **), char **envp);
+int		exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char **), char **envp);
+int		create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char **), char **envp);
 
 /* exec_cmd_utils.c */
 
