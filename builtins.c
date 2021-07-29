@@ -44,8 +44,6 @@ int	exec_cd(int *fd, char **arg, char **envp)
 	}
 	else
 		error_and_exit("cd", NULL, 0);
-	printf("%s\n", envp[i]);
-	printf("%s\n", new_wd);
 	return (0);
 }
 
