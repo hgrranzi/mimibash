@@ -10,7 +10,8 @@ int	main(int argc, char **argv, char **envp)
 	handle_signal();
 	init_builtins(builtins);
 	envp_copy = copy_arr(envp);
-	head_data = init_data(); // no need probably
+	head_data = NULL;
+	//head_data = init_data(); // no need probably
 	while (1)
 	{
 		// input = ft_strdup("echo >a > b");
@@ -22,10 +23,12 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			//fill_history();
-			parser(input, envp_copy, head_data);
+			parser(input, envp_copy, &head_data);
 		}
-		free(input);
+		printf("%s %s %s\n", head_data->args[0], head_data->args[1], head_data->args[2]);
 		exec_cmd(&head_data, builtins, envp_copy);
+		free(input);
+		exit (0);
 		//free_data();
 		;
 	}

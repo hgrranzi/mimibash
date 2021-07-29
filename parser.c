@@ -135,7 +135,7 @@ char **shielding(char **input, char **envp)
 		j = 0;
 		while(input[i][j] !='\0')
 		{
-			
+
 			if (input[i][j] == '$')
 				input[i] = parse_dollar(input[i], &j, envp);
 			if (input[i][j] == '\\')
@@ -145,7 +145,7 @@ char **shielding(char **input, char **envp)
 			if (input[i][j] == '\"')
 				input[i] = parse_double_quote(input[i], &j, envp);
 			j++;
-			
+
 		}
 		// printf("%s\n", input[i]);
 		i++;
@@ -153,7 +153,7 @@ char **shielding(char **input, char **envp)
 	return (input);
 }
 
-void parser(char *input, char **envp, t_data *data)
+void parser(char *input, char **envp, t_data **data)
 {
 	int i;
 	int j;
@@ -165,15 +165,15 @@ void parser(char *input, char **envp, t_data *data)
 	free(input);
 	while(str[i] !=NULL)
 	{
-		last = add_back_lst(&data, newlst());
+		last = add_back_lst(data, newlst());
 		str[i] = parse_redir(str[i], last->fd, envp);
 		tmp = new_split(str[i], ' ');
 		last->args = shielding(tmp, envp);
 		// j = -1;
 		// while(tmp[++j] != NULL)
 		//  	printf("tmp[%d]:%s\n", j, tmp[j]);
-		get_builtins(&last->args[0], &last->builtin);		
-		free(tmp);
+		get_builtins(last->args[0], &last->builtin);
+		//free(tmp);
 		i++;
 	}
 	// return (str);

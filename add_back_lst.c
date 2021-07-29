@@ -30,13 +30,10 @@ t_data	*add_back_lst(t_data **lst, t_data *new)
 	t_data *tmp;
 
 	tmp = *lst;
-
-	if (*lst == NULL)
+	tmp = lastlst(*lst);
+	if (!tmp)
 		(*lst) = new;
 	else
-	{
-		tmp = lastlst(*lst);
 		tmp->next = new;
-	}
-	return(tmp);
+	return(new);
 }
