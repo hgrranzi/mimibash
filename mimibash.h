@@ -97,11 +97,17 @@ int		only_digits(char *str);
 
 /* */
 
-void	parser(char *input, char **envp, t_data **data);
-char	*parse_redir(char *str, int *fd);
+void parser(char *input, char **envp, t_data *data);
+char *parse_redir(char *str, int *fd, char **envp);
 char	*parse_single_quote(char *str, int *i);
 char	**new_split(char const *s, char c);
 void	get_builtins(char *str, int *built);
 int		ft_key(char c);
-
+t_data	*newlst(void);
+t_data	*lastlst(t_data *lst);
+t_data	*add_back_lst(t_data **lst, t_data *new);
+char *parse_single_quote(char *str, int *i);
+char *parse_slash(char *str, int *i);
+char *parse_dollar(char *str, int *i, char **env);
+char *parse_double_quote(char *str, int *i, char **env);
 #endif

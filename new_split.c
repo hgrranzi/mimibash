@@ -25,16 +25,7 @@ static size_t	ft_countword(char const *s, char c)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\"' && (n%2) == 0)
-		{
-			k++;
-			i++;
-		}
-		if (s[i] == '\'' && (k%2) == 0)
-		{
-			n++;
-			i++;
-		}
+		check_open_quote(s[i], &n, &k, &i);
 		if((k%2) == 0 && (n%2) == 0)
 		{
 			if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
@@ -57,16 +48,7 @@ static size_t	ft_wrdlen(char const *s, char c)
 	n = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\"' && (n%2) == 0)
-		{
-			k++;
-			i++;
-		}
-		if (s[i] == '\'' && (k%2) == 0)
-		{
-			n++;
-			i++;
-		}
+		check_open_quote(s[i], &n, &k, &i);
 		if((k%2) == 0 && (n%2) == 0)
 		{
 			while(s[i] != c && s[i] != '\0')

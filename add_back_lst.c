@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-t_data *newlst(int built, char **args, int fd)
+t_data *newlst(void)
 {
 	t_data *new;
 
@@ -25,13 +25,12 @@ t_data	*lastlst(t_data *lst)
 		lst = lst->next;
 	return (lst);
 }
-void	add_back_lst(t_data **lst, t_data *new)
+t_data	*add_back_lst(t_data **lst, t_data *new)
 {
 	t_data *tmp;
 
 	tmp = *lst;
-	if (lst == NULL)
-		return ;
+
 	if (*lst == NULL)
 		(*lst) = new;
 	else
@@ -39,4 +38,5 @@ void	add_back_lst(t_data **lst, t_data *new)
 		tmp = lastlst(*lst);
 		tmp->next = new;
 	}
+	return(tmp);
 }

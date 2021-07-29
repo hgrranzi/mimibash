@@ -12,18 +12,7 @@ char *make_same(char *str)
 	}
 	return (str);
 }
-// void parse_builtins(char *str, int b)
-// {
-// 	int i;
 
-// 	i = 0;
-// 	if (b == 0)
-// 	{
-// 		if (str[0] == '/')
-
-// 	}
-// 	while (str[i] != '\0')
-// }
 void get_builtins(char *str, int *built)
 {
 	int n;
@@ -45,5 +34,7 @@ void get_builtins(char *str, int *built)
 		*built = 6;
 	if (!ft_strncmp(str, "exit", n))
 		*built = 7;
+	free (str);
+	str = NULL;
 	// parse_builtins(str[0], built);
 }

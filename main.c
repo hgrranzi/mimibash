@@ -13,13 +13,16 @@ int	main(int argc, char **argv, char **envp)
 	head_data = init_data();
 	while (1)
 	{
-		input = readline (PROMPT);
+		input = ft_strdup("echo >a > b");
+		printf("%s\n", input);
+		// printf ("%d", head_data->builtin);
+		// input = readline (PROMPT);
 		if (!input) // or "exit"
 			head_data->builtin = EXIT;
 		else
 		{
 			//fill_history();
-			parser(input, envp_copy, &head_data);
+			parser(input, envp_copy, head_data);
 		}
 		free(input);
 		exec_cmd(&head_data, builtin_functions, envp_copy);

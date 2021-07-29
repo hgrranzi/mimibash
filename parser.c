@@ -1,5 +1,4 @@
 #include "mimibash.h"
-#include "mimibash.h"
 
 int ft_key(char c)
 {
@@ -105,7 +104,7 @@ char *parse_double_quote(char *str, int *i, char **env)
 	}
 	if (str[(*i)] == '\0')
 	{
-		error_and_exit(NULL, ERR_SYNTAX, 0);
+		// error_and_exit(NULL, ERR_SYNTAX, 0);
 		write(1, "syntax error: double quotes are not closed\n", 43);
 
 		return("err");
@@ -125,62 +124,55 @@ char *parse_double_quote(char *str, int *i, char **env)
 	}
 }
 
-char *shielding(char *input, char **envp)
+char **shielding(char **input, char **envp)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while(input[i] !='\0')
+	while (input[i] != NULL)
 	{
-		if (input[i] == '$')
-			input = parse_dollar(input, &i, envp);
-		if (input[i] == '\\')
-			input = parse_slash(input, &i);
-		if (input[i] == '\'')
-			input = parse_single_quote(input, &i);
-		if (input[i] == '\"')
-			input = parse_double_quote(input, &i, envp);
+		j = 0;
+		while(input[i][j] !='\0')
+		{
+			
+			if (input[i][j] == '$')
+				input[i] = parse_dollar(input[i], &j, envp);
+			if (input[i][j] == '\\')
+				input[i] = parse_slash(input[i], &j);
+			if (input[i][j] == '\'')
+				input[i] = parse_single_quote(input[i], &j);
+			if (input[i][j] == '\"')
+				input[i] = parse_double_quote(input[i], &j, envp);
+			j++;
+			
+		}
+		// printf("%s\n", input[i]);
 		i++;
-		// printf("%s\n", input);
 	}
-
 	return (input);
 }
-// void puttostruct(char **tmp, t_data **data, char **envp)
-// {
-// 	int i;
 
-// 	i = 0;
-// 	while (tmp[i] != NULL)
-// 	{
-// 		tmp[i]=shielding(tmp[i], envp);
-// 		printf("tmp:%s\n", tmp[i]);
-// 		i++;
-// 	}
-// 	parse_first_arg(tmp);
-// }
-
-void parser(char *input, char **envp, t_data **data)
+void parser(char *input, char **envp, t_data *data)
 {
 	int i;
+	int j;
 	char **str;
 	char **tmp;
-	t_data *head;
-
 	i = 0;
+	j = -1;
 	str = new_split(input, '|');
 	free(input);
 	while(str[i] !=NULL)
 	{
-		str[i] = parse_redir(str[i], head->fd);
+		add_back_lst(&data, newlst());
+		str[i] = parse_redir(str[i], data->fd, envp);
 		tmp = new_split(str[i], ' ');
-		// puttostruct(tmp, data, envp);
+		tmp = shielding(tmp, envp);
+		// while(tmp[++j] != NULL)
+		//  	printf("tmp[%d]:%s\n", j, tmp[j]);
+		// get_builtins(tmp[0], &data->builtin);
 		free(tmp);
-		i++;
-	}
-	while (str[i]!= NULL)
-	{
-		str[i]=shielding(str[i], envp);
 		i++;
 	}
 	// return (str);
