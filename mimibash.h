@@ -110,4 +110,6 @@ char *parse_single_quote(char *str, int *i);
 char *parse_slash(char *str, int *i);
 char *parse_dollar(char *str, int *i, char **env);
 char *parse_double_quote(char *str, int *i, char **env);
+void check_open_quote(char c, int *n, int *k, int *i);
+
 #endif
