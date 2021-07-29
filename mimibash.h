@@ -101,7 +101,7 @@ void parser(char *input, char **envp, t_data *data);
 char *parse_redir(char *str, int *fd, char **envp);
 char	*parse_single_quote(char *str, int *i);
 char	**new_split(char const *s, char c);
-void	get_builtins(char *str, int *built);
+void	get_builtins(char **str, int *built);
 int		ft_key(char c);
 t_data	*newlst(void);
 t_data	*lastlst(t_data *lst);

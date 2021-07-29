@@ -10,13 +10,13 @@ int	main(int argc, char **argv, char **envp)
 	handle_signal();
 	init_builtins(builtins);
 	envp_copy = copy_arr(envp);
-	//head_data = init_data(); // no need probably
+	head_data = init_data(); // no need probably
 	while (1)
 	{
-		input = ft_strdup("echo >a > b");
-		printf("%s\n", input);
+		// input = ft_strdup("echo >a > b");
+		// printf("%s\n", input);
 		// printf ("%d", head_data->builtin);
-		// input = readline (PROMPT);
+		input = readline (PROMPT);
 		if (!input) // or "exit"
 			head_data->builtin = EXIT;
 		else

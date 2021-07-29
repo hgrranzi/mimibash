@@ -159,19 +159,20 @@ void parser(char *input, char **envp, t_data *data)
 	int j;
 	char **str;
 	char **tmp;
+	t_data *last;
 	i = 0;
-	j = -1;
 	str = new_split(input, '|');
 	free(input);
 	while(str[i] !=NULL)
 	{
-		add_back_lst(&data, newlst());
-		str[i] = parse_redir(str[i], data->fd, envp);
+		last = add_back_lst(&data, newlst());
+		str[i] = parse_redir(str[i], last->fd, envp);
 		tmp = new_split(str[i], ' ');
-		tmp = shielding(tmp, envp);
+		last->args = shielding(tmp, envp);
+		// j = -1;
 		// while(tmp[++j] != NULL)
 		//  	printf("tmp[%d]:%s\n", j, tmp[j]);
-		// get_builtins(tmp[0], &data->builtin);
+		get_builtins(&last->args[0], &last->builtin);		
 		free(tmp);
 		i++;
 	}
