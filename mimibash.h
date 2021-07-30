@@ -101,7 +101,7 @@ void parser(char *input, char **envp, t_data **data);
 char *parse_redir(char *str, int *fd, char **envp);
 char	*parse_single_quote(char *str, int *i);
 char	**new_split(char const *s, char c);
-void	get_builtins(char *str, int *built);
+void get_builtins(char **str, int *built);
 int		ft_key(char c);
 t_data	*newlst(void);
 t_data	*lastlst(t_data *lst);
@@ -111,5 +111,7 @@ char *parse_slash(char *str, int *i);
 char *parse_dollar(char *str, int *i, char **env);
 char *parse_double_quote(char *str, int *i, char **env);
 void check_open_quote(char c, int *n, int *k, int *i);
-
+void	free_data(t_data **lst, void (*del)(void *));
+char **remove_n( char **args, int built);
+char	**new_splitn(char const *s, char c);
 #endif

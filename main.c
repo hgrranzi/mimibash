@@ -14,23 +14,28 @@ int	main(int argc, char **argv, char **envp)
 	//head_data = init_data(); // no need probably
 	while (1)
 	{
+		// input = ft_calloc(1000, 1);
 		// input = ft_strdup("echo >a > b");
 		// printf("%s\n", input);
 		// printf ("%d", head_data->builtin);
+		// read (0, input, 10);
 		input = readline (PROMPT);
 		if (!input) // or "exit"
+		{
 			head_data->builtin = EXIT;
+		}
 		else
 		{
+			add_history(input);
 			//fill_history();
 			parser(input, envp_copy, &head_data);
+
 		}
-		printf("%s %s %s\n", head_data->args[0], head_data->args[1], head_data->args[2]);
+		// printf("%s %s %s\n", head_data->args[0], head_data->args[1], head_data->args[2]);
 		exec_cmd(&head_data, builtins, envp_copy);
-		free(input);
-		exit (0);
-		//free_data();
-		;
+		// free(input);
+		// exit (0);
+		free_data(&head_data, free);
 	}
 	return (0);
 }

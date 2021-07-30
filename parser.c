@@ -152,11 +152,29 @@ char **shielding(char **input, char **envp)
 	}
 	return (input);
 }
-
+void print_struct(t_data **data)
+{
+	t_data *tmp;
+	tmp = *data;
+	while (tmp !=NULL)
+	{
+		printf("builtin: %d\n", tmp->builtin);
+		printf("fd[0]: %d\n", tmp->fd[0]);
+		printf("fd[1]: %d\n", tmp->fd[1]);
+		int i = 0;
+		while(tmp->args[i] != NULL)
+		{
+			printf("args[%d]: %s\n", i, tmp->args[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
 void parser(char *input, char **envp, t_data **data)
 {
 	int i;
 	int j;
+	int n;
 	char **str;
 	char **tmp;
 	t_data *last;
@@ -167,14 +185,13 @@ void parser(char *input, char **envp, t_data **data)
 	{
 		last = add_back_lst(data, newlst());
 		str[i] = parse_redir(str[i], last->fd, envp);
-		tmp = new_split(str[i], ' ');
+		tmp = new_splitn(str[i], ' ');
 		last->args = shielding(tmp, envp);
-		// j = -1;
-		// while(tmp[++j] != NULL)
-		//  	printf("tmp[%d]:%s\n", j, tmp[j]);
-		get_builtins(last->args[0], &last->builtin);
-		//free(tmp);
+		get_builtins(&last->args[0], &last->builtin);
+		n = ft_strlen(last->args[1]);
+		if (last->builtin == 1 && !ft_strncmp(last->args[1], "-n", n))
+			last->args = remove_n(last->args, last->builtin);
 		i++;
 	}
-	// return (str);
+	print_struct(data);
 }

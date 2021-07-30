@@ -37,3 +37,19 @@ t_data	*add_back_lst(t_data **lst, t_data *new)
 		tmp->next = new;
 	return(new);
 }
+void	free_one(t_data *lst, void (*del)(void *))
+{
+	(*del)(lst->args);
+	free(lst);
+}
+void	free_data(t_data **lst, void (*del)(void *))
+{
+	t_data	*tmp;
+
+	while ((*lst) != NULL)
+	{
+		tmp = (*lst);
+		(*lst) = (*lst)->next;
+		free_one(tmp, del);
+	}
+}

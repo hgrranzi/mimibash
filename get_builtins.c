@@ -13,28 +13,29 @@ char *make_same(char *str)
 	return (str);
 }
 
-void get_builtins(char *str, int *built)
+void get_builtins(char **str, int *built)
 {
 	int n;
 
 	*built = 0;
-	str = make_same(str);
-	n = ft_strlen(str);
-	if (!ft_strncmp(str, "echo", n))
+	*str = make_same(*str);
+	n = ft_strlen(*str);
+	if (!ft_strncmp(*str, "echo", n))
 		*built = 1;
-	if (!ft_strncmp(str, "cd", n))
+	if (!ft_strncmp(*str, "cd", n))
 		*built = 2;
-	if (!ft_strncmp(str, "pwd", n))
+	if (!ft_strncmp(*str, "pwd", n))
 		*built = 3;
-	if (!ft_strncmp(str, "export", n))
+	if (!ft_strncmp(*str, "export", n))
 		*built = 4;
-	if (!ft_strncmp(str, "unset", n))
+	if (!ft_strncmp(*str, "unset", n))
 		*built = 5;
-	if (!ft_strncmp(str, "env", n))
+	if (!ft_strncmp(*str, "env", n))
 		*built = 6;
-	if (!ft_strncmp(str, "exit", n))
+	if (!ft_strncmp(*str, "exit", n))
 		*built = 7;
-	free (str);
-	str = NULL;
+	// free (str);
+	if (*built > 0)
+		*str = ft_strdup("\0");
 	// parse_builtins(str[0], built);
 }
