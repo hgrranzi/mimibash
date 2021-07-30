@@ -91,7 +91,6 @@ char	**new_split(char const *s, char c)
 	i = 0;
 	j = 0;
 	int m = ft_countword(s, c);
-	printf("countword: %d\n", m);
 	str = (char **)ft_calloc((ft_countword(s, c) + 1), sizeof(char *));
 	if (str == NULL)
 		return (NULL);

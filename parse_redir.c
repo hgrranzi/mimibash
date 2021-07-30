@@ -32,6 +32,8 @@ char *redir(char *str, int *i, int *fd, int flag, char **env)
 	{
 		if (str[(*i)] == '$')
 			str = parse_dollar(str, i, env);
+		if (str[(*i)] == '\"')
+			str = parse_double_quote(str, i, env);
 		if (!ft_key(str[(*i)]))
 			break;
 		(*i)++;
