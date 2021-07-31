@@ -111,8 +111,11 @@ int	exec_env(int *fd, char **arg, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		write(fd[OUT], envp[i], strlen(envp[i]));
-		write(fd[OUT], "\n", 1);
+		if (envp[i][0])
+		{
+			write(fd[OUT], envp[i], strlen(envp[i]));
+			write(fd[OUT], "\n", 1);
+		}
 		i++;
 	}
 	return (0);
