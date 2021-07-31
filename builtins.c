@@ -7,9 +7,9 @@ int	exec_echo(int *fd, char **arg, char **envp)
 	i = 0;
 	while (arg && arg[i])
 	{
-		if (i)
-			write(fd[OUT], " ", 1);
 		write(fd[OUT], arg[i], strlen(arg[i]));
+		if (i && arg[i + 1] && arg[i + 1][0] != '\n')
+			write(fd[OUT], " ", 1);
 		i++;
 	}
 	return (0);
