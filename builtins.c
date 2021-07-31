@@ -60,9 +60,105 @@ int	exec_pwd(int *fd, char **arg, char **envp)
 	return (0);
 }
 
-int	exec_export(int *fd, char **arg, char **envp)
+int	find_variable(char *var, int var_len, char *arg, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (strncmp(envp[i], arg, var_len) == 0 && envp[i][var_len] == '=')
+		{
+			free(envp[i]);
+			envp[i] = strdup(arg);
+			if (!envp[i])
+				error_and_exit(NULL, NULL, 1);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	find_place(char *arg, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!envp[i][0])
+		{
+			free(envp[i]);
+			envp[i] = strdup(arg);
+			if (!envp[i])
+				error_and_exit(NULL, NULL, 1);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	new_place(char *arg, char **envp) // need to be fixed
+{
+	int		new_envp_size;
+	char	**tmp_arr;
+	int		i;
+
+	new_envp_size = count_arr_size(envp) + 1;
+	tmp_arr = malloc((new_envp_size + 1)* sizeof(char *));
+	if (!tmp_arr)
+		error_and_exit(NULL, NULL, 1);
+	tmp_arr[0] = strdup(arg);
+	if (!tmp_arr[0])
+		error_and_exit(NULL, NULL, 1);
+	i = 1;
+	while (envp[i])
+	{
+		tmp_arr[i] = strdup(envp[i]);
+		if (!tmp_arr[i])
+			error_and_exit(NULL, NULL, 1);
+		i++;
+	}
+	tmp_arr[new_envp_size] = NULL;
+	free_arr(envp);
+	envp = tmp_arr;
+	return (0);
+}
+
+int	print_sorted_env(char **envp)
 {
 	return (0);
+}
+
+int	exec_export(int *fd, char **arg, char **envp)
+{
+	int		i;
+	int		var_len;
+	char	*var;
+	int		exit_code;
+
+	i = 1;
+	exit_code = 0;
+	if (!arg[i])
+		return (print_sorted_env(envp));
+	while (arg[i][0] != '\n')
+	{
+		if (!arg[i][0])
+			exit_code = 1;
+		else
+		{
+			var_len = index_char(arg[i], '=');
+			var = strndup(arg[i], var_len);
+			if (!var)
+				error_and_exit(NULL, NULL, 1);
+			find_variable(var, var_len, arg[i], envp) || find_place(arg[i], envp) || new_place(arg[i], envp);
+			free(var);
+		}
+		i++;
+	}
+	return (exit_code);
 }
 
 void	remove_variable(char *arg, char **envp)
