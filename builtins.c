@@ -106,24 +106,26 @@ int	new_place(char *arg, char **envp) // need to be fixed
 	char	**tmp_arr;
 	int		i;
 
+	tmp_arr = copy_arr(envp);
 	new_envp_size = count_arr_size(envp) + 1;
-	tmp_arr = malloc((new_envp_size + 1)* sizeof(char *));
-	if (!tmp_arr)
+	free_arr(envp);
+	envp = malloc((new_envp_size + 1)* sizeof(char *));
+	if (!envp)
 		error_and_exit(NULL, NULL, 1);
-	tmp_arr[0] = strdup(arg);
-	if (!tmp_arr[0])
+	envp[0] = strdup(arg);
+	if (!envp[0])
 		error_and_exit(NULL, NULL, 1);
 	i = 1;
-	while (envp[i])
+	while (tmp_arr[i])
 	{
-		tmp_arr[i] = strdup(envp[i]);
-		if (!tmp_arr[i])
+		envp[i] = strdup(tmp_arr[i]);
+		if (!envp[i])
 			error_and_exit(NULL, NULL, 1);
 		i++;
 	}
-	tmp_arr[new_envp_size] = NULL;
-	free_arr(envp);
-	envp = tmp_arr;
+	envp[new_envp_size] = NULL;
+	free_arr(tmp_arr);
+	tmp_arr = NULL;
 	return (0);
 }
 
@@ -143,7 +145,7 @@ int	exec_export(int *fd, char **arg, char **envp)
 	exit_code = 0;
 	if (!arg[i])
 		return (print_sorted_env(envp));
-	while (arg[i][0] != '\n')
+	while (arg[i])
 	{
 		if (!arg[i][0])
 			exit_code = 1;
