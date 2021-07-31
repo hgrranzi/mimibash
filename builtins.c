@@ -49,7 +49,10 @@ int	exec_pwd(int *fd, char **arg, char **envp)
 
 	wd = getcwd(NULL, 0);
 	if (!wd)
+	{
 		error_and_exit("pwd", NULL, 0);
+		return (1);
+	}
 	write(fd[OUT], wd, strlen(wd));
 	write(fd[OUT], "\n", 1);
 	free(wd);
