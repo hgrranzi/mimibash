@@ -6,11 +6,13 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*head_data;
 	int		(*builtins[8])(int *, char **, char **);
 	char	**envp_copy;
+	int		exit_status;
 
 	handle_signal();
 	init_builtins(builtins);
 	envp_copy = copy_arr(envp);
 	head_data = NULL;
+	exit_status = 0;
 	//head_data = init_data(); // no need probably
 	while (1)
 	{
@@ -32,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 
 		}
 		// printf("%s %s %s\n", head_data->args[0], head_data->args[1], head_data->args[2]);
-		exec_cmd(&head_data, builtins, envp_copy);
+		exit_status = exec_cmd(&head_data, builtins, envp_copy);
 		// free(input);
 		// exit (0);
 		free_data(&head_data, free);
