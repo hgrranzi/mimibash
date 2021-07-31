@@ -65,9 +65,43 @@ int	exec_export(int *fd, char **arg, char **envp)
 	return (0);
 }
 
+void	remove_variable(char *arg, char **envp)
+{
+	int	i;
+	int	arg_len;
+
+	i = 0;
+	arg_len = strlen(arg);
+	while (envp[i])
+	{
+		if (strncmp(envp[i], arg, arg_len) == 0 && envp[i][arg_len] == '=')
+		{
+			free(envp[i]);
+			envp[i] = strdup("\0");
+			if (!envp[i])
+				error_and_exit(NULL, NULL, 1);
+			break ;
+		}
+		i++;
+	}
+}
+
 int	exec_unset(int *fd, char **arg, char **envp)
 {
-	return (0);
+	int	i;
+	int	exit_code;
+
+	i = 1;
+	exit_code = 0;
+	while (arg[i])
+	{
+		if (!arg[i][0])
+			exit_code = 1;
+		else
+			remove_variable(arg[i], envp);
+		i++;
+	}
+	return (exit_code);
 }
 
 int	exec_env(int *fd, char **arg, char **envp)

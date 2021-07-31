@@ -18,6 +18,7 @@
 # define PROMPT "mimibash 💬 "
 # define ERR_CMD "command not found"
 # define ERR_SYNTAX "syntax error"
+# define ERR_UNSET "not a valid identifier"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
