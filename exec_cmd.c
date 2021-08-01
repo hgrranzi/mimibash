@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char **), char **envp)
+int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_data	*head_data_p;
 	int		i;
@@ -39,7 +39,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 	return (0);
 }
 
-int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char **), char **envp)
+int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_info	info;
 
@@ -52,7 +52,7 @@ int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char **), ch
 	return (0);
 }
 
-int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char **), char **envp)
+int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_data	*head_data_p;
 	char	**possible_path;
@@ -60,7 +60,7 @@ int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char **), char
 	head_data_p = *head_data;
 	if (head_data_p->builtin && !head_data_p->next)
 		return ((builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp)));
-	possible_path = take_env_path(envp);
+	possible_path = take_env_path(*envp);
 	take_cmd_path(head_data, possible_path);
 	free_arr(possible_path);
 	return (exec_pipes(head_data, builtins, envp));
