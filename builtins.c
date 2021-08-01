@@ -106,9 +106,11 @@ int	new_place(char *arg, char **envp) // need to be fixed
 	char	**tmp_arr;
 	int		i;
 
+	printf("%s\n", arg);
 	tmp_arr = copy_arr(envp);
 	new_envp_size = count_arr_size(envp) + 1;
 	free_arr(envp);
+	envp = NULL;
 	envp = malloc((new_envp_size + 1)* sizeof(char *));
 	if (!envp)
 		error_and_exit(NULL, NULL, 1);
@@ -116,9 +118,9 @@ int	new_place(char *arg, char **envp) // need to be fixed
 	if (!envp[0])
 		error_and_exit(NULL, NULL, 1);
 	i = 1;
-	while (tmp_arr[i])
+	while (tmp_arr[i - 1])
 	{
-		envp[i] = strdup(tmp_arr[i]);
+		envp[i] = strdup(tmp_arr[i - 1]);
 		if (!envp[i])
 			error_and_exit(NULL, NULL, 1);
 		i++;

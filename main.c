@@ -16,8 +16,7 @@ int	main(int argc, char **argv, char **envp)
 	//head_data = init_data(); // no need probably
 	while (1)
 	{
-		// input = ft_calloc(1000, 1);
-		// input = ft_strdup("echo \"123\"");
+		// input = ft_strdup("env");
 		// printf("%s\n", input);
 		// printf ("%d", head_data->builtin);
 		// read (0, input, 10);

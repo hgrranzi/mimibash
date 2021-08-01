@@ -188,9 +188,9 @@ void parser(char *input, char **envp, t_data **data)
 		tmp = new_split(str[i], ' ');
 		last->args = shielding(tmp, envp);
 		get_builtins(&last->args[0], &last->builtin);
-		n = ft_strlen(last->args[1]);
-		if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", n))
-			last->args = remove_n(last->args, last->builtin);
+		// n = ft_strlen(last->args[1]);
+		// if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", n))
+		// 	last->args = remove_n(last->args, last->builtin);
 		i++;
 	}
 	print_struct(data);

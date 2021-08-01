@@ -19,15 +19,15 @@ int	only_digits(char *str)
 	return (1);
 }
 
-void	free_data(t_data **data)
-{
-	t_data	*data_p;
+// void	free_data(t_data **data)
+// {
+// 	t_data	*data_p;
 
-	while (*data)
-	{
-		data_p = *data;
-		*data = (*data)->next;
-		free_arr(data_p->args);
-		free(data_p);
-	}
-}
+// 	while (*data)
+// 	{
+// 		data_p = *data;
+// 		*data = (*data)->next;
+// 		free_arr(data_p->args);
+// 		free(data_p);
+// 	}
+// }

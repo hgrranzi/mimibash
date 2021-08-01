@@ -79,61 +79,61 @@ void check_open_quote(char c, int *n, int *k, int *i)
 		(*i)++;
 	}
 }
-char *double_quote_redir(char *str, int *i)
-{
-	int j;
-	char *tmp1;
-	char *tmp2;
-	char *tmp3;
+// char *double_quote_redir(char *str, int *i)
+// {
+// 	int j;
+// 	char *tmp1;
+// 	char *tmp2;
+// 	char *tmp3;
 
-	j = *i;
-	while(str[++(*i)] != '\0')
-	{
-		if (str[(*i)] == '\"')
-			break;
-	}
-	if (str[(*i)] == '\0')
-	{
-		// error_and_exit(NULL, ERR_SYNTAX, 0);
-		write(1, "syntax error: double quotes are not closed\n", 43);
+// 	j = *i;
+// 	while(str[++(*i)] != '\0')
+// 	{
+// 		if (str[(*i)] == '\"')
+// 			break;
+// 	}
+// 	if (str[(*i)] == '\0')
+// 	{
+// 		// error_and_exit(NULL, ERR_SYNTAX, 0);
+// 		write(1, "syntax error: double quotes are not closed\n", 43);
 
-		return("err");
-	}
-	else
-	{
-		tmp1 = ft_substr(str, 0, j);
-		tmp2 = ft_substr(str, j + 1, (*i) - j - 1);
-		tmp3 = ft_strdup(str + (*i) + 1);
-		tmp1 = ft_strjoin(tmp1, tmp2);
-		free(tmp2);
-		tmp1 = ft_strjoin(tmp1, tmp3);
-		free(tmp3);
-		free(str);
-		(*i)--;
-		return (tmp1);
-	}
-}
-char *heredoc(char *str, int *i, int *fd)
-{
-	int j;
-	int n;
+// 		return("err");
+// 	}
+// 	else
+// 	{
+// 		tmp1 = ft_substr(str, 0, j);
+// 		tmp2 = ft_substr(str, j + 1, (*i) - j - 1);
+// 		tmp3 = ft_strdup(str + (*i) + 1);
+// 		tmp1 = ft_strjoin(tmp1, tmp2);
+// 		free(tmp2);
+// 		tmp1 = ft_strjoin(tmp1, tmp3);
+// 		free(tmp3);
+// 		free(str);
+// 		(*i)--;
+// 		return (tmp1);
+// 	}
+// }
+// char *heredoc(char *str, int *i, int *fd)
+// {
+// 	int j;
+// 	int n;
 
-	j = (*i);
-	(*i)++;
-	while (str[(*i)] == ' ')
-		(*i)++;
-	n = (*i) - j;
-	while(str[(*i)] != '\0' )
-	{
-		if (str[(*i)] == '\"')
-			str = double_quote_redir(str, i);
-		if (str[(*i)] == '\'')
-			str = parse_single_quote(str, i);
-		if (!ft_key(str[(*i)]))
-			break;
-		(*i)++;
-	}
-}
+// 	j = (*i);
+// 	(*i)++;
+// 	while (str[(*i)] == ' ')
+// 		(*i)++;
+// 	n = (*i) - j;
+// 	while(str[(*i)] != '\0' )
+// 	{
+// 		if (str[(*i)] == '\"')
+// 			str = double_quote_redir(str, i);
+// 		if (str[(*i)] == '\'')
+// 			str = parse_single_quote(str, i);
+// 		if (!ft_key(str[(*i)]))
+// 			break;
+// 		(*i)++;
+// 	}
+// }
 char *parse_redir(char *str, int *fd, char **envp)
 {
 	int i;
