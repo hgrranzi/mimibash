@@ -1,6 +1,8 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
+# define ENV_PREFIX "declare -x"
+
 typedef enum e_builtin
 {
 	NO_BUILTIN,
@@ -17,6 +19,9 @@ int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_cd(int *fd, char **arg, char ***envp);
 int		exec_pwd(int *fd, char **arg, char ***envp);
 int		exec_export(int *fd, char **arg, char ***envp);
+int		print_sorted_env(int *fd, char **envp);
+char	**add_quotes(char **arr);
+char	*quote_str(char *str);
 int		find_variable(char *var, int var_len, char *arg, char **envp);
 int		find_place(char *arg, char **envp);
 int		new_place(char *arg, char ***envp);

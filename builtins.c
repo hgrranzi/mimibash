@@ -129,8 +129,80 @@ int	new_place(char *arg, char ***envp) // need to be fixed
 	return (0);
 }
 
-int	print_sorted_env(char **envp)
+char	*quote_str(char *str)
 {
+	char	*new_str;
+	int		new_len;
+	int		i;
+	int		j;
+	int		quote_index;
+
+	new_len = strlen(str) + 2;
+	new_str = malloc((new_len + 1) * sizeof(char));
+	if (!new_str)
+		error_and_exit(NULL, NULL, 1);
+	new_str[new_len] = '\0';
+	new_str[new_len - 1] = '\"';
+	quote_index = index_char(str, '=') + 1;
+	i = 0;
+	j = 0;
+	while (i < new_len - 1)
+	{
+		new_str[i] = str[j];
+		if (i == quote_index)
+		{
+			new_str[i] = '\"';
+			j--;
+		}
+		j++;
+		i++;
+	}
+	return (new_str);
+}
+
+char	**add_quotes(char **arr)
+{
+	char	**quoted_arr;
+	int		arr_len;
+	int		i;
+
+	arr_len = count_arr_size(arr);
+	quoted_arr = malloc((arr_len + 1) * sizeof (char *));
+	if (!quoted_arr)
+		error_and_exit(NULL, NULL, 1);
+	quoted_arr[arr_len] = NULL;
+	i = 0;
+	while (arr[i])
+	{
+		if (arr[i][0])
+			quoted_arr[i] = quote_str(arr[i]);
+		else
+			quoted_arr[i] = strdup(arr[i]);
+		i++;
+	}
+	return(quoted_arr);
+}
+
+int	print_sorted_env(int *fd, char **envp)
+{
+	int		i;
+	char	**quoted_envp;
+
+	//sort_env();
+	quoted_envp = add_quotes(envp);
+	i = 0;
+	while (quoted_envp[i])
+	{
+		if (quoted_envp[i][0])
+		{
+			write(fd[OUT], ENV_PREFIX, strlen(ENV_PREFIX));
+			write(fd[OUT], " ", 1);
+			write(fd[OUT], quoted_envp[i], strlen(quoted_envp[i]));
+			write(fd[OUT], "\n", 1);
+		}
+		i++;
+	}
+
 	return (0);
 }
 
@@ -144,7 +216,7 @@ int	exec_export(int *fd, char **arg, char ***envp)
 	i = 1;
 	exit_code = 0;
 	if (!arg[i])
-		return (print_sorted_env(*envp));
+		return (print_sorted_env(fd, *envp));
 	while (arg[i])
 	{
 		if (!arg[i][0])
