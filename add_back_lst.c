@@ -40,6 +40,14 @@ t_data	*add_back_lst(t_data **lst, t_data *new)
 /*
 void	free_one(t_data *lst, void (*del)(void *))
 {
+	int i;
+
+	i = 0;
+	while (lst->args[i] != NULL)
+	{
+		(*del)(lst->args[i]);
+		i++;
+	}
 	(*del)(lst->args);
 	free(lst);
 }

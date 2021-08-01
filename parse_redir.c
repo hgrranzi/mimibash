@@ -1,17 +1,28 @@
 #include "mimibash.h"
-int create_fd(char *str, int flag)
+int create_fd(char *str, int flag, int *old_fd)
 {
 	int fd;
 
 	if (flag == 1)
+	{
+		if (*old_fd > 1)
+			close(*old_fd);
 		fd = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	}
 	if (flag == 2)
+	{
+		if (*old_fd > 1)
+			close(*old_fd);
 		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	}
 	if (flag == 3)
+	{
+		if (*old_fd > 0)
+			close(*old_fd);
 		fd = open(str, O_RDONLY, 0644);
+	}
 	if (fd == -1)
-		error_and_exit(str, NULL, 0);
-	// printf("fd: %d\n", fd);
+		error_and_exit(str, NULL, 0);	
 	return (fd);
 }
 
@@ -34,15 +45,17 @@ char *redir(char *str, int *i, int *fd, int flag, char **env)
 			str = parse_dollar(str, i, env);
 		if (str[(*i)] == '\"')
 			str = parse_double_quote(str, i, env);
+		if (str[(*i)] == '\'')
+			str = parse_single_quote(str, i);
 		if (!ft_key(str[(*i)]))
 			break;
 		(*i)++;
 	}
 	tmp1 = ft_substr(str, 0, j);
-	tmp2 = ft_substr(str, j + n, (*i) - j - 1);
+	tmp2 = ft_substr(str, j + n, (*i) - j - 2);
 	tmp3 = ft_strdup(str + (*i));
 	tmp1 = ft_strjoin(tmp1, tmp3);
-	(*fd) = create_fd(tmp2, flag);
+	(*fd) = create_fd(tmp2, flag, fd);
 	if((*fd) == -1)
 	{
 		free(tmp2);
@@ -66,6 +79,61 @@ void check_open_quote(char c, int *n, int *k, int *i)
 		(*i)++;
 	}
 }
+char *double_quote_redir(char *str, int *i)
+{
+	int j;
+	char *tmp1;
+	char *tmp2;
+	char *tmp3;
+
+	j = *i;
+	while(str[++(*i)] != '\0')
+	{
+		if (str[(*i)] == '\"')
+			break;
+	}
+	if (str[(*i)] == '\0')
+	{
+		// error_and_exit(NULL, ERR_SYNTAX, 0);
+		write(1, "syntax error: double quotes are not closed\n", 43);
+
+		return("err");
+	}
+	else
+	{
+		tmp1 = ft_substr(str, 0, j);
+		tmp2 = ft_substr(str, j + 1, (*i) - j - 1);
+		tmp3 = ft_strdup(str + (*i) + 1);
+		tmp1 = ft_strjoin(tmp1, tmp2);
+		free(tmp2);
+		tmp1 = ft_strjoin(tmp1, tmp3);
+		free(tmp3);
+		free(str);
+		(*i)--;
+		return (tmp1);
+	}
+}
+char *heredoc(char *str, int *i, int *fd)
+{
+	int j;
+	int n;
+
+	j = (*i);
+	(*i)++;
+	while (str[(*i)] == ' ')
+		(*i)++;
+	n = (*i) - j;
+	while(str[(*i)] != '\0' )
+	{
+		if (str[(*i)] == '\"')
+			str = double_quote_redir(str, i);
+		if (str[(*i)] == '\'')
+			str = parse_single_quote(str, i);
+		if (!ft_key(str[(*i)]))
+			break;
+		(*i)++;
+	}
+}
 char *parse_redir(char *str, int *fd, char **envp)
 {
 	int i;
@@ -81,23 +149,13 @@ char *parse_redir(char *str, int *fd, char **envp)
 		if((k%2) == 0 && (n%2) == 0)
 		{
 			if(str[i] == '>' && str[i + 1] == '>')
-			{
-				if (fd[1] > 1)
-					close(fd[1]);
 				str = redir(str, (&i + 1), &fd[1], 1, envp);
-			}
 			if (str[i] == '>' && str[i + 1] != '>')
-			{
-				if (fd[1] > 1)
-					close(fd[1]);
 				str = redir(str, &i, &fd[1], 2, envp);
-			}
 			if (str[i] == '<' && str[i + 1] != '<')
-			{
-				if (fd[0] > 0)
-					close(fd[0]);
 				str = redir(str, &i, &fd[0], 3, envp);
-			}
+			// if (str[i] == '<' && str[i + 1] == '<')
+			// 	str = heredoc(str, &i, &fd[0]);
 		}
 		i++;
 	}
