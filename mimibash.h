@@ -18,6 +18,7 @@
 # define PROMPT "mimibash 💬 "
 # define ERR_CMD "command not found"
 # define ERR_SYNTAX "syntax error"
+# define ERR_UNSET "not a valid identifier"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
@@ -94,6 +95,7 @@ void	error_and_exit(char *reason, char *error_message, int end);
 
 int		aka_isdigit(int c);
 int		only_digits(char *str);
+void	free_data(t_data **data);
 
 /* */
 
@@ -111,7 +113,7 @@ char *parse_slash(char *str, int *i);
 char *parse_dollar(char *str, int *i, char **env);
 char *parse_double_quote(char *str, int *i, char **env);
 void check_open_quote(char c, int *n, int *k, int *i);
-void	free_data(t_data **lst, void (*del)(void *));
+//void	free_data(t_data **lst, void (*del)(void *));
 char **remove_n( char **args, int built);
 char	**new_splitn(char const *s, char c);
 #endif
