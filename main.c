@@ -4,7 +4,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_data	*head_data;
-	int		(*builtins[8])(int *, char **, char **);
+	int		(*builtins[8])(int *, char **, char ***);
 	char	**envp_copy;
 	int		exit_status;
 
@@ -33,10 +33,10 @@ int	main(int argc, char **argv, char **envp)
 
 		}
 		// printf("%s %s %s\n", head_data->args[0], head_data->args[1], head_data->args[2]);
-		exit_status = exec_cmd(&head_data, builtins, envp_copy);
+		exit_status = exec_cmd(&head_data, builtins, &envp_copy);
 		// free(input);
 		// exit (0);
-		free_data(&head_data, free);
+		free_data(&head_data);
 	}
 	return (0);
 }

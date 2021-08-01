@@ -37,6 +37,7 @@ t_data	*add_back_lst(t_data **lst, t_data *new)
 		tmp->next = new;
 	return(new);
 }
+/*
 void	free_one(t_data *lst, void (*del)(void *))
 {
 	int i;
@@ -61,3 +62,4 @@ void	free_data(t_data **lst, void (*del)(void *))
 		free_one(tmp, del);
 	}
 }
+*/

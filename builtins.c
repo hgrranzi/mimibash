@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-int	exec_echo(int *fd, char **arg, char **envp)
+int	exec_echo(int *fd, char **arg, char ***envp)
 {
 	int	i;
 
@@ -15,7 +15,7 @@ int	exec_echo(int *fd, char **arg, char **envp)
 	return (0);
 }
 
-int	exec_cd(int *fd, char **arg, char **envp)
+int	exec_cd(int *fd, char **arg, char ***envp)
 {
 	char	*new_wd;
 	int		i;
@@ -24,13 +24,13 @@ int	exec_cd(int *fd, char **arg, char **envp)
 	if (!arg[1] || chdir(arg[1]) == 0)
 	{
 		new_wd = getcwd(NULL, 0);
-		while (new_wd && envp[i])
+		while (new_wd && (*envp)[i])
 		{
-			if (strncmp(envp[i], "PWD=", 4) == 0)
+			if (strncmp((*envp)[i], "PWD=", 4) == 0)
 			{
-				free(envp[i]);
-				envp[i] = aka_strjoin("PWD=", new_wd);
-				if (!envp[i])
+				free((*envp)[i]);
+				(*envp)[i] = aka_strjoin("PWD=", new_wd);
+				if (!(*envp)[i])
 					error_and_exit(NULL, NULL, 1);
 				free(new_wd);
 				return (0);
@@ -43,7 +43,7 @@ int	exec_cd(int *fd, char **arg, char **envp)
 	return (1);
 }
 
-int	exec_pwd(int *fd, char **arg, char **envp)
+int	exec_pwd(int *fd, char **arg, char ***envp)
 {
 	char	*wd;
 
@@ -100,32 +100,30 @@ int	find_place(char *arg, char **envp)
 	return (0);
 }
 
-int	new_place(char *arg, char **envp) // need to be fixed
+int	new_place(char *arg, char ***envp) // need to be fixed
 {
 	int		new_envp_size;
 	char	**tmp_arr;
 	int		i;
 
-	printf("%s\n", arg);
-	tmp_arr = copy_arr(envp);
-	new_envp_size = count_arr_size(envp) + 1;
-	free_arr(envp);
-	envp = NULL;
-	envp = malloc((new_envp_size + 1)* sizeof(char *));
-	if (!envp)
+	tmp_arr = copy_arr(*envp);
+	new_envp_size = count_arr_size(*envp) + 1;
+	free_arr(*envp);
+	*envp = malloc((new_envp_size + 1)* sizeof(char *));
+	if (!*envp)
 		error_and_exit(NULL, NULL, 1);
-	envp[0] = strdup(arg);
-	if (!envp[0])
+	(*envp)[0] = strdup(arg);
+	if (!(*envp)[0])
 		error_and_exit(NULL, NULL, 1);
 	i = 1;
 	while (tmp_arr[i - 1])
 	{
-		envp[i] = strdup(tmp_arr[i - 1]);
-		if (!envp[i])
+		(*envp)[i] = strdup(tmp_arr[i - 1]);
+		if (!(*envp)[i])
 			error_and_exit(NULL, NULL, 1);
 		i++;
 	}
-	envp[new_envp_size] = NULL;
+	(*envp)[new_envp_size] = NULL;
 	free_arr(tmp_arr);
 	tmp_arr = NULL;
 	return (0);
@@ -136,7 +134,7 @@ int	print_sorted_env(char **envp)
 	return (0);
 }
 
-int	exec_export(int *fd, char **arg, char **envp)
+int	exec_export(int *fd, char **arg, char ***envp)
 {
 	int		i;
 	int		var_len;
@@ -146,7 +144,7 @@ int	exec_export(int *fd, char **arg, char **envp)
 	i = 1;
 	exit_code = 0;
 	if (!arg[i])
-		return (print_sorted_env(envp));
+		return (print_sorted_env(*envp));
 	while (arg[i])
 	{
 		if (!arg[i][0])
@@ -157,7 +155,7 @@ int	exec_export(int *fd, char **arg, char **envp)
 			var = strndup(arg[i], var_len);
 			if (!var)
 				error_and_exit(NULL, NULL, 1);
-			find_variable(var, var_len, arg[i], envp) || find_place(arg[i], envp) || new_place(arg[i], envp);
+			find_variable(var, var_len, arg[i], *envp) || find_place(arg[i], *envp) || new_place(arg[i], envp);
 			free(var);
 		}
 		i++;
@@ -186,7 +184,7 @@ void	remove_variable(char *arg, char **envp)
 	}
 }
 
-int	exec_unset(int *fd, char **arg, char **envp)
+int	exec_unset(int *fd, char **arg, char ***envp)
 {
 	int	i;
 	int	exit_code;
@@ -198,22 +196,22 @@ int	exec_unset(int *fd, char **arg, char **envp)
 		if (!arg[i][0])
 			exit_code = 1;
 		else
-			remove_variable(arg[i], envp);
+			remove_variable(arg[i], *envp);
 		i++;
 	}
 	return (exit_code);
 }
 
-int	exec_env(int *fd, char **arg, char **envp)
+int	exec_env(int *fd, char **arg, char ***envp)
 {
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	while ((*envp)[i])
 	{
-		if (envp[i][0])
+		if ((*envp)[i][0])
 		{
-			write(fd[OUT], envp[i], strlen(envp[i]));
+			write(fd[OUT], (*envp)[i], strlen((*envp)[i]));
 			write(fd[OUT], "\n", 1);
 		}
 		i++;
@@ -221,7 +219,7 @@ int	exec_env(int *fd, char **arg, char **envp)
 	return (0);
 }
 
-int	exec_exit(int *fd, char **arg, char **envp)
+int	exec_exit(int *fd, char **arg, char ***envp)
 {
 	int	exit_code;
 
