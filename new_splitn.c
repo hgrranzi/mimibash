@@ -93,7 +93,7 @@ char	**new_splitn(char const *s, char c)
 			i += ft_wrdlen(s + i, c);
 		}
 	}
-	str[j++] = "\n";
+	str[j++] = ft_strdup("\n");
 	str[j] = NULL;
 	return (str);
 }

@@ -15,7 +15,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		// input = ft_calloc(1000, 1);
-		// input = ft_strdup("echo >a > b");
+		// input = ft_strdup("echo \"123\"");
 		// printf("%s\n", input);
 		// printf ("%d", head_data->builtin);
 		// read (0, input, 10);
