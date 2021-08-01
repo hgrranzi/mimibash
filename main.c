@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		exit_status = exec_cmd(&head_data, builtins, &envp_copy);
 		// free(input);
 		// exit (0);
-		free_data(&head_data);
+		free_data(&head_data, free);
 	}
 	return (0);
 }
