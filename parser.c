@@ -188,10 +188,12 @@ void parser(char *input, char **envp, t_data **data)
 		tmp = new_split(str[i], ' ');
 		last->args = shielding(tmp, envp);
 		get_builtins(&last->args[0], &last->builtin);
-		// n = ft_strlen(last->args[1]);
-		// if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", n))
-		// 	last->args = remove_n(last->args, last->builtin);
+		if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", 3))
+			last->args = add_n(last->args, last->builtin);
+		else if (last->builtin == 1 && !ft_strncmp(last->args[1], "-n", 3))
+		 	last->args = remove_n(last->args, last->builtin);
+		// last->args=check_builtins(last);
 		i++;
 	}
-	print_struct(data);
+	// print_struct(data);
 }

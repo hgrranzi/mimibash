@@ -5,7 +5,7 @@ COMPILE = gcc -lreadline # -Wall -Wextra -Werror
 SRCS = main.c init.c handle_signal.c exec_cmd.c builtins.c arr.c error.c \
 		exec_cmd_utils.c split_line.c take_cmd_path.c utils.c \
 		add_back_lst.c get_builtins.c new_split.c new_splitn.c parse_redir.c \
-		parser.c remove_n.c
+		parser.c remove_n.c check_builtins.c
 
 OBJS =	$(SRCS:.c=.o)
 

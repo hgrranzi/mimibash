@@ -116,4 +116,6 @@ void check_open_quote(char c, int *n, int *k, int *i);
 void	free_data(t_data **lst, void (*del)(void *));
 char **remove_n( char **args, int built);
 char	**new_splitn(char const *s, char c);
+char **add_n(char **args, int builtin);
+void check_unset(char ***args);
 #endif
