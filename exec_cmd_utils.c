@@ -56,8 +56,18 @@ void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count)
 
 void	duplicate_fd(int *fd)
 {
-	dup2(fd[IN], STDIN_FILENO);
-	dup2(fd[OUT], STDOUT_FILENO);
+	if (fd[IN] != STDIN_FILENO)
+	{
+		close(STDIN_FILENO);
+		if (dup2(fd[IN], STDIN_FILENO) == -1)
+			printf("ho\n");
+	}
+	if (fd[OUT] != STDOUT_FILENO)
+	{
+		close(STDOUT_FILENO);
+		if (dup2(fd[OUT], STDOUT_FILENO) == -1)
+		printf("ha\n");
+	}
 	return ;
 }
 
@@ -72,6 +82,11 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 			close(pipe_fd[i - 1][IN]);
 		if (i < cmd_count - 1)
 			close(pipe_fd[i][OUT]);
+		i++;
+	}
+	i = 0;
+	while (i < cmd_count)
+	{
 		waitpid(pid[i], NULL, 0);
 		i++;
 	}

@@ -17,7 +17,10 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
 			if (head_data_p->builtin)
-				return ((builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp)));
+			{
+				builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp);
+				exit (0);
+			}
 			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
 				return (1);
 			else if (!head_data_p->args[CMD_PATH])
