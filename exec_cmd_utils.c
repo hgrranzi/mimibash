@@ -68,11 +68,11 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 	i = 0;
 	while (i < cmd_count)
 	{
-		waitpid(pid[i], NULL, 0);
 		if (i > 0)
 			close(pipe_fd[i - 1][IN]);
 		if (i < cmd_count - 1)
 			close(pipe_fd[i][OUT]);
+		waitpid(pid[i], NULL, 0);
 		i++;
 	}
 }
