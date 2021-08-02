@@ -56,17 +56,17 @@ void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count)
 
 void	duplicate_fd(int *fd)
 {
-	if (fd[IN] != STDIN_FILENO)
+	if (fd[IN] != STDIN_FILENO && fd[IN] != -1)
 	{
 		close(STDIN_FILENO);
 		if (dup2(fd[IN], STDIN_FILENO) == -1)
-			printf("ho\n");
+			error_and_exit(NULL, NULL, 0);
 	}
-	if (fd[OUT] != STDOUT_FILENO)
+	if (fd[OUT] != STDOUT_FILENO && fd[OUT] != -1)
 	{
 		close(STDOUT_FILENO);
 		if (dup2(fd[OUT], STDOUT_FILENO) == -1)
-		printf("ha\n");
+			error_and_exit(NULL, NULL, 0);
 	}
 	return ;
 }
