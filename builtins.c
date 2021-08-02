@@ -160,13 +160,11 @@ char	*quote_str(char *str)
 	return (new_str);
 }
 
-char	**add_quotes(char **arr)
+char	**add_quotes(char **arr, int arr_len)
 {
 	char	**quoted_arr;
-	int		arr_len;
 	int		i;
 
-	arr_len = count_arr_size(arr);
 	quoted_arr = malloc((arr_len + 1) * sizeof (char *));
 	if (!quoted_arr)
 		error_and_exit(NULL, NULL, 1);
@@ -180,16 +178,65 @@ char	**add_quotes(char **arr)
 			quoted_arr[i] = strdup(arr[i]);
 		i++;
 	}
-	return(quoted_arr);
+	return (quoted_arr);
+}
+
+char	**take_variables(char **arr)
+{
+	char	**new_arr;
+	int		i;
+	char	*ptr;
+
+	new_arr = copy_arr(arr);
+	i = 0;
+	while (new_arr[i])
+	{
+		if (new_arr[i][0])
+		{
+			ptr = strchr(new_arr[i], '=');
+			*ptr = '\0';
+		}
+		i++;
+	}
+	return (new_arr);
+}
+
+void	sort_env(char **arr, int arr_len)
+{
+	char	**var_arr;
+	char	*tmp_p;
+	int		i;
+
+	var_arr = take_variables(arr);
+	while (arr_len-- > 0)
+	{
+		i = 0;
+		while (i < arr_len)
+		{
+			if (strcmp(var_arr[i], var_arr[i + 1]) > 0)
+			{
+				tmp_p = var_arr[i];
+				var_arr[i] = var_arr[i + 1];
+				var_arr[i + 1] = tmp_p;
+				tmp_p = arr[i];
+				arr[i] = arr[i + 1];
+				arr[i + 1] = tmp_p;
+			}
+			i++;
+		}
+	}
+	free_arr(var_arr);
 }
 
 int	print_sorted_env(int *fd, char **envp)
 {
 	int		i;
+	int		envp_len;
 	char	**quoted_envp;
 
-	//sort_env();
-	quoted_envp = add_quotes(envp);
+	envp_len = count_arr_size(envp);
+	quoted_envp = add_quotes(envp, envp_len);
+	sort_env(quoted_envp, envp_len);
 	i = 0;
 	while (quoted_envp[i])
 	{
@@ -202,7 +249,7 @@ int	print_sorted_env(int *fd, char **envp)
 		}
 		i++;
 	}
-
+	free_arr(quoted_envp);
 	return (0);
 }
 
