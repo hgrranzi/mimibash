@@ -21,6 +21,8 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 {
 	int		*no_need;
 	char	*new_wd;
+	char	*old_wd;
+	char	*oldpwd;
 	int		i;
 
 	no_need = fd;
@@ -32,6 +34,15 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 		{
 			if (strncmp((*envp)[i], "PWD=", 4) == 0)
 			{
+				old_wd = strdup(&(*envp)[i][4]);
+				if (!old_wd)
+					error_and_exit(NULL, NULL, 1);
+				oldpwd = aka_strjoin("OLDPWD=", old_wd);
+				if (!oldpwd)
+					error_and_exit(NULL, NULL, 1);
+				free(old_wd);
+				find_variable("OLDPWD", 6, oldpwd, *envp) || find_place(oldpwd, *envp) || new_place(oldpwd, envp);
+				free(oldpwd);
 				free((*envp)[i]);
 				(*envp)[i] = aka_strjoin("PWD=", new_wd);
 				if (!(*envp)[i])
@@ -41,6 +52,7 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 			}
 			i++;
 		}
+		remove_variable("OLDPWD", *envp);
 	}
 	else
 		error_and_exit("cd", NULL, 0);
