@@ -20,7 +20,7 @@ typedef enum e_builtin
 
 int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_cd(int *fd, char **arg, char ***envp);
-char	*take_home(char **envp);
+char	*take_var(char **envp, char *var);
 void	update_wd_var(char ***envp, char *new_wd, int i);
 int		exec_pwd(int *fd, char **arg, char ***envp);
 int		exec_export(int *fd, char **arg, char ***envp);

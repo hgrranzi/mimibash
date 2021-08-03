@@ -17,7 +17,7 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 	return (0);
 }
 
-char	*take_home(char **envp)
+char	*take_var(char **envp, char *var)
 {
 	char	*home;
 	int		i;
@@ -26,7 +26,7 @@ char	*take_home(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp("HOME=", envp[i], 5) == 0)
+		if (strncmp(var, envp[i], strlen(var)) == 0 && envp[i][strlen(var)] == '=')
 		{
 			home = strdup(&(envp[i][5]));
 			if (!home)
