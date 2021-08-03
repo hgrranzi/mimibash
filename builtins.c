@@ -109,7 +109,7 @@ int	new_place(char *arg, char ***envp) // need to be fixed
 	tmp_arr = copy_arr(*envp);
 	new_envp_size = count_arr_size(*envp) + 1;
 	free_arr(*envp);
-	*envp = malloc((new_envp_size + 1)* sizeof(char *));
+	*envp = malloc((new_envp_size + 1) * sizeof(char *));
 	if (!*envp)
 		error_and_exit(NULL, NULL, 1);
 	(*envp)[0] = strdup(arg);
@@ -149,7 +149,7 @@ int	exec_export(int *fd, char **arg, char ***envp)
 	{
 		if (!arg[i][0])
 			exit_code = 1;
-		else
+		else if (strchr(arg[i], '='))
 		{
 			var_len = index_char(arg[i], '=');
 			var = strndup(arg[i], var_len);
