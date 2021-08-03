@@ -2,8 +2,10 @@
 
 int	exec_echo(int *fd, char **arg, char ***envp)
 {
-	int	i;
+	char	***no_need;
+	int		i;
 
+	no_need = envp;
 	i = 0;
 	while (arg && arg[i])
 	{
@@ -17,9 +19,11 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 
 int	exec_cd(int *fd, char **arg, char ***envp)
 {
+	int		*no_need;
 	char	*new_wd;
 	int		i;
 
+	no_need = fd;
 	i = 0;
 	if (!arg[1] || chdir(arg[1]) == 0)
 	{
@@ -45,8 +49,12 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 
 int	exec_pwd(int *fd, char **arg, char ***envp)
 {
+	char	**no_need;
+	char	***no_need2;
 	char	*wd;
 
+	no_need = arg;
+	no_need2 = envp;
 	wd = getcwd(NULL, 0);
 	if (!wd)
 	{
@@ -91,9 +99,11 @@ int	exec_export(int *fd, char **arg, char ***envp)
 
 int	exec_unset(int *fd, char **arg, char ***envp)
 {
+	int	*no_need;
 	int	i;
 	int	exit_code;
 
+	no_need = fd;
 	i = 1;
 	exit_code = 0;
 	while (arg[i])
@@ -109,8 +119,10 @@ int	exec_unset(int *fd, char **arg, char ***envp)
 
 int	exec_env(int *fd, char **arg, char ***envp)
 {
-	int	i;
+	char	**no_need;
+	int		i;
 
+	no_need = arg;
 	i = 0;
 	while ((*envp)[i])
 	{
@@ -126,8 +138,10 @@ int	exec_env(int *fd, char **arg, char ***envp)
 
 int	exec_exit(int *fd, char **arg, char ***envp)
 {
-	int	exit_code;
+	char	***no_need;
+	int		exit_code;
 
+	no_need = envp;
 	exit_code = 0;//need to take the last return code
 	write(fd[OUT], "\b\b", 2); // temporary
 	write(fd[OUT], "exit\n", 6); // temporary

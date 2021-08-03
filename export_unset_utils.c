@@ -7,7 +7,7 @@ int	find_variable(char *var, int var_len, char *arg, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(envp[i], arg, var_len) == 0 && envp[i][var_len] == '=')
+		if (strncmp(envp[i], var, var_len) == 0 && envp[i][var_len] == '=')
 		{
 			free(envp[i]);
 			envp[i] = strdup(arg);
