@@ -5,6 +5,7 @@ t_data *newlst(void)
 	t_data *new;
 
 	new = (t_data *)malloc(sizeof(t_data));
+
 	if (!new)
 		error_and_exit(NULL, NULL, 1);
 	if (new)

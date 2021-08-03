@@ -36,6 +36,9 @@ void get_builtins(char **str, int *built)
 		*built = 7;
 	// free (str);
 	if (*built > 0)
+	{
+		free(*str);
 		*str = ft_strdup("\0");
+	}
 	// parse_builtins(str[0], built);
 }

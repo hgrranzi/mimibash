@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 	//head_data = init_data(); // no need probably
 	while (1)
 	{
-		// input = ft_strdup("export   *q=b");
+		// input = ft_strdup("echo \"123");
 		// printf("%s\n", input);
 		// printf ("%d", head_data->builtin);
 		// read (0, input, 10);
@@ -29,12 +29,12 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			//fill_history();
-			parser(input, envp_copy, &head_data);
+			parser(input, envp_copy, &head_data, exit_status);
 
 		}
 		// printf("%s %s %s\n", head_data->args[0], head_data->args[1], head_data->args[2]);
 		exit_status = exec_cmd(&head_data, builtins, &envp_copy);
-		// free(input);
+		free(input);
 		// exit (0);
 		free_data(&head_data, free);
 	}

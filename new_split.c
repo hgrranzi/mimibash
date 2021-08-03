@@ -25,15 +25,14 @@ static size_t	ft_countword(char const *s, char c)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		check_open_quote(s[i], &n, &k, &i);
-		if((k%2) == 0 && (n%2) == 0)
-		{
-			if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-				count++;
-		}
+		if (s[i] == '\"')
+			skip_quote(s, &i, '\"');
+		if (s[i] == '\'')
+			skip_quote(s, &i, '\'');
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			count++;
 		i++;
 	}
-	count += k / 2;
 	return (count);
 }
 
@@ -48,20 +47,13 @@ static size_t	ft_wrdlen(char const *s, char c)
 	n = 0;
 	while (s[i] != '\0')
 	{
-		check_open_quote(s[i], &n, &k, &i);
-		if((k%2) == 0 && (n%2) == 0)
-		{
-			while(s[i] != c && s[i] != '\0')
-				i++;
-			return (i);
-		}
-		else
-		{
-			while(s[i] != '\"' && s[i] != '\0')
-				i++;
-			return (i + 1);
-		}
-		i++;
+		if (s[i] == '\"')
+			skip_quote(s, &i, '\"');
+		if (s[i] == '\'')
+			skip_quote(s, &i, '\'');
+		while(s[i] != c && s[i] != '\0')
+			i++;
+		return (i);
 	}
 	return (i);
 }
@@ -90,7 +82,8 @@ char	**new_split(char const *s, char c)
 		return (NULL);
 	i = 0;
 	j = 0;
-	int m = ft_countword(s, c);
+	// int m = ft_countword(s, c);
+	// printf("count %d\n", m);
 	str = (char **)ft_calloc((ft_countword(s, c) + 1), sizeof(char *));
 	if (str == NULL)
 		return (NULL);
@@ -101,6 +94,7 @@ char	**new_split(char const *s, char c)
 		if (s[i] != '\0')
 		{
 			str[j++] = ft_substr((s + i), 0, ft_wrdlen(s + i, c));
+			// printf("new_split:%p\n", str[j - 1]);
 			if (!str)
 				return (ft_free(str));
 			i += ft_wrdlen(s + i, c);

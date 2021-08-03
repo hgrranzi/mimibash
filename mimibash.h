@@ -99,7 +99,7 @@ int		only_digits(char *str);
 
 /* */
 
-void parser(char *input, char **envp, t_data **data);
+void parser(char *input, char **envp, t_data **data, int exit_status);
 char *parse_redir(char *str, int *fd, char **envp);
 char	*parse_single_quote(char *str, int *i);
 char	**new_split(char const *s, char c);
@@ -112,10 +112,14 @@ char *parse_single_quote(char *str, int *i);
 char *parse_slash(char *str, int *i);
 char *parse_dollar(char *str, int *i, char **env);
 char *parse_double_quote(char *str, int *i, char **env);
-void check_open_quote(char c, int *n, int *k, int *i);
+int check_open_quote(char c, int *n, int *k, int *i);
 void	free_data(t_data **lst, void (*del)(void *));
 char **remove_n( char **args, int built);
 char	**new_splitn(char const *s, char c);
 char **add_n(char **args, int builtin);
-void check_unset(char ***args);
+char **check_unset(char **args);
+char **check_builtins(t_data *data);
+char **pipesplit(char *str);
+void skip_quote(char const *str, int *i, char c);
+char **shielding(char **str, char **env, int exit_status);
 #endif

@@ -8,6 +8,7 @@ char **remove_n(char **args, int built)
 	while(args[i] != NULL)
 		i++;
 	tmp = malloc(sizeof(char *) * (i));
+	// printf("remove_n:%p\n", tmp);
 	tmp[0] = args[0];
 	i = 2;
 	while (args[i] != NULL)
@@ -16,6 +17,7 @@ char **remove_n(char **args, int built)
 		free(args[i]);
 		i++;
 	}
+	free(args);
 	tmp[i-1] = NULL;
 	return (tmp);
 }
@@ -31,12 +33,14 @@ char **add_n(char **args, int builtin)
 	n = i;
 	i = 0;
 	tmp = malloc((n + 2)*sizeof(char *));
+	// printf("add_n:%p\n", tmp);
 	while (i < n)
 	{
 		tmp[i] = ft_strdup(args[i]);
 		free(args[i]);
 		i++;
 	}
+	free(args);
 	tmp[i++] = ft_strdup("\n");
 	tmp[i] = NULL;
 	return (tmp);

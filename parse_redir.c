@@ -33,6 +33,7 @@ char *redir(char *str, int *i, int *fd, int flag, char **env)
 	char *tmp1;
 	char *tmp2;
 	char *tmp3;
+	char *tmp4;
 
 	j = (*i);
 	(*i)++;
@@ -47,14 +48,16 @@ char *redir(char *str, int *i, int *fd, int flag, char **env)
 			str = parse_double_quote(str, i, env);
 		if (str[(*i)] == '\'')
 			str = parse_single_quote(str, i);
-		if (!ft_key(str[(*i)]))
+		if (str[(*i)] == ' ')
 			break;
 		(*i)++;
 	}
 	tmp1 = ft_substr(str, 0, j);
 	tmp2 = ft_substr(str, j + n, (*i) - j - 2);
 	tmp3 = ft_strdup(str + (*i));
-	tmp1 = ft_strjoin(tmp1, tmp3);
+	free(str);
+	tmp4 = ft_strjoin(tmp1, tmp3);
+	free(tmp1);
 	(*fd) = create_fd(tmp2, flag, fd);
 	if((*fd) == -1)
 	{
@@ -63,56 +66,75 @@ char *redir(char *str, int *i, int *fd, int flag, char **env)
 	}
 	free(tmp3);
 	(*i)= j - 1;
-	return(tmp1);
+	return(tmp4);
 
 }
-void check_open_quote(char c, int *n, int *k, int *i)
+int check_open_quote(char c, int *n, int *k, int *i)
 {
-	if (c == '\"' && (*n)%2 == 0)
+	if (c == '\"' && *n == 0)
 	{
-		(*k)++;
+		if ((*k) == 0)
+		{
+			(*k)++;
+			return(1);
+		}
+		else
+		{
+			(*k)--;
+			(*i)++;
+		}
 		(*i)++;
 	}
-	if (c == '\'' && (*k)%2 == 0)
+	if (c == '\'' && (*k) == 0)
 	{
-		(*n)++;
+		if ((*n) == 0)
+		{
+			(*n)++;
+			return (1);
+		}
+		else
+		{
+			(*n)--;
+			(*i)++;
+		}
 		(*i)++;
+	}
+	return (0);
+}
+char *double_quote_redir(char *str, int *i)
+{
+	int j;
+	char *tmp1;
+	char *tmp2;
+	char *tmp3;
+
+	j = *i;
+	while(str[++(*i)] != '\0')
+	{
+		if (str[(*i)] == '\"')
+			break;
+	}
+	if (str[(*i)] == '\0')
+	{
+		// error_and_exit(NULL, ERR_SYNTAX, 0);
+		write(1, "syntax error: double quotes are not closed\n", 43);
+
+		return("err");
+	}
+	else
+	{
+		tmp1 = ft_substr(str, 0, j);
+		tmp2 = ft_substr(str, j + 1, (*i) - j - 1);
+		tmp3 = ft_strdup(str + (*i) + 1);
+		tmp1 = ft_strjoin(tmp1, tmp2);
+		free(tmp2);
+		tmp1 = ft_strjoin(tmp1, tmp3);
+		free(tmp3);
+		free(str);
+		(*i)--;
+		return (tmp1);
 	}
 }
-// char *double_quote_redir(char *str, int *i)
-// {
-// 	int j;
-// 	char *tmp1;
-// 	char *tmp2;
-// 	char *tmp3;
-
-// 	j = *i;
-// 	while(str[++(*i)] != '\0')
-// 	{
-// 		if (str[(*i)] == '\"')
-// 			break;
-// 	}
-// 	if (str[(*i)] == '\0')
-// 	{
-// 		// error_and_exit(NULL, ERR_SYNTAX, 0);
-// 		write(1, "syntax error: double quotes are not closed\n", 43);
-
-// 		return("err");
-// 	}
-// 	else
-// 	{
-// 		tmp1 = ft_substr(str, 0, j);
-// 		tmp2 = ft_substr(str, j + 1, (*i) - j - 1);
-// 		tmp3 = ft_strdup(str + (*i) + 1);
-// 		tmp1 = ft_strjoin(tmp1, tmp2);
-// 		free(tmp2);
-// 		tmp1 = ft_strjoin(tmp1, tmp3);
-// 		free(tmp3);
-// 		free(str);
-// 		(*i)--;
-// 		return (tmp1);
-// 	}
-// }
 // char *heredoc(char *str, int *i, int *fd)
 // {
 // 	int j;
