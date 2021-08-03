@@ -2,6 +2,7 @@
 # define BUILTINS_H
 
 # define ENV_PREFIX "declare -x"
+# define ERR_HOME "HOME not set"
 
 typedef enum e_builtin
 {

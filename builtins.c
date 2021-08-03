@@ -17,6 +17,28 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 	return (0);
 }
 
+char	*take_home(char **envp)
+{
+	char	*home;
+	int		i;
+
+	home = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		if (strncmp("HOME=", envp[i], 5) == 0)
+		{
+			home = strdup(&(envp[i][5]));
+			if (!home)
+				error_and_exit(NULL, NULL, 1);
+			return (home);
+		}
+		i++;
+	}
+	error_and_exit("cd", ERR_HOME, 0);
+	return (home);
+}
+
 int	exec_cd(int *fd, char **arg, char ***envp)
 {
 	int		*no_need;
