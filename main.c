@@ -11,6 +11,7 @@ int	main(int argc, char **argv, char **envp)
 	handle_signal();
 	init_builtins(builtins);
 	envp_copy = copy_arr(envp);
+	init_shlvl(&envp_copy);
 	head_data = NULL;
 	exit_status = 0;
 	//head_data = init_data(); // no need probably

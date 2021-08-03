@@ -47,7 +47,9 @@ int		handle_signal(void);
 
 /* init.c */
 
-t_data	*init_data(void);
+//t_data	*init_data(void);
+void	init_shlvl(char ***envp);
+char	*update_shlvl(char *shlvl_value);
 void	init_builtins(int (**builtins)(int *, char **, char ***));
 pid_t	*init_pids(int cmd_count);
 int		**init_pipes(int cmd_count);

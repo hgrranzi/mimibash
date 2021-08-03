@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-t_data	*init_data(void)
+/*t_data	*init_data(void)
 {
 	t_data	*data;
 
@@ -14,6 +14,49 @@ t_data	*init_data(void)
 	data->exit_status = 0;
 	data->next = NULL;
 	return (data);
+} */
+
+char	*update_shlvl(char *shlvl_value)
+{
+	char	*new_value;
+	int		value;
+
+	value = atoi(shlvl_value);
+	if (value < 0)
+		value = 0;
+	else
+		value++;
+	new_value = ft_itoa(value);
+	if (!new_value)
+		error_and_exit(NULL, NULL, 1);
+	return (new_value);
+}
+
+void	init_shlvl(char ***envp)
+{
+	char	*shlvl_value;
+	char	*key_value;
+	char	*value;
+
+	shlvl_value = take_var(*envp, "SHLVL");
+	if (!shlvl_value)
+	{
+		key_value = aka_strjoin("SHLVL=", "1");
+		if (!key_value)
+			error_and_exit(NULL, NULL, 1);
+		new_place(key_value, envp);
+	}
+	else
+	{
+		value = update_shlvl(shlvl_value);
+		key_value = aka_strjoin("SHLVL=", value);
+		if (!key_value)
+			error_and_exit(NULL, NULL, 1);
+		free(value);
+		find_variable("SHLVL", strlen("SHLVL"), key_value, *envp);
+	}
+	free(shlvl_value);
+	free(key_value);
 }
 
 void	init_builtins(int (**builtins)(int *, char **, char ***))
