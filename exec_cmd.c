@@ -17,15 +17,18 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
 			if (head_data_p->builtin)
-				return ((builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp)));
+			{
+				builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp);
+				exit (0);
+			}
 			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
 				return (1);
 			else if (!head_data_p->args[CMD_PATH])
 				return (127);
 			else
 			{
-				execve(head_data_p->args[CMD_PATH], head_data_p->args, NULL);
-				error_and_exit(NULL, NULL, 0);
+				execve(head_data_p->args[CMD_PATH], head_data_p->args, *envp);
+				error_and_exit(head_data_p->args[CMD_PATH], NULL, 0);
 				if (errno == ENOENT)
 					return (127);
 				else
