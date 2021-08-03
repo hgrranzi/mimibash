@@ -27,7 +27,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 				return (127);
 			else
 			{
-				execve(head_data_p->args[CMD_PATH], head_data_p->args, NULL);
+				execve(head_data_p->args[CMD_PATH], head_data_p->args, *envp);
 				error_and_exit(head_data_p->args[CMD_PATH], NULL, 0);
 				if (errno == ENOENT)
 					return (127);
