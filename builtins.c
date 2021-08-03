@@ -35,7 +35,6 @@ char	*take_var(char **envp, char *var)
 		}
 		i++;
 	}
-	error_and_exit("cd", ERR_HOME, 0);
 	return (home);
 }
 
@@ -68,6 +67,7 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 
 	no_need = fd;
 	i = 0;
+	//error_and_exit("cd", ERR_HOME, 0);
 	if (!arg[1] || chdir(arg[1]) == 0)
 	{
 		new_wd = getcwd(NULL, 0);
