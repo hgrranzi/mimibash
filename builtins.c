@@ -19,23 +19,23 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 
 char	*take_var(char **envp, char *var)
 {
-	char	*home;
+	char	*value;
 	int		i;
 
-	home = NULL;
+	value = NULL;
 	i = 0;
 	while (envp[i])
 	{
 		if (strncmp(var, envp[i], strlen(var)) == 0 && envp[i][strlen(var)] == '=')
 		{
-			home = strdup(&(envp[i][5]));
-			if (!home)
+			value = strdup(&(envp[i][strlen(var) + 1]));
+			if (!value)
 				error_and_exit(NULL, NULL, 1);
-			return (home);
+			return (value);
 		}
 		i++;
 	}
-	return (home);
+	return (value);
 }
 
 void	update_wd_var(char ***envp, char *new_wd, int i)
