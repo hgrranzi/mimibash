@@ -38,7 +38,7 @@ char	*take_var(char **envp, char *var)
 	return (value);
 }
 
-void	update_wd_var(char ***envp, char *new_wd, int i)
+int	update_wd_var(char ***envp, char *new_wd, int i)
 {
 	char	*old_wd;
 	char	*oldpwd;
@@ -57,27 +57,48 @@ void	update_wd_var(char ***envp, char *new_wd, int i)
 	if (!(*envp)[i])
 		error_and_exit(NULL, NULL, 1);
 	free(new_wd);
+	return (0);
+}
+
+char	*check_dir(char *arg, char **envp)
+{
+	char	*go_to;
+
+	if (!arg)
+	{
+		go_to = take_var(envp, "HOME");
+		if (!go_to)
+			error_and_exit("cd", ERR_HOME, 0);
+	}
+	else
+	{
+		go_to = strdup(arg);
+		if (!go_to)
+			error_and_exit(NULL, NULL, 1);
+	}
+	return (go_to);
 }
 
 int	exec_cd(int *fd, char **arg, char ***envp)
 {
 	int		*no_need;
 	char	*new_wd;
+	char	*go_to;
 	int		i;
 
 	no_need = fd;
 	i = 0;
-	//error_and_exit("cd", ERR_HOME, 0);
-	if (!arg[1] || chdir(arg[1]) == 0)
+	go_to = check_dir(arg[1], *envp);
+	if (!go_to || !arg[1][0])
+		return (1);
+	if (chdir(go_to) == 0)
 	{
+		free(go_to);
 		new_wd = getcwd(NULL, 0);
 		while (new_wd && (*envp)[i])
 		{
 			if (strncmp((*envp)[i], "PWD=", 4) == 0)
-			{
-				update_wd_var(envp, new_wd, i);
-				return (0);
-			}
+				return (update_wd_var(envp, new_wd, i));
 			i++;
 		}
 		remove_variable("OLDPWD", *envp);
