@@ -1,5 +1,19 @@
 #include "mimibash.h"
 
+int	is_error(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		if (args[i][0] == '\0')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_data	*head_data_p;
@@ -22,19 +36,21 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 				exit (0);
 			}
 			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
-				return (1);
+				exit (1);
 			else if (!head_data_p->args[CMD_PATH])
-				return (127);
+				exit (127);
+			else if (is_error(head_data_p->args))
+				exit (258);
 			else
 			{
 				execve(head_data_p->args[CMD_PATH], head_data_p->args, *envp);
 				error_and_exit(head_data_p->args[CMD_PATH], NULL, 0);
 				if (errno == ENOENT)
-					return (127);
+					exit (127);
 				else
-					return (126);
+					exit (126);
 			}
-			return (1); // draft
+			exit (1); // draft
 		}
 		head_data_p = head_data_p->next;
 		i++;
