@@ -37,11 +37,11 @@ void get_builtins(char **str, int *built)
 	if (!ft_strncmp(tmp, "exit", n + 1))
 		*built = 7;
 	// free (str);
-	if (*built > 0)
-	{
-		free(*str);
-		*str = ft_strdup("\0");
-	}
+	// if (*built > 0)
+	// {
+	// 	free(*str);
+	// 	*str = ft_strdup("\0");
+	// }
 	free(tmp);
 	// parse_builtins(str[0], built);
 }

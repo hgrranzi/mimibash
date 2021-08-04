@@ -51,8 +51,8 @@ char *parse_single_quote(char *str, int *i)
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
-	(*i)--;
 	free(str);
+	(*i) = (*i) - 2;
 	return (tmp1);
 }
 char *parse_double_quote(char *str, int *i, char **env)
@@ -65,7 +65,7 @@ char *parse_double_quote(char *str, int *i, char **env)
 	{
 		if (str[(*i)] == '\\' && ((str[(*i) + 1] == '\'') || (str[(*i) + 1] == '\"') || (str[(*i) + 1] == '$') || (str[(*i) + 1] == '\\')))
 			str = parse_slash(str, i);
-		if (str[(*i)] == '$')
+		if (str[(*i)] == '$' && ft_key(str[(*i) + 1]))
 			str = parse_dollar(str, i, env);
 		if (str[(*i)] == '\"')
 			break;
@@ -78,7 +78,7 @@ char *parse_double_quote(char *str, int *i, char **env)
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
-	(*i)--;
 	free(str);
+	(*i) = (*i) - 2;
 	return (tmp1);
 }
