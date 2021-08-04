@@ -19,6 +19,7 @@
 # define ERR_CMD "command not found"
 # define ERR_SYNTAX "syntax error"
 # define ERR_UNSET "not a valid identifier"
+# define ERR_EXIT "numeric argument required"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
@@ -54,7 +55,9 @@ int		handle_signal(void);
 
 /* init.c */
 
-t_data	*init_data(void);
+//t_data	*init_data(void);
+void	init_shlvl(char ***envp);
+char	*update_shlvl(char *shlvl_value);
 void	init_builtins(int (**builtins)(int *, char **, char ***));
 pid_t	*init_pids(int cmd_count);
 int		**init_pipes(int cmd_count);

@@ -2,8 +2,10 @@
 
 int	exec_echo(int *fd, char **arg, char ***envp)
 {
-	int	i;
+	char	***no_need;
+	int		i;
 
+	no_need = envp;
 	i = 0;
 	while (arg && arg[i])
 	{
@@ -15,28 +17,91 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 	return (0);
 }
 
-int	exec_cd(int *fd, char **arg, char ***envp)
+char	*take_var(char **envp, char *var)
 {
-	char	*new_wd;
+	char	*value;
 	int		i;
 
+	value = NULL;
 	i = 0;
-	if (!arg[1] || chdir(arg[1]) == 0)
+	while (envp[i])
 	{
+		if (strncmp(var, envp[i], strlen(var)) == 0 && envp[i][strlen(var)] == '=')
+		{
+			value = strdup(&(envp[i][strlen(var) + 1]));
+			if (!value)
+				error_and_exit(NULL, NULL, 1);
+			return (value);
+		}
+		i++;
+	}
+	return (value);
+}
+
+int	update_wd_var(char ***envp, char *new_wd, int i)
+{
+	char	*old_wd;
+	char	*oldpwd;
+
+	old_wd = strdup(&(*envp)[i][4]);
+	if (!old_wd)
+		error_and_exit(NULL, NULL, 1);
+	oldpwd = aka_strjoin("OLDPWD=", old_wd);
+	if (!oldpwd)
+		error_and_exit(NULL, NULL, 1);
+	free(old_wd);
+	find_variable("OLDPWD", 6, oldpwd, *envp) || find_place(oldpwd, *envp) || new_place(oldpwd, envp);
+	free(oldpwd);
+	free((*envp)[i]);
+	(*envp)[i] = aka_strjoin("PWD=", new_wd);
+	if (!(*envp)[i])
+		error_and_exit(NULL, NULL, 1);
+	free(new_wd);
+	return (0);
+}
+
+char	*check_dir(char *arg, char **envp)
+{
+	char	*go_to;
+
+	if (!arg)
+	{
+		go_to = take_var(envp, "HOME");
+		if (!go_to)
+			error_and_exit("cd", ERR_HOME, 0);
+	}
+	else
+	{
+		go_to = strdup(arg);
+		if (!go_to)
+			error_and_exit(NULL, NULL, 1);
+	}
+	return (go_to);
+}
+
+int	exec_cd(int *fd, char **arg, char ***envp)
+{
+	int		*no_need;
+	char	*new_wd;
+	char	*go_to;
+	int		i;
+
+	no_need = fd;
+	i = 0;
+	go_to = check_dir(arg[1], *envp);
+	if (!go_to || !arg[1][0])
+		return (1);
+	if (chdir(go_to) == 0)
+	{
+		free(go_to);
 		new_wd = getcwd(NULL, 0);
 		while (new_wd && (*envp)[i])
 		{
 			if (strncmp((*envp)[i], "PWD=", 4) == 0)
-			{
-				free((*envp)[i]);
-				(*envp)[i] = aka_strjoin("PWD=", new_wd);
-				if (!(*envp)[i])
-					error_and_exit(NULL, NULL, 1);
-				free(new_wd);
-				return (0);
-			}
+				return (update_wd_var(envp, new_wd, i));
 			i++;
 		}
+		remove_variable("OLDPWD", *envp);
 	}
 	else
 		error_and_exit("cd", NULL, 0);
@@ -45,8 +110,12 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 
 int	exec_pwd(int *fd, char **arg, char ***envp)
 {
+	char	**no_need;
+	char	***no_need2;
 	char	*wd;
 
+	no_need = arg;
+	no_need2 = envp;
 	wd = getcwd(NULL, 0);
 	if (!wd)
 	{
@@ -91,9 +160,11 @@ int	exec_export(int *fd, char **arg, char ***envp)
 
 int	exec_unset(int *fd, char **arg, char ***envp)
 {
+	int	*no_need;
 	int	i;
 	int	exit_code;
 
+	no_need = fd;
 	i = 1;
 	exit_code = 0;
 	while (arg[i])
@@ -109,8 +180,10 @@ int	exec_unset(int *fd, char **arg, char ***envp)
 
 int	exec_env(int *fd, char **arg, char ***envp)
 {
-	int	i;
+	char	**no_need;
+	int		i;
 
+	no_need = arg;
 	i = 0;
 	while ((*envp)[i])
 	{
@@ -126,17 +199,19 @@ int	exec_env(int *fd, char **arg, char ***envp)
 
 int	exec_exit(int *fd, char **arg, char ***envp)
 {
-	int	exit_code;
+	char	***no_need;
+	int		exit_code;
 
-	exit_code = 0;//need to take the last return code
-	write(fd[OUT], "\b\b", 2); // temporary
-	write(fd[OUT], "exit\n", 6); // temporary
-	if (arg)
+	no_need = envp;
+	exit_code = 0;
+	if (fd[IN] == STDIN_FILENO)
+		write(STDERR_FILENO, "exit\n", 6);
+	if (only_digits(arg[1]))
+		exit_code = atoi(arg[1]);
+	else
 	{
-		if (only_digits(*arg))
-			exit_code = atoi(*arg); // need an arg checker for errors
-		else
-			exit_code = 255;
+		error_and_exit("exit", ERR_EXIT, 0);
+		exit_code = 255;
 	}
 	exit((exit_code + 256) % 256);
 }

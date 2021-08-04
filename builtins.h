@@ -2,6 +2,7 @@
 # define BUILTINS_H
 
 # define ENV_PREFIX "declare -x"
+# define ERR_HOME "HOME not set"
 
 typedef enum e_builtin
 {
@@ -19,6 +20,9 @@ typedef enum e_builtin
 
 int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_cd(int *fd, char **arg, char ***envp);
+char	*check_dir(char *arg, char **envp);
+char	*take_var(char **envp, char *var);
+int		update_wd_var(char ***envp, char *new_wd, int i);
 int		exec_pwd(int *fd, char **arg, char ***envp);
 int		exec_export(int *fd, char **arg, char ***envp);
 int		exec_unset(int *fd, char **arg, char ***envp);
