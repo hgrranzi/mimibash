@@ -98,6 +98,7 @@ char *redir(t_redir *red, int flag)
 	if (red->str[(red->i)] == '\0')
 	{
 		write(1, "syntax error near unexpected token \'newline\'", 43);
+		(red->i)= j - 1;
 		return (NULL);
 	}
 	parse_red(red);

@@ -91,7 +91,7 @@ char **shielding(char **str, char **env, int exit_status)
 		{
 			if (str[i][j] == '$' && str[i][j + 1] == '?')
 				str[i] = parse_exitcode(str[i], &j, exit_status);
-			if (str[i][j] == '$')
+			if (str[i][j] == '$' && ft_key(str[i][j + 1]))
 				str[i] = parse_dollar(str[i], &j, env);
 			if (str[i][j] == '\\')
 				str[i] = parse_slash(str[i], &j);
