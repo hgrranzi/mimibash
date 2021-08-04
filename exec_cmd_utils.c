@@ -71,11 +71,13 @@ void	duplicate_fd(int *fd)
 	return ;
 }
 
-void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
+int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 {
 	int	i;
+	int	exit_status;
 
 	i = 0;
+	exit_status = 0;
 	while (i < cmd_count)
 	{
 		if (i > 0)
@@ -87,9 +89,13 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 	i = 0;
 	while (i < cmd_count)
 	{
-		waitpid(pid[i], NULL, 0);
+		waitpid(pid[i], &pid[i], 0);
 		i++;
 	}
+	if WIFEXITED(pid[i - 1])
+		exit_status = WEXITSTATUS(pid[i - 1]);
+	else
+		exit_status = 1;
 	i = 0;
 	while (i < cmd_count -1)
 	{
@@ -98,5 +104,5 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 	}
 	free(pipe_fd);
 	free(pid);
-
+	return (exit_status);
 }

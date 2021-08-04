@@ -37,10 +37,8 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 			}
 			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
 				exit (1);
-			else if (!head_data_p->args[CMD_PATH])
-				exit (127);
 			else if (is_error(head_data_p->args))
-				exit (258);
+				exit (127);
 			else
 			{
 				execve(head_data_p->args[CMD_PATH], head_data_p->args, *envp);
@@ -61,14 +59,15 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_info	info;
+	int		exit_status;
 
 	info.cmd_count = count_cmd(head_data);
 	info.pid = init_pids(info.cmd_count);
 	info.pipe_fd = init_pipes(info.cmd_count);
 	distribute_fd(head_data, info.pipe_fd);
 	create_processes(head_data, &info, builtins, envp);
-	wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
-	return (0);
+	exit_status = wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
+	return (exit_status);
 }
 
 int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp)

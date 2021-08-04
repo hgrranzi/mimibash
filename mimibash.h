@@ -95,7 +95,7 @@ int		count_cmd(t_data **head_data);
 void	distribute_fd(t_data **head_data, int **pipe_fd);
 void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count);
 void	duplicate_fd(int *fd);
-void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
+int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
 
 /* error.c */
 
