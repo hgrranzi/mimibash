@@ -89,7 +89,7 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 	no_need = fd;
 	i = 0;
 	go_to = check_dir(arg[1], *envp);
-	if (!go_to || !arg[1][0])
+	if (!go_to || (arg[1] && !arg[1][0]))
 		return (1);
 	if (chdir(go_to) == 0)
 	{
