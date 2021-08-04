@@ -6,7 +6,7 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 	int		i;
 
 	no_need = envp;
-	i = 0;
+	i = 1;
 	while (arg && arg[i])
 	{
 		write(fd[OUT], arg[i], strlen(arg[i]));
