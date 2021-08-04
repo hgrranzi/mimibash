@@ -107,6 +107,11 @@ int		aka_isdigit(int c);
 int		only_digits(char *str);
 // void	free_data(t_data **data);
 
+/* update_underscore.c */
+
+void	update_underscore(t_data **head_data, char ***envp);
+char	*take_last_arg(t_data **head_data);
+
 /* */
 
 void parser(char *input, char **envp, t_data **data, int exit_status);
