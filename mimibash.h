@@ -41,6 +41,13 @@ typedef struct s_info
 	int		cmd_count;
 }				t_info;
 
+typedef struct s_redir
+{
+	char **str;
+	int *fd;
+	int i;
+	char **env;
+}				t_redir;
 /* handle_signal.c */
 
 int		handle_signal(void);

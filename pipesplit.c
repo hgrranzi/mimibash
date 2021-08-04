@@ -20,8 +20,6 @@ int countpipe(char *str)
 			skip_quote(str, &i, '\"');
 		if (str[i] == '\'')
 			skip_quote(str, &i, '\'');
-		if (str[i] == '\0')
-			count++;
 		if (str[i] != '|' && (str[i + 1] == '|' || str[i + 1] == '\0'))
 			count++;
 		i++;
@@ -33,12 +31,14 @@ int pipelen(char *str)
 	int i;
 
 	i = 0;
-	while(str[i] != '\0' && str[i] != '|')
+	while(str[i] != '\0')
 	{
 		if (str[i] == '\"')
 			skip_quote(str, &i, '\"');
 		if (str[i] == '\'')
-			skip_quote(str, &i, '\'');		
+			skip_quote(str, &i, '\'');
+		if (str[i] == '|')
+			break;	
 		i++;		
 	}
 	return (i);
@@ -60,11 +60,13 @@ char **pipesplit(char *str)
 {
 	int i;
 	int j;
+	int m;
 	char **tmp;
 
 	i = 0;
 	j = 0;
-	tmp = (char **)ft_calloc((countpipe(str) + 1), sizeof(char *));
+	m = countpipe(str);
+	tmp = (char **)ft_calloc((m + 1), sizeof(char *));
 	
 	if (str == NULL)
 		return(NULL);
@@ -80,6 +82,6 @@ char **pipesplit(char *str)
 			i += pipelen(str + i);
 		}
 	}
-	tmp[i] = NULL;
+	tmp[j] = NULL;
 	return (tmp);	
 }

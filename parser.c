@@ -117,8 +117,10 @@ void parser(char *input, char **envp, t_data **data, int exit_status)
 	while(str[i] !=NULL)
 	{
 		last = add_back_lst(data, newlst());
-		str[i] = parse_redir(str[i], last->fd, envp);
+		// printf("last: %p\n", last);
+		// str[i] = parse_redir(str[i], last->fd, envp);
 		tmp = new_split(str[i], ' ');
+		// printf("split: %p\n", tmp);
 		// j = 0;
 		// while(tmp[j] != NULL)
 		// {
@@ -128,14 +130,18 @@ void parser(char *input, char **envp, t_data **data, int exit_status)
 		free(str[i]);
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
-		if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", 3))
-			last->args = add_n(last->args, last->builtin);
-		else if (last->builtin == 1 && !ft_strncmp(last->args[1], "-n", 3))
-		 	last->args = remove_n(last->args, last->builtin);
-
-		last->args=check_builtins(last);
+		if (last->args[1] != NULL)
+		{
+			if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", 3))
+				last->args = add_n(last->args, last->builtin);
+			else if (last->builtin == 1 && !ft_strncmp(last->args[1], "-n", 3))
+		 		last->args = remove_n(last->args, last->builtin);
+		}
+		// last->args=check_builtins(last);
 		i++;
 	}
+
 	free(str);
+
 	// print_struct(data);
 }

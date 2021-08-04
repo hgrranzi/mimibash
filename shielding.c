@@ -1,12 +1,12 @@
 #include "mimibash.h"
-void spec_free(char *str1, char *str2, char *str3)
+void spec_free(char **str1, char **str2, char **str3)
 {
-	free(str1);
-	str1 = NULL;
-	free(str2);
-	str2 = NULL;
-	free(str3);
-	str3 = NULL;
+	free(*str1);
+	*str1 = NULL;
+	free(*str2);
+	*str2 = NULL;
+	free(*str3);
+	*str3 = NULL;
 }
 char *unpack(char *str, char **env, char *str2)
 {
@@ -54,7 +54,7 @@ char *parse_dollar(char *str, int *i, char **env)
 	free(tmp1);
 	tmp2 = unpack(tmp3, env, tmp2);
 	tmp3 = ft_strjoin(tmp2, tmp4);
-	spec_free(tmp2, tmp4, str);
+	spec_free(&tmp2, &tmp4, &str);
 	return (tmp3);
 }
 char *parse_exitcode(char *str, int *i, int exit_code)

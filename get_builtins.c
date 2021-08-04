@@ -40,5 +40,6 @@ void get_builtins(char **str, int *built)
 		free(*str);
 		*str = ft_strdup("\0");
 	}
+	
 	// parse_builtins(str[0], built);
 }
