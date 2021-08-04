@@ -182,15 +182,15 @@ int	exec_exit(int *fd, char **arg, char ***envp)
 	int		exit_code;
 
 	no_need = envp;
-	exit_code = 0;//need to take the last return code
-	write(fd[OUT], "\b\b", 2); // temporary
-	write(fd[OUT], "exit\n", 6); // temporary
-	if (arg)
+	exit_code = 0;
+	if (fd[IN] == STDIN_FILENO)
+		write(STDERR_FILENO, "exit\n", 6);
+	if (only_digits(arg[1]))
+		exit_code = atoi(arg[1]);
+	else
 	{
-		if (only_digits(*arg))
-			exit_code = atoi(*arg); // need an arg checker for errors
-		else
-			exit_code = 255;
+		error_and_exit("exit", ERR_EXIT, 0);
+		exit_code = 255;
 	}
 	exit((exit_code + 256) % 256);
 }
