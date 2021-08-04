@@ -46,7 +46,8 @@ char *parse_single_quote(char *str, int *i)
 	if (str[(*i)] == '\0')
 	{
 		write(1, "syntax error: single quotes are not closed\n", 43);
-		return(NULL);
+		free(str);
+		return(ft_strdup("\0"));
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
@@ -72,7 +73,8 @@ char *parse_double_quote(char *str, int *i, char **env)
 	if (str[(*i)] == '\0')
 	{
 		write(1, "syntax error: double quotes are not closed\n", 43);
-		return(NULL);
+		free(str);
+		return(ft_strdup("\0"));
 	}
 	else
 		tmp1 = getstr(str, j, (*i));

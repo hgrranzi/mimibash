@@ -21,7 +21,6 @@ char **check_export(char **args)
 		}
 		i++;	
 	}
-	printf("%s\n", args[0]);
 	return (args);
 }
 
@@ -30,5 +29,6 @@ char **check_builtins(t_data *data)
 	
 	if (data->builtin == 4)
 		data->args = check_export(data->args);
+
 	return(data->args);
 }

@@ -55,13 +55,10 @@ void parser(char *input, char **envp, t_data **data, int exit_status)
 		free(str[i]);
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
-		if (last->args[1] != NULL)
-		{
-			if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", 3))
-				last->args = add_n(last->args, last->builtin);
-			else if (last->builtin == 1 && !ft_strncmp(last->args[1], "-n", 3))
-				last->args = remove_n(last->args, last->builtin);
-		}
+		if (last->builtin == 1 && last->args[1] && !ft_strncmp(last->args[1], "-n", 3))
+			last->args = remove_n(last->args, last->builtin);
+		else if (last->builtin == 1)
+			last->args = add_n(last->args, last->builtin);
 	
 		last->args=check_builtins(last);
 		i++;

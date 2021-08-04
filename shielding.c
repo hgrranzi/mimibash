@@ -87,7 +87,7 @@ char **shielding(char **str, char **env, int exit_status)
 	while (str[i] != NULL)
 	{
 		j = 0;
-		while (str[i] != NULL && str[i][j] != '\0')
+		while (str[i][j] != '\0')
 		{
 			if (str[i][j] == '$' && str[i][j + 1] == '?')
 				str[i] = parse_exitcode(str[i], &j, exit_status);
@@ -95,9 +95,9 @@ char **shielding(char **str, char **env, int exit_status)
 				str[i] = parse_dollar(str[i], &j, env);
 			if (str[i][j] == '\\')
 				str[i] = parse_slash(str[i], &j);
-			if (str[i] != NULL && str[i][j] == '\'')
+			if (str[i][j] == '\'')
 				str[i] = parse_single_quote(str[i], &j);
-			if (str[i] != NULL && str[i][j] == '\"')
+			if (str[i][j] == '\"')
 				str[i] = parse_double_quote(str[i], &j, env);
 			j++;
 		}

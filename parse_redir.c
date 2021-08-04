@@ -105,10 +105,70 @@ char *redir(t_redir *red, int flag)
 	(red->i)= j - 1;
 	return(tmp1);
 }
+// void parse_heredoc(t_redir *red)
+// {
+// 	while(red->str[(red->i)] != '\0' )
+// 	{
+// 		if (red->str[(red->i)] == '\"')
+// 			red->str = parse_double_quote(red->str, &red->i, red->env);
+// 		if (red->str[(red->i)] == '\'')
+// 			red->str = parse_single_quote(red->str, &red->i);
+// 		if (red->str[(red->i)] == ' ' || red->str[(red->i)] == '\0' || red->str[(red->i)] == '>' || red->str[(red->i)] == '<')
+// 			break;
+// 		(red->i)++;
+// 	}
+// }
+// char *fill_heredoc(t_redir *red, int j, int n)
+// {
+// 	char *tmp1;
+// 	char *tmp2;
+// 	char *tmp3;
+// 	char *tmp4;
+// 	char *str;
+// 	int i;
+// 	int fd;
 
+// 	tmp1 = ft_substr(red->str, 0, j);
+// 	tmp2 = ft_substr(red->str, n, red->i - n);
+// 	tmp3 = ft_strdup(red->str + red->i);
+// 	free(red->str);
+// 	tmp4 = ft_strjoin(tmp1, tmp3);
+// 	free(tmp1);
+// 	free(tmp3);
+
+// 	fd = open(".heredoc", O_RDWR | O_CREAT | O_APPEND, 0644);
+// 	while (1)
+// 	{
+// 		str = readline(">");
+
+// 		if (ft_strncmp(tmp2, str, (ft_strlen(tmp2) + 1)))
+// 			break;
+// 		i = -1;
+// 		while (str[++i] !='\0')
+// 			str = parse_dollar(str, &i, red->env);
+		
+// 	}
+// 	return (tmp4);
+// }
 // char *heredoc(t_redir *red)
 // {
+// 	int j;
+// 	int n;
+// 	char *tmp;
 
+// 	j = (red->i);
+// 	red->i++;
+// 	skip_space(red);
+// 	n = (red->i);
+// 	if (red->str[(red->i)] == '\0')
+// 	{
+// 		write(1, "syntax error near unexpected token \'newline\'", 43);
+// 		return (NULL);
+// 	}
+// 	parse_heredoc(red);
+// 	tmp = fill_heredoc(red, j, n);
+// 	red->i = j - 1;
+// 	return (tmp);
 // }
 char *parse_redir(char *str, int *fd, char **envp)
 {
