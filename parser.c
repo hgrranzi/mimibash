@@ -7,72 +7,6 @@ int ft_key(char c)
 	return (0);
 }
 
-// char *parse_dollar(char *str, int *i, char **env)
-// {
-// 	char *tmp1;
-// 	char *tmp2;
-// 	char *tmp3;
-// 	char *tmp4;
-// 	int j;
-// 	int n;
-// 	int k;
-// 	int m;
-
-// 	k = 0;
-// 	j = (*i);
-// 	while(str[++(*i)] != '\0' )
-// 	{
-// 		if (!ft_key(str[(*i)]))
-// 			break;
-// 	}
-// 	tmp1 = ft_substr(str, j + 1, (*i) - j - 1);
-// 	tmp2 = ft_substr(str, 0, j);
-// 	tmp4 = ft_strdup(str + (*i));
-// 	tmp1 = ft_strjoin(tmp1, "=");
-// 	n = ft_strlen(tmp1);
-// 	while (env[k] != NULL)
-// 	{
-// 		if ((tmp3 = ft_strnstr(env[k], tmp1, n)))
-// 			tmp2 = ft_strjoin(tmp2, tmp3 + n);
-// 		k++;
-// 	}
-// 	free(tmp1);
-// 	free(tmp3);
-// 	tmp2 = ft_strjoin(tmp2, tmp4);
-// 	free (tmp4);
-// 	return (tmp2);
-// }
-
-
-
-// char **shielding(char **input, char **envp)
-// {
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	while (input[i] != NULL)
-// 	{
-// 		j = 0;
-// 		while(input[i][j] !='\0')
-// 		{
-
-// 			if (input[i][j] == '$')
-// 				input[i] = parse_dollar(input[i], &j, envp);
-// 			if (input[i][j] == '\\')
-// 				input[i] = parse_slash(input[i], &j);
-// 			if (input[i][j] == '\'')
-// 				input[i] = parse_single_quote(input[i], &j);
-// 			if (input[i][j] == '\"')
-// 				input[i] = parse_double_quote(input[i], &j, envp);
-// 			j++;
-
-// 		}
-// 		// printf("%s\n", input[i]);
-// 		i++;
-// 	}
-// 	return (input);
-// }
 void print_struct(t_data **data)
 {
 	t_data *tmp;
@@ -112,21 +46,12 @@ void parser(char *input, char **envp, t_data **data, int exit_status)
 	char **tmp;
 	t_data *last;
 	i = 0;
-	str = pipesplit(input);
-	
+	str = pipesplit(input);	
 	while(str[i] !=NULL)
 	{
 		last = add_back_lst(data, newlst());
-		// printf("last: %p\n", last);
-		// str[i] = parse_redir(str[i], last->fd, envp);
+		str[i] = parse_redir(str[i], last->fd, envp);
 		tmp = new_split(str[i], ' ');
-		// printf("split: %p\n", tmp);
-		// j = 0;
-		// while(tmp[j] != NULL)
-		// {
-		// 	printf("%s\n", tmp[j]);
-		// 	j++;
-		// }
 		free(str[i]);
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
@@ -135,13 +60,12 @@ void parser(char *input, char **envp, t_data **data, int exit_status)
 			if (last->builtin == 1 && ft_strncmp(last->args[1], "-n", 3))
 				last->args = add_n(last->args, last->builtin);
 			else if (last->builtin == 1 && !ft_strncmp(last->args[1], "-n", 3))
-		 		last->args = remove_n(last->args, last->builtin);
+				last->args = remove_n(last->args, last->builtin);
 		}
-		// last->args=check_builtins(last);
+	
+		last->args=check_builtins(last);
 		i++;
 	}
-
 	free(str);
-
 	// print_struct(data);
 }

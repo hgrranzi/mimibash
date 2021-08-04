@@ -43,7 +43,7 @@ typedef struct s_info
 
 typedef struct s_redir
 {
-	char **str;
+	char *str;
 	int *fd;
 	int i;
 	char **env;
@@ -129,4 +129,7 @@ char **check_builtins(t_data *data);
 char **pipesplit(char *str);
 void skip_quote(char const *str, int *i, char c);
 char **shielding(char **str, char **env, int exit_status);
+char *append_output(t_redir *red, int flag);
+void parse_red(t_redir *red);
+void skip_space(t_redir *red);
 #endif
