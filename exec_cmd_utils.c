@@ -90,4 +90,13 @@ void	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 		waitpid(pid[i], NULL, 0);
 		i++;
 	}
+	i = 0;
+	while (i < cmd_count -1)
+	{
+		free(pipe_fd[i]);
+		i++;
+	}
+	free(pipe_fd);
+	free(pid);
+
 }
