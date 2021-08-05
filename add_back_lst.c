@@ -1,11 +1,10 @@
 #include "mimibash.h"
 
-t_data *newlst(void)
+t_data	*newlst(void)
 {
-	t_data *new;
+	t_data	*new;
 
 	new = (t_data *)malloc(sizeof(t_data));
-
 	if (!new)
 		error_and_exit(NULL, NULL, 1);
 	if (new)
@@ -18,6 +17,7 @@ t_data *newlst(void)
 	}
 	return (new);
 }
+
 t_data	*lastlst(t_data *lst)
 {
 	if (lst == NULL)
@@ -26,9 +26,10 @@ t_data	*lastlst(t_data *lst)
 		lst = lst->next;
 	return (lst);
 }
+
 t_data	*add_back_lst(t_data **lst, t_data *new)
 {
-	t_data *tmp;
+	t_data	*tmp;
 
 	tmp = *lst;
 	tmp = lastlst(*lst);
@@ -36,12 +37,12 @@ t_data	*add_back_lst(t_data **lst, t_data *new)
 		(*lst) = new;
 	else
 		tmp->next = new;
-	return(new);
+	return (new);
 }
 
 void	free_one(t_data *lst, void (*del)(void *))
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (lst->args[i] != NULL)
@@ -52,6 +53,7 @@ void	free_one(t_data *lst, void (*del)(void *))
 	(*del)(lst->args);
 	free(lst);
 }
+
 void	free_data(t_data **lst, void (*del)(void *))
 {
 	t_data	*tmp;
@@ -63,4 +65,3 @@ void	free_data(t_data **lst, void (*del)(void *))
 		free_one(tmp, del);
 	}
 }
-

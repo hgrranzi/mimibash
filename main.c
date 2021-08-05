@@ -51,10 +51,12 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(input);
-			parser(input, envp_copy, &head_data, exit_status);
+
+			parser(&input, envp_copy, &head_data, exit_status);
 		}
 		exit_status = exec_cmd(&head_data, builtins, &envp_copy);
-		free(input);
+		if (input)
+			free(input);
 		free_data(&head_data, free);
 		if (new_in)
 			close(new_in);

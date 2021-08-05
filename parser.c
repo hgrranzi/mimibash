@@ -37,37 +37,58 @@ void arr_free(char **array)
 	}
 	free(array);
 }
-void parser(char *input, char **envp, t_data **data, int exit_status)
+void check_empty(char **str)
 {
 	int i;
-	int j;
-	int n;
-	char **str;
-	char **tmp;
-	t_data *last;
-	i = 0;
-	// if (valid_input(input))
-	// {
-		str = pipesplit(input);
-		while(str[i] !=NULL)
-		{
-			last = add_back_lst(data, newlst());
-			str[i] = parse_redir(str[i], last->fd, envp);
 
-			tmp = new_split(str[i], ' ');
-			free(str[i]);
-			last->args = shielding(tmp, envp, exit_status);
-			get_builtins(&last->args[0], &last->builtin);
-			if (last->builtin == 1 && last->args[1] && !ft_strncmp(last->args[1], "-n", 3))
-			 	last->args = remove_n(last->args, last->builtin);
-			else if (last->builtin == 1 )
-				last->args = add_n(last->args, last->builtin);
-			check_builtins(last);
-			i++;
+	i = 0;
+	skipper((*str), &i);
+	if ((*str)[i] == '\0')
+	{
+		free(*str);
+		(*str) = ft_strdup("echo -n");
+	}
+}
+void check_echo_n(t_data *data)
+{
+	if (data->builtin == 1 && data->args[1] && !ft_strncmp(data->args[1], "-n", 3))
+	 	data->args = remove_n(data->args, data->builtin);
+	else if (data->builtin == 1 )
+		data->args = add_n(data->args, data->builtin);
+}
+void fill_struct(t_data *data)
+{
+	data->builtin = 1;
+	data->args = ft_calloc(2, sizeof(char));
+	data->args[0] = ft_strdup("echo");
+	data->args[1] = NULL;
+}
+void parser(char **input, char **envp, t_data **data, int exit_status)
+{
+	int		i;
+	char	**str;
+	char	**tmp;
+	t_data	*last;
+
+	i = 0;
+	valid_input(input);
+	str = pipesplit(*input);
+	while(str[i] !=NULL)
+	{
+		last = add_back_lst(data, newlst());
+		str[i] = parse_redir(str[i], last->fd, envp);
+		tmp = new_split(str[i], ' ');
+		if (tmp[0] == NULL)
+		{
+			fill_struct(last);
+			break ;
 		}
-		free(str);
-	// }
-	// else
-	// 	fill_struct(data);
-	// print_struct(data);
+		free(str[i]);
+		last->args = shielding(tmp, envp, exit_status);
+		get_builtins(&last->args[0], &last->builtin);	
+		check_echo_n(last);
+		check_builtins(last);
+		i++;
+	}
+	free(str);
 }

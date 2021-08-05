@@ -1,8 +1,8 @@
 #include "mimibash.h"
-void check_export(char **args)
+void	check_export(char **args)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (args[i] != NULL)
@@ -10,25 +10,27 @@ void check_export(char **args)
 		j = 0;
 		while (args[i][j] != '\0')
 		{
-			if ((!ft_key(args[i][j]) && args[i][j]!='=') || 
-			(args[i][0] && args[i][1] && args[i][0]=='=' && args[i][1]=='=') ||
+			if ((!ft_key(args[i][j]) && args[i][j] != '=') ||
+			(args[i][0] && args[i][1] && args[i][0] == '=' &&
+			args[i][1] == '=') ||
 			(args[i][0] && ft_isdigit(args[i][0])))
 			{
 				free(args[i]);
 				args[i] = ft_strdup("\0");
 				j = -1;
 			}
-			if (args[i][j]=='=')
-				break;
+			if (args[i][j] == '=')
+				break ;
 			j++;
 		}
-		i++;	
+		i++;
 	}
 }
-void check_unset(char **args)
+
+void	check_unset(char **args)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (args[i] != NULL)
@@ -36,7 +38,7 @@ void check_unset(char **args)
 		j = 0;
 		while (args[i][j] != '\0')
 		{
-			if (!ft_key(args[i][j])||(args[i][0] && ft_isdigit(args[i][0])))
+			if (!ft_key(args[i][j]) || (args[i][0] && ft_isdigit(args[i][0])))
 			{
 				free(args[i]);
 				args[i] = ft_strdup("\0");
@@ -44,10 +46,11 @@ void check_unset(char **args)
 			}
 			j++;
 		}
-		i++;	
+		i++;
 	}
 }
-void check_builtins(t_data *data)
+
+void	check_builtins(t_data *data)
 {	
 	if (data->builtin == 4)
 		check_export(data->args);
