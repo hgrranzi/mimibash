@@ -3,8 +3,11 @@ void skipper(char *str, int *i)
 {
 	if (str)
 	{
-		while(str[(*i)] == ' ')
-			i++;
+		if (str[(*i)] && str[(*i)] == ' ')
+		{
+			while(str[(*i)] == ' ' && str[(*i)] != '\0' )
+				i++;
+		}
 	}
 }
 void check_valid(char **str)
@@ -33,6 +36,7 @@ void check_pipe(char **str)
 	{
 		if ((*str)[i]&& (*str)[i + 1] && (*str)[i] == '|' && (*str)[i + 1] != '|')
 		{
+			i++;
 			skipper((*str), &i);
 			if ((*str)[i] && (*str)[i] == '|')
 			{
@@ -56,12 +60,18 @@ void valid_input(char **str)
 		free(*str);
 		*str = ft_strdup("echo -n");
 	}
+		if ((*str)[i] && (*str)[i + 1] && (*str)[i] == '|' && (*str)[i + 1] != '|')
+	{
+		write(1, "syntax error near unexpected token `|'\n", 40);
+		free(*str);
+		*str = ft_strdup("echo -n");
+	}
 	if ((*str)[i] && (*str)[i + 1] && (*str)[i] == '|' && (*str)[i + 1] == '|')
 	{
 		write(1, "syntax error near unexpected token `||'\n", 40);
 		free(*str);
 		*str = ft_strdup("echo -n");
 	}
-	check_pipe(str);
+	// check_pipe(str);
 	check_valid(str);
 }
