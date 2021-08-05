@@ -59,9 +59,10 @@ void check_echo_n(t_data *data)
 void fill_struct(t_data *data)
 {
 	data->builtin = 1;
-	data->args = ft_calloc(2, sizeof(char));
+	data->args = ft_calloc(3, sizeof(char*));
 	data->args[0] = ft_strdup("echo");
-	data->args[1] = NULL;
+	data->args[1] = ft_strdup("\n");
+	data->args[2] = NULL;
 }
 void parser(char **input, char **envp, t_data **data, int exit_status)
 {
@@ -77,6 +78,7 @@ void parser(char **input, char **envp, t_data **data, int exit_status)
 	{
 		last = add_back_lst(data, newlst());
 		str[i] = parse_redir(str[i], last->fd, envp);
+		printf("str |%s|\n", str[i]);
 		tmp = new_split(str[i], ' ');
 		if (tmp[0] == NULL)
 		{
@@ -91,4 +93,5 @@ void parser(char **input, char **envp, t_data **data, int exit_status)
 		i++;
 	}
 	free(str);
+	print_struct(data);
 }

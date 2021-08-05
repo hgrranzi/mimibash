@@ -147,4 +147,6 @@ char	*heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
 char *fill_redir(int flag, int j, int n, t_redir *red);
+void	fill_heredoc(t_redir *red, char *delimiter);
+int	create_heredoc(int *old_fd);
 #endif

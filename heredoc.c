@@ -18,6 +18,7 @@ void	fill_heredoc(t_redir *red, char *delimiter)
 
 	while (1)
 	{
+		// str = ft_strdup(":");
 		str = readline("> ");
 		if (!ft_strncmp(delimiter, str, (ft_strlen(delimiter) + 1)))
 		{
@@ -43,13 +44,14 @@ char	*heredoc(t_redir *red)
 	char	*tmp;
 
 	j = (red->i);
-	red->i++;
+	red->i += 2;
 	skip_space(red);
 	n = (red->i);
 	if (red->str[(red->i)] == '\0')
 	{
-		write(1, "syntax error near unexpected token \'newline\'", 43);
-		return (NULL);
+		write(1, "syntax error near unexpected token \'newline\'", 44);
+		(red->i) = 2;
+		return (ft_strdup("echo"));
 	}
 	parse_heredoc(red);
 	make_heredoc(red, j, n);

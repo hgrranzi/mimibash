@@ -84,11 +84,11 @@ char	*redir(t_redir *red, int flag)
 char	*parse_redir(char *str, int *fd, char **envp)
 {
 	t_redir	red;
-
 	red.i = 0;
 	red.str = str;
 	red.fd = fd;
 	red.env = envp;
+	char *tmp;
 	while (red.str[red.i] != '\0' && red.fd[0] != -1 && red.fd[1] != -1)
 	{
 		if (red.str[red.i] && red.str[red.i] == '\"')
@@ -107,5 +107,7 @@ char	*parse_redir(char *str, int *fd, char **envp)
 			red.str = heredoc(&red);
 		red.i++;
 	}
+	// tmp = ft_strdup(red.str);
 	return (red.str);
+
 }
