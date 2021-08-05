@@ -37,7 +37,19 @@ void arr_free(char **array)
 	}
 	free(array);
 }
-void parser(char *input, char **envp, t_data **data, int exit_status)
+void check_empty(char **str)
+{
+	int i;
+
+	i = 0;
+	skipper((*str), &i);
+	if ((*str)[i] == '\0')
+	{
+		free(*str);
+		(*str) = ft_strdup("echo -n");
+	}
+}
+void parser(char **input, char **envp, t_data **data, int exit_status)
 {
 	int i;
 	int j;
@@ -46,26 +58,25 @@ void parser(char *input, char **envp, t_data **data, int exit_status)
 	char **tmp;
 	t_data *last;
 	i = 0;
-	// if (valid_input(input))
-	// {
-		str = pipesplit(input);
-		while(str[i] !=NULL)
-		{
-			last = add_back_lst(data, newlst());
-			str[i] = parse_redir(str[i], last->fd, envp);
-
-			tmp = new_split(str[i], ' ');
-			free(str[i]);
-			last->args = shielding(tmp, envp, exit_status);
-			get_builtins(&last->args[0], &last->builtin);
-			if (last->builtin == 1 && last->args[1] && !ft_strncmp(last->args[1], "-n", 3))
-			 	last->args = remove_n(last->args, last->builtin);
-			else if (last->builtin == 1 )
-				last->args = add_n(last->args, last->builtin);
-			check_builtins(last);
-			i++;
-		}
-		free(str);
+	valid_input(input);
+	str = pipesplit(*input);
+	while(str[i] !=NULL)
+	{
+		last = add_back_lst(data, newlst());
+		str[i] = parse_redir(str[i], last->fd, envp);
+		check_empty(&str[i]);		
+		tmp = new_split(str[i], ' ');
+		free(str[i]);
+		last->args = shielding(tmp, envp, exit_status);
+		get_builtins(&last->args[0], &last->builtin);
+		if (last->builtin == 1 && last->args[1] && !ft_strncmp(last->args[1], "-n", 3))
+		 	last->args = remove_n(last->args, last->builtin);
+		else if (last->builtin == 1 )
+			last->args = add_n(last->args, last->builtin);
+		check_builtins(last);
+		i++;
+	}
+	free(str);
 	// }
 	// else
 	// 	fill_struct(data);

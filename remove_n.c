@@ -17,6 +17,7 @@ char **remove_n(char **args, int built)
 		free(args[i]);
 		i++;
 	}
+	free(args[1]);
 	free(args);
 	tmp[i-1] = NULL;
 	return (tmp);

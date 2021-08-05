@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	//head_data = init_data(); // no need probably
 	while (1)
 	{
-		// input = ft_strdup("echo \"123");
+		// input = ft_strdup("");
 		if (fd_in != STDIN_FILENO)
 			dup2(fd_in, STDIN_FILENO);
 		input = readline (PROMPT);
@@ -45,10 +45,12 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(input);
-			parser(input, envp_copy, &head_data, exit_status);
+
+			parser(&input, envp_copy, &head_data, exit_status);
 		}
 		exit_status = exec_cmd(&head_data, builtins, &envp_copy);
-		free(input);
+		if (input)
+			free(input);
 		free_data(&head_data, free);
 	}
 	return (0);
