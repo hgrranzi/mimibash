@@ -7,7 +7,9 @@ int	main(int argc, char **argv, char **envp)
 	int		(*builtins[8])(int *, char **, char ***);
 	char	**envp_copy;
 	int		exit_status;
-	int		fd_in;
+	int		new_in;
+	int		stdin_copy;
+	int		new_in_copy;
 
 	handle_signal();
 	init_builtins(builtins);
@@ -15,22 +17,22 @@ int	main(int argc, char **argv, char **envp)
 	init_shlvl(&envp_copy);
 	head_data = NULL;
 	exit_status = 0;
-	fd_in = STDIN_FILENO;
+	new_in = STDIN_FILENO;
 	if (argc > 1)
 	{
-		fd_in = open(argv[1], O_RDONLY, 0644);
-		if (fd_in == -1)
+		new_in = open(argv[1], O_RDONLY, 0644);
+		if (new_in == -1)
 			error_and_exit(argv[1], NULL, 1);
 	}
 	//head_data = init_data(); // no need probably
 	while (1)
 	{
 		// input = ft_strdup("echo \"123");
-		if (fd_in != STDIN_FILENO)
-			dup2(fd_in, STDIN_FILENO);
+		stdin_copy = dup(STDIN_FILENO);
+		new_in_copy = dup(new_in);
+		dup2(new_in_copy, STDIN_FILENO);
 		input = readline (PROMPT);
-		if (fd_in != STDIN_FILENO)
-			dup2(STDIN_FILENO, fd_in);
+		dup2(stdin_copy, STDIN_FILENO);
 		if (!input) // or "exit"
 		{
 			head_data = malloc(sizeof(t_data));
@@ -39,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 			head_data->args[0] = strdup("\0");
 			head_data->args[1] = ft_itoa(exit_status);
 			head_data->args[2] = NULL;
-			head_data->fd[IN] = fd_in;
+			head_data->fd[IN] = new_in;
 			head_data->fd[OUT] = OUT;
 		}
 		else
