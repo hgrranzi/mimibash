@@ -14,6 +14,10 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 			write(fd[OUT], " ", 1);
 		i++;
 	}
+	if (fd[IN] != IN)
+		close(fd[IN]);
+	if (fd[OUT] != OUT)
+		close(fd[OUT]);
 	return (0);
 }
 
@@ -126,6 +130,10 @@ int	exec_pwd(int *fd, char **arg, char ***envp)
 	write(fd[OUT], "\n", 1);
 	free(wd);
 	wd = NULL;
+	if (fd[IN] != IN)
+		close(fd[IN]);
+	if (fd[OUT] != OUT)
+		close(fd[OUT]);
 	return (0);
 }
 
@@ -213,5 +221,7 @@ int	exec_exit(int *fd, char **arg, char ***envp)
 		error_and_exit("exit", ERR_EXIT, 0);
 		exit_code = 255;
 	}
+	close(fd[IN]);
+	close(fd[OUT]);
 	exit((exit_code + 256) % 256);
 }

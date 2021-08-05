@@ -50,6 +50,10 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 			}
 			exit (1); // draft
 		}
+		if (head_data_p->fd[IN] != IN)
+			close(head_data_p->fd[IN]);
+		if (head_data_p->fd[OUT] != OUT)
+			close(head_data_p->fd[OUT]);
 		head_data_p = head_data_p->next;
 		i++;
 	}

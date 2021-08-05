@@ -29,10 +29,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		// input = ft_strdup("echo \"123");
 		stdin_copy = dup(STDIN_FILENO);
-		new_in_copy = dup(new_in);
-		dup2(new_in_copy, STDIN_FILENO);
+		//printf("stdin_copy %d\n", stdin_copy);
+		//new_in_copy = dup(new_in);
+		//printf("newin_copy %d\n", new_in_copy);
+		dup2(new_in, STDIN_FILENO);
+		//close(new_in);
 		input = readline (PROMPT);
 		dup2(stdin_copy, STDIN_FILENO);
+		close(stdin_copy);
 		if (!input) // or "exit"
 		{
 			head_data = malloc(sizeof(t_data));
@@ -41,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 			head_data->args[0] = strdup("\0");
 			head_data->args[1] = ft_itoa(exit_status);
 			head_data->args[2] = NULL;
-			head_data->fd[IN] = new_in;
+			head_data->fd[IN] = IN;
 			head_data->fd[OUT] = OUT;
 		}
 		else
@@ -52,6 +56,8 @@ int	main(int argc, char **argv, char **envp)
 		exit_status = exec_cmd(&head_data, builtins, &envp_copy);
 		free(input);
 		free_data(&head_data, free);
+		if (new_in)
+			close(new_in);
 	}
 	return (0);
 }
