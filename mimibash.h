@@ -178,6 +178,13 @@ char	*parse_dollar(char *str, int *i, char **env);
 char	*unpack(char *str, char **env, char *str2);
 void	spec_free(char **str1, char **str2, char **str3)
 
+/* shielding_utils.c */
+
+char	*parse_double_quote(char *str, int *i, char **env);
+char	*parse_single_quote(char *str, int *i);
+char	*getstr(char *str, int i, int j);
+char	*parse_slash(char *str, int *i);
+
 /* heredoc.c */
 
 char	*heredoc(t_redir *red);
@@ -188,13 +195,9 @@ int		create_heredoc(int *old_fd);
 
 /* */
 
-char	*parse_single_quote(char *str, int *i);
-char	*parse_slash(char *str, int *i);
-char	*parse_double_quote(char *str, int *i, char **env);
 int		check_open_quote(char c, int *n, int *k, int *i);
 char	**new_splitn(char const *s, char c);
 void	check_unset(char **args);
 void	check_builtins(t_data *data);
-void	skipper(char *str, int *i);
 
 #endif

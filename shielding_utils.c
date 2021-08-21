@@ -1,9 +1,10 @@
 #include "mimibash.h"
-char *parse_slash(char *str, int *i)
+
+char	*parse_slash(char *str, int *i)
 {
-	char *tmp1;
-	char *tmp2;
-	char *tmp3;
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
 
 	tmp1 = ft_substr(str, 0, (*i));
 	tmp2 = ft_strdup(str + (*i) + 1);
@@ -14,12 +15,13 @@ char *parse_slash(char *str, int *i)
 	(*i)++;
 	return (tmp3);
 }
-char *getstr(char *str, int i, int j)
+
+char	*getstr(char *str, int i, int j)
 {
-	char *tmp1;
-	char *tmp2;
-	char *tmp3;
-	char *tmp4;
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
+	char	*tmp4;
 
 	tmp1 = ft_substr(str, 0, i);
 	tmp2 = ft_substr(str, i + 1, j - i - 1);
@@ -30,24 +32,25 @@ char *getstr(char *str, int i, int j)
 	tmp1 = ft_strjoin(tmp4, tmp3);
 	free(tmp4);
 	free(tmp3);
-	return(tmp1);
+	return (tmp1);
 }
-char *parse_single_quote(char *str, int *i)
+
+char	*parse_single_quote(char *str, int *i)
 {
-	int j;
-	char *tmp1;
+	int		j;
+	char	*tmp1;
 
 	j = (*i);
 	while (str[++(*i)] != '\0')
 	{
 		if (str[(*i)] == '\'')
-			break;
+			break ;
 	}
 	if (str[(*i)] == '\0')
 	{
 		write(1, "syntax error: single quotes are not closed\n", 43);
 		free(str);
-		return(ft_strdup("\0"));
+		return (ft_strdup("\0"));
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
@@ -55,10 +58,11 @@ char *parse_single_quote(char *str, int *i)
 	(*i) = (*i) - 2;
 	return (tmp1);
 }
-char *parse_double_quote(char *str, int *i, char **env)
+
+char	*parse_double_quote(char *str, int *i, char **env)
 {
-	int j;
-	char *tmp1;
+	int		j;
+	char	*tmp1;
 
 	j = (*i);
 	while (str[++(*i)] != '\0')
@@ -68,13 +72,13 @@ char *parse_double_quote(char *str, int *i, char **env)
 		if (str[(*i)] == '$' && ft_key(str[(*i) + 1]))
 			str = parse_dollar(str, i, env);
 		if (str[(*i)] == '\"')
-			break;
+			break ;
 	}
 	if (str[(*i)] == '\0')
 	{
 		write(1, "syntax error: double quotes are not closed\n", 43);
 		free(str);
-		return(ft_strdup("\0"));
+		return (ft_strdup("\0"));
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
