@@ -1,23 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tmiranda <tmiranda@srudent.21-schoo>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/15 17:05:57 by tmiranda          #+#    #+#             */
-/*   Updated: 2021/04/07 18:52:31 by tmiranda         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "mimibash.h"
 
 static size_t	ft_countword(char const *s, char c)
 {
-	int			i;
-	int			k;
-	int			n;
-	int			count;
+	int	i;
+	int	k;
+	int	n;
+	int	count;
 
 	i = 0;
 	k = 0;
@@ -38,9 +26,9 @@ static size_t	ft_countword(char const *s, char c)
 
 static size_t	ft_wrdlen(char const *s, char c)
 {
-	int			i;
-	int			k;
-	int			n;
+	int	i;
+	int	k;
+	int	n;
 
 	i = 0;
 	k = 0;
@@ -56,20 +44,6 @@ static size_t	ft_wrdlen(char const *s, char c)
 		return (i);
 	}
 	return (i);
-}
-
-static char	**ft_free(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (*s)
-	{
-		free(s[i]);
-		i++;
-	}
-	free(s);
-	return (NULL);
 }
 
 char	**new_split(char const *s, char c)
@@ -93,7 +67,7 @@ char	**new_split(char const *s, char c)
 		{
 			str[j++] = ft_substr((s + i), 0, ft_wrdlen(s + i, c));
 			if (!str)
-				return (ft_free(str));
+				return (free_arr(str));
 			i += ft_wrdlen(s + i, c);
 		}
 	}

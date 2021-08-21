@@ -141,10 +141,13 @@ void	skip_quote(char const *str, int *i, char c);
 int		create_fd(char *str, int flag, int *old_fd);
 void	skip_space(t_redir *red);
 
+/* new_split.c */
+
+char	**new_split(char const *s, char c);
+
 /* */
 
 char	*parse_single_quote(char *str, int *i);
-char	**new_split(char const *s, char c);
 void	get_builtins(char **str, int *built);
 int		ft_key(char c);
 t_data	*newlst(void);
