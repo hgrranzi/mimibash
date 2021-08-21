@@ -1,4 +1,5 @@
 #include "mimibash.h"
+
 char	*make_same(char *str)
 {
 	int	i;

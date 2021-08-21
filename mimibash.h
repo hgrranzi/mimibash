@@ -145,6 +145,11 @@ void	skip_space(t_redir *red);
 
 char	**new_split(char const *s, char c);
 
+/* get_builtins.c */
+
+void	get_builtins(char **str, int *built);
+char	*make_same(char *str);
+
 /* */
 
 char	*parse_single_quote(char *str, int *i);
