@@ -44,11 +44,12 @@ typedef struct s_info
 
 typedef struct s_redir
 {
-	char *str;
-	int *fd;
-	int i;
-	char **env;
+	char	*str;
+	int		*fd;
+	int		i;
+	char	**env;
 }				t_redir;
+
 /* handle_signal.c */
 
 int		handle_signal(void);
@@ -112,9 +113,16 @@ int		only_digits(char *str);
 void	update_underscore(t_data **head_data, char ***envp);
 char	*take_last_arg(t_data **head_data);
 
-/* */
+/* parser.c */
 
 void	parser(char **input, char **envp, t_data **data, int exit_status);
+void	fill_struct(t_data *data);
+void	check_echo_n(t_data *data);
+void	check_empty(char **str);
+int		ft_key(char c);
+
+/* */
+
 char	*parse_redir(char *str, int *fd, char **envp);
 char	*parse_single_quote(char *str, int *i);
 char	**new_split(char const *s, char c);
@@ -146,7 +154,7 @@ int		create_fd(char *str, int flag, int *old_fd);
 char	*heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
-char *fill_redir(int flag, int j, int n, t_redir *red);
+char	*fill_redir(int flag, int j, int n, t_redir *red);
 void	fill_heredoc(t_redir *red, char *delimiter);
-int	create_heredoc(int *old_fd);
+int		create_heredoc(int *old_fd);
 #endif
