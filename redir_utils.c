@@ -1,13 +1,15 @@
 #include "mimibash.h"
-void skip_space(t_redir *red)
+
+void	skip_space(t_redir *red)
 {
 	red->i++;
 	while (red->str[red->i] == ' ')
 		red->i++;
 }
-int create_fd(char *str, int flag, int *old_fd)
+
+int	create_fd(char *str, int flag, int *old_fd)
 {
-	int fd;
+	int	fd;
 
 	if (flag == 1)
 	{
@@ -28,6 +30,6 @@ int create_fd(char *str, int flag, int *old_fd)
 		fd = open(str, O_RDONLY, 0644);
 	}
 	if (fd == -1)
-		error_and_exit(str, NULL, 0);	
+		error_and_exit(str, NULL, 0);
 	return (fd);
 }

@@ -136,6 +136,11 @@ int		pipelen(char *str);
 int		countpipe(char *str);
 void	skip_quote(char const *str, int *i, char c);
 
+/* redir_utils.c */
+
+int		create_fd(char *str, int flag, int *old_fd);
+void	skip_space(t_redir *red);
+
 /* */
 
 char	*parse_single_quote(char *str, int *i);
@@ -157,10 +162,8 @@ char	**add_n(char **args, int builtin);
 void	check_unset(char **args);
 void	check_builtins(t_data *data);
 char	**shielding(char **str, char **env, int exit_status);
-void	skip_space(t_redir *red);
 void	valid_input(char **str);
 void	skipper(char *str, int *i);
-int		create_fd(char *str, int flag, int *old_fd);
 char	*heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
