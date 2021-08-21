@@ -1,14 +1,14 @@
 #include "mimibash.h"
-char **remove_n(char **args, int built)
+
+char	**remove_n(char **args, int built)
 {
-	int i;
-	char **tmp;
+	int		i;
+	char	**tmp;
 
 	i = 0;
-	while(args[i] != NULL)
+	while (args[i] != NULL)
 		i++;
 	tmp = malloc(sizeof(char *) * (i));
-	// printf("remove_n:%p\n", tmp);
 	tmp[0] = args[0];
 	i = 2;
 	while (args[i] != NULL)
@@ -19,22 +19,22 @@ char **remove_n(char **args, int built)
 	}
 	free(args[1]);
 	free(args);
-	tmp[i-1] = NULL;
+	tmp[i - 1] = NULL;
 	return (tmp);
 }
-char **add_n(char **args, int builtin)
+
+char	**add_n(char **args, int builtin)
 {
-	int i;
-	int n;
-	char **tmp;
+	int		i;
+	int		n;
+	char	**tmp;
 
 	i = 0;
 	while (args[i] != NULL)
 		i++;
 	n = i;
 	i = 0;
-	tmp = malloc((n + 2)*sizeof(char *));
-	// printf("add_n:%p\n", tmp);
+	tmp = malloc((n + 2) * sizeof(char *));
 	while (i < n)
 	{
 		tmp[i] = ft_strdup(args[i]);

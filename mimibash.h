@@ -165,6 +165,11 @@ void	check_pipe(char **str);
 void	check_valid(char **str);
 void	skipper(char *str, int *i);
 
+/* remove_n.c */
+
+char	**remove_n( char **args, int built);
+char	**add_n(char **args, int builtin);
+
 /* */
 
 char	*parse_single_quote(char *str, int *i);
@@ -173,9 +178,7 @@ char	*parse_slash(char *str, int *i);
 char	*parse_dollar(char *str, int *i, char **env);
 char	*parse_double_quote(char *str, int *i, char **env);
 int		check_open_quote(char c, int *n, int *k, int *i);
-char	**remove_n( char **args, int built);
 char	**new_splitn(char const *s, char c);
-char	**add_n(char **args, int builtin);
 void	check_unset(char **args);
 void	check_builtins(t_data *data);
 char	**shielding(char **str, char **env, int exit_status);
