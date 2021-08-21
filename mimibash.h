@@ -150,6 +150,12 @@ char	**new_split(char const *s, char c);
 void	get_builtins(char **str, int *built);
 char	*make_same(char *str);
 
+/* check_builtins.c */
+
+void	check_builtins(t_data *data);
+void	check_unset(char **args);
+void	check_export(char **args);
+
 /* add_back_lst.c */
 
 t_data	*newlst(void);
@@ -197,7 +203,5 @@ int		create_heredoc(int *old_fd);
 
 int		check_open_quote(char c, int *n, int *k, int *i);
 char	**new_splitn(char const *s, char c);
-void	check_unset(char **args);
-void	check_builtins(t_data *data);
 
 #endif

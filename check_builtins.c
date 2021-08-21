@@ -1,4 +1,5 @@
 #include "mimibash.h"
+
 void	check_export(char **args)
 {
 	int	i;
@@ -51,7 +52,7 @@ void	check_unset(char **args)
 }
 
 void	check_builtins(t_data *data)
-{	
+{
 	if (data->builtin == 4)
 		check_export(data->args);
 	if (data->builtin == 5)
