@@ -1,5 +1,6 @@
 #include "mimibash.h"
-void spec_free(char **str1, char **str2, char **str3)
+
+void	spec_free(char **str1, char **str2, char **str3)
 {
 	free(*str1);
 	*str1 = NULL;
@@ -8,13 +9,14 @@ void spec_free(char **str1, char **str2, char **str3)
 	free(*str3);
 	*str3 = NULL;
 }
-char *unpack(char *str, char **env, char *str2)
+
+char	*unpack(char *str, char **env, char *str2)
 {
-	int n;
-	int i;
-	char *tmp;
-	char *getstr;
-	
+	int		n;
+	int		i;
+	char	*tmp;
+	char	*getstr;
+
 	i = 0;
 	n = ft_strlen(str);
 	while (env[i] != NULL)
@@ -27,25 +29,26 @@ char *unpack(char *str, char **env, char *str2)
 			str2 = NULL;
 			free(str);
 			str = NULL;
-			break;
+			break ;
 		}
 		i++;
 	}
-	return(getstr);
+	return (getstr);
 }
-char *parse_dollar(char *str, int *i, char **env)
+
+char	*parse_dollar(char *str, int *i, char **env)
 {
-	char *tmp1;
-	char *tmp2;
-	char *tmp3;
-	char *tmp4;
-	int j;
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
+	char	*tmp4;
+	int		j;
 
 	j = (*i);
-	while(str[++(*i)] != '\0' )
+	while (str[++(*i)] != '\0' )
 	{
 		if (!ft_key(str[(*i)]))
-			break;
+			break ;
 	}
 	tmp1 = ft_substr(str, j + 1, (*i) - j - 1);
 	tmp2 = ft_substr(str, 0, j);
@@ -57,13 +60,14 @@ char *parse_dollar(char *str, int *i, char **env)
 	spec_free(&tmp2, &tmp4, &str);
 	return (tmp3);
 }
-char *parse_exitcode(char *str, int *i, int exit_code)
+
+char	*parse_exitcode(char *str, int *i, int exit_code)
 {
-	int j;
-	char *tmp1;
-	char *tmp2;
-	char *tmp3;
-	char *tmp4;
+	int		j;
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
+	char	*tmp4;
 
 	tmp1 = ft_substr(str, 0, (*i));
 	tmp2 = ft_strdup(str + (*i) + 2);
@@ -75,13 +79,14 @@ char *parse_exitcode(char *str, int *i, int exit_code)
 	free(tmp4);
 	free(tmp2);
 	free(str);
-	return(tmp1);
+	return (tmp1);
 }
-char **shielding(char **str, char **env, int exit_status)
+
+char	**shielding(char **str, char **env, int exit_status)
 {
-	int i;
-	int j;
-	char **tmp;
+	int		i;
+	int		j;
+	char	**tmp;
 
 	i = 0;
 	while (str[i] != NULL)

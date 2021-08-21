@@ -170,18 +170,23 @@ void	skipper(char *str, int *i);
 char	**remove_n( char **args, int built);
 char	**add_n(char **args, int builtin);
 
+/* shielding.c */
+
+char	**shielding(char **str, char **env, int exit_status);
+char	*parse_exitcode(char *str, int *i, int exit_code);
+char	*parse_dollar(char *str, int *i, char **env);
+char	*unpack(char *str, char **env, char *str2);
+void	spec_free(char **str1, char **str2, char **str3)
+
 /* */
 
 char	*parse_single_quote(char *str, int *i);
-char	*parse_single_quote(char *str, int *i);
 char	*parse_slash(char *str, int *i);
-char	*parse_dollar(char *str, int *i, char **env);
 char	*parse_double_quote(char *str, int *i, char **env);
 int		check_open_quote(char c, int *n, int *k, int *i);
 char	**new_splitn(char const *s, char c);
 void	check_unset(char **args);
 void	check_builtins(t_data *data);
-char	**shielding(char **str, char **env, int exit_status);
 void	skipper(char *str, int *i);
 char	*heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
