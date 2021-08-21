@@ -129,6 +129,13 @@ char	*fill_redir(int flag, int j, int n, t_redir *red);
 char	*append_output(t_redir *red, int flag);
 void	parse_red(t_redir *red);
 
+/* pipesplit.c */
+
+char	**pipesplit(char *str);
+int		pipelen(char *str);
+int		countpipe(char *str);
+void	skip_quote(char const *str, int *i, char c);
+
 /* */
 
 char	*parse_single_quote(char *str, int *i);
@@ -149,8 +156,6 @@ char	**new_splitn(char const *s, char c);
 char	**add_n(char **args, int builtin);
 void	check_unset(char **args);
 void	check_builtins(t_data *data);
-char	**pipesplit(char *str);
-void	skip_quote(char const *str, int *i, char c);
 char	**shielding(char **str, char **env, int exit_status);
 void	skip_space(t_redir *red);
 void	valid_input(char **str);
