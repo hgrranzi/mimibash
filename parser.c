@@ -71,7 +71,6 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 	{
 		last = add_back_lst(data, newlst());
 		str[i] = parse_redir(str[i], last->fd, envp);
-		printf("str |%s|\n", str[i]);
 		tmp = new_split(str[i], ' ');
 		if (tmp[0] == NULL)
 		{
