@@ -14,10 +14,10 @@ all: $(NAME)
 lib:
 	cd Libft && make
 
-$(NAME): mimibash.h builtins.h $(OBJS) lib
+$(NAME): mimibash.h $(OBJS) lib
 	$(COMPILE) -g $(OBJS) Libft/libft.a -o $(NAME)
 
-%.o: %.c mimibash.h builtins.h
+%.o: %.c mimibash.h
 	$(COMPILE) -c -g $< -o $@
 
 clean:

@@ -13,18 +13,30 @@
 
 # include "Libft/libft.h"
 
-# include "builtins.h"
-
 # define PROMPT "mimibash 💬 "
 # define ERR_CMD "command not found"
 # define ERR_SYNTAX "syntax error"
 # define ERR_UNSET "not a valid identifier"
 # define ERR_EXIT "numeric argument required"
+# define ERR_HOME "HOME not set"
+# define ENV_PREFIX "declare -x"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
 # define CURRENT_DIR "."
 # define IS_CHILD 0
+
+typedef enum e_builtin
+{
+	NO_BUILTIN,
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT
+}			t_builtin;
 
 typedef struct s_data
 {
@@ -53,6 +65,34 @@ typedef struct s_redir
 /* handle_signal.c */
 
 int		handle_signal(void);
+
+/* builtins.c */
+
+int		exec_echo(int *fd, char **arg, char ***envp);
+int		exec_cd(int *fd, char **arg, char ***envp);
+char	*check_dir(char *arg, char **envp);
+char	*take_var(char **envp, char *var);
+int		update_wd_var(char ***envp, char *new_wd, int i);
+int		exec_pwd(int *fd, char **arg, char ***envp);
+int		exec_export(int *fd, char **arg, char ***envp);
+int		exec_unset(int *fd, char **arg, char ***envp);
+int		exec_env(int *fd, char **arg, char ***envp);
+int		exec_exit(int *fd, char **arg, char ***envp);
+
+/* print_sorted_env.c */
+
+int		print_sorted_env(int *fd, char **envp);
+char	**add_quotes(char **arr, int arr_len);
+char	*quote_str(char *str);
+void	sort_env(char **arr, int arr_len);
+char	**take_variables(char **arr);
+
+/* export_unset_utils.c */
+
+int		find_variable(char *var, int var_len, char *arg, char **envp);
+int		find_place(char *arg, char **envp);
+int		new_place(char *arg, char ***envp);
+void	remove_variable(char *arg, char **envp);
 
 /* init.c */
 
