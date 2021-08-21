@@ -150,27 +150,35 @@ char	**new_split(char const *s, char c);
 void	get_builtins(char **str, int *built);
 char	*make_same(char *str);
 
-/* */
+/* add_back_lst.c */
 
-char	*parse_single_quote(char *str, int *i);
-void	get_builtins(char **str, int *built);
-int		ft_key(char c);
 t_data	*newlst(void);
 t_data	*lastlst(t_data *lst);
 t_data	*add_back_lst(t_data **lst, t_data *new);
+void	free_one(t_data *lst, void (*del)(void *));
+void	free_data(t_data **lst, void (*del)(void *));
+
+/* valid_input.c */
+
+void	valid_input(char **str);
+void	check_pipe(char **str);
+void	check_valid(char **str);
+void	skipper(char *str, int *i);
+
+/* */
+
+char	*parse_single_quote(char *str, int *i);
 char	*parse_single_quote(char *str, int *i);
 char	*parse_slash(char *str, int *i);
 char	*parse_dollar(char *str, int *i, char **env);
 char	*parse_double_quote(char *str, int *i, char **env);
 int		check_open_quote(char c, int *n, int *k, int *i);
-void	free_data(t_data **lst, void (*del)(void *));
 char	**remove_n( char **args, int built);
 char	**new_splitn(char const *s, char c);
 char	**add_n(char **args, int builtin);
 void	check_unset(char **args);
 void	check_builtins(t_data *data);
 char	**shielding(char **str, char **env, int exit_status);
-void	valid_input(char **str);
 void	skipper(char *str, int *i);
 char	*heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
