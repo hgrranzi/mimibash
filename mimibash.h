@@ -121,9 +121,16 @@ void	check_echo_n(t_data *data);
 void	check_empty(char **str);
 int		ft_key(char c);
 
-/* */
+/* parse_redir.c */
 
 char	*parse_redir(char *str, int *fd, char **envp);
+char	*redir(t_redir *red, int flag);
+char	*fill_redir(int flag, int j, int n, t_redir *red);
+char	*append_output(t_redir *red, int flag);
+void	parse_red(t_redir *red);
+
+/* */
+
 char	*parse_single_quote(char *str, int *i);
 char	**new_split(char const *s, char c);
 void	get_builtins(char **str, int *built);
@@ -145,8 +152,6 @@ void	check_builtins(t_data *data);
 char	**pipesplit(char *str);
 void	skip_quote(char const *str, int *i, char c);
 char	**shielding(char **str, char **env, int exit_status);
-char	*append_output(t_redir *red, int flag);
-void	parse_red(t_redir *red);
 void	skip_space(t_redir *red);
 void	valid_input(char **str);
 void	skipper(char *str, int *i);
@@ -154,7 +159,6 @@ int		create_fd(char *str, int flag, int *old_fd);
 char	*heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
-char	*fill_redir(int flag, int j, int n, t_redir *red);
 void	fill_heredoc(t_redir *red, char *delimiter);
 int		create_heredoc(int *old_fd);
 #endif
