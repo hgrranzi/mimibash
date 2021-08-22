@@ -1,10 +1,5 @@
 #include "mimibash.h"
 
-int	aka_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
 int	only_digits(char *str)
 {
 	int	i;
@@ -12,7 +7,7 @@ int	only_digits(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!aka_isdigit(str[i]))
+		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}

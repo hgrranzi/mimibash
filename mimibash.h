@@ -149,7 +149,6 @@ int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
 
 /* utils.c */
 
-int		aka_isdigit(int c);
 int		only_digits(char *str);
 // void	free_data(t_data **data);
 

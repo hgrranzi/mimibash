@@ -8,7 +8,7 @@ char	*quote_str(char *str)
 	int		j;
 	int		quote_index;
 
-	new_len = strlen(str) + 2;
+	new_len = ft_strlen(str) + 2;
 	new_str = malloc((new_len + 1) * sizeof(char));
 	if (!new_str)
 		error_and_exit(NULL, NULL, 1);
@@ -46,7 +46,7 @@ char	**add_quotes(char **arr, int arr_len)
 		if (arr[i][0])
 			quoted_arr[i] = quote_str(arr[i]);
 		else
-			quoted_arr[i] = strdup(arr[i]);
+			quoted_arr[i] = ft_strdup(arr[i]);
 		i++;
 	}
 	return (quoted_arr);
@@ -113,9 +113,9 @@ int	print_sorted_env(int *fd, char **envp)
 	{
 		if (quoted_envp[i][0])
 		{
-			write(fd[OUT], ENV_PREFIX, strlen(ENV_PREFIX));
+			write(fd[OUT], ENV_PREFIX, ft_strlen(ENV_PREFIX));
 			write(fd[OUT], " ", 1);
-			write(fd[OUT], quoted_envp[i], strlen(quoted_envp[i]));
+			write(fd[OUT], quoted_envp[i], ft_strlen(quoted_envp[i]));
 			write(fd[OUT], "\n", 1);
 		}
 		i++;

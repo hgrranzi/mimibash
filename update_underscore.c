@@ -13,17 +13,17 @@ char	*take_last_arg(t_data **head_data)
 		if ((*head_data)->builtin == EXPORT)
 		{
 			if (i == 0)
-				last_arg = strdup((*head_data)->args[i]);
+				last_arg = ft_strdup((*head_data)->args[i]);
 			else
 				last_arg = strndup((*head_data)->args[i], index_char((*head_data)->args[i], '='));
 		}
 		else if ((*head_data)->args[i][0] != '\n')
-			last_arg = strdup((*head_data)->args[i]);
+			last_arg = ft_strdup((*head_data)->args[i]);
 		else
-			last_arg = strdup((*head_data)->args[i - 1]);
+			last_arg = ft_strdup((*head_data)->args[i - 1]);
 	}
 	else
-		last_arg = strdup("\0");
+		last_arg = ft_strdup("\0");
 	return (last_arg);
 }
 
@@ -38,7 +38,7 @@ void	update_underscore(t_data **head_data, char ***envp)
 	args = malloc(3 * sizeof(char *));
 	if (!args)
 		error_and_exit(NULL, NULL, 1);
-	args[0] = strdup("\0");
+	args[0] = ft_strdup("\0");
 	args[1] = aka_strjoin("_=", last_arg);
 	args[2] = NULL;
 	free(last_arg);

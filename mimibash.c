@@ -7,13 +7,13 @@ void	error_and_exit(char *reason, char *error_message, int end)
 	system_message = strerror(errno);
 	if (reason)
 	{
-		write(STDERR_FILENO, reason, strlen(reason));
+		write(STDERR_FILENO, reason, ft_strlen(reason));
 		write(STDERR_FILENO, ": ", 2);
 	}
 	if (error_message)
-		write(STDERR_FILENO, error_message, strlen(error_message));
+		write(STDERR_FILENO, error_message, ft_strlen(error_message));
 	else
-		write(STDERR_FILENO, system_message, strlen(system_message));
+		write(STDERR_FILENO, system_message, ft_strlen(system_message));
 	write(STDERR_FILENO, "\n", 1);
 	if (end)
 		exit(0);
@@ -32,7 +32,7 @@ char	*read_cmd(int new_in)
 	if (!input)
 	{
 		close(new_in);
-		input = strdup("exit");
+		input = ft_strdup("exit");
 	}
 	else
 		add_history(input);

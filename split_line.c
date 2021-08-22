@@ -24,7 +24,7 @@ char	*aka_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = 0;
 	j = 0;
-	new_str = malloc((strlen(s1) + strlen(s2) + 1) * sizeof(char));
+	new_str = malloc((strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -70,7 +70,7 @@ char	*trim_line(char *s, char c)
 	if (s == NULL)
 		return (NULL);
 	start_trim = 0;
-	finish_trim = strlen(s) - 1;
+	finish_trim = ft_strlen(s) - 1;
 	while (start_trim < finish_trim && c == s[start_trim])
 		start_trim++;
 	while (finish_trim > start_trim && c == s[finish_trim])
@@ -78,7 +78,7 @@ char	*trim_line(char *s, char c)
 		s[finish_trim] = '\0';
 		finish_trim--;
 	}
-	trimmed_str = strdup(&s[start_trim]);
+	trimmed_str = ft_strdup(&s[start_trim]);
 	return (trimmed_str);
 }
 
@@ -103,7 +103,7 @@ char	**split_line(char *s, char c)
 		arr[i] = strndup(&new_str[start], index_char(&new_str[start], c));
 		if (!arr)
 			return (free_arr(arr));
-		start = start + strlen(arr[i]);
+		start = start + ft_strlen(arr[i]);
 		while (new_str[start] == c)
 			start++;
 		i++;

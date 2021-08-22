@@ -9,7 +9,7 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 	i = 1;
 	while (arg && arg[i])
 	{
-		write(fd[OUT], arg[i], strlen(arg[i]));
+		write(fd[OUT], arg[i], ft_strlen(arg[i]));
 		if (i && arg[i + 1] && arg[i + 1][0] != '\n')
 			write(fd[OUT], " ", 1);
 		i++;
@@ -30,9 +30,9 @@ char	*take_var(char **envp, char *var)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(var, envp[i], strlen(var)) == 0 && envp[i][strlen(var)] == '=')
+		if (strncmp(var, envp[i], ft_strlen(var)) == 0 && envp[i][strlen(var)] == '=')
 		{
-			value = strdup(&(envp[i][strlen(var) + 1]));
+			value = ft_strdup(&(envp[i][strlen(var) + 1]));
 			if (!value)
 				error_and_exit(NULL, NULL, 1);
 			return (value);
@@ -47,7 +47,7 @@ int	update_wd_var(char ***envp, char *new_wd, int i)
 	char	*old_wd;
 	char	*oldpwd;
 
-	old_wd = strdup(&(*envp)[i][4]);
+	old_wd = ft_strdup(&(*envp)[i][4]);
 	if (!old_wd)
 		error_and_exit(NULL, NULL, 1);
 	oldpwd = aka_strjoin("OLDPWD=", old_wd);
@@ -76,7 +76,7 @@ char	*check_dir(char *arg, char **envp)
 	}
 	else
 	{
-		go_to = strdup(arg);
+		go_to = ft_strdup(arg);
 		if (!go_to)
 			error_and_exit(NULL, NULL, 1);
 	}
@@ -126,7 +126,7 @@ int	exec_pwd(int *fd, char **arg, char ***envp)
 		error_and_exit("pwd", NULL, 0);
 		return (1);
 	}
-	write(fd[OUT], wd, strlen(wd));
+	write(fd[OUT], wd, ft_strlen(wd));
 	write(fd[OUT], "\n", 1);
 	free(wd);
 	wd = NULL;
@@ -197,7 +197,7 @@ int	exec_env(int *fd, char **arg, char ***envp)
 	{
 		if ((*envp)[i][0])
 		{
-			write(fd[OUT], (*envp)[i], strlen((*envp)[i]));
+			write(fd[OUT], (*envp)[i], ft_strlen((*envp)[i]));
 			write(fd[OUT], "\n", 1);
 		}
 		i++;
@@ -215,7 +215,7 @@ int	exec_exit(int *fd, char **arg, char ***envp)
 	if (fd[IN] == STDIN_FILENO)
 		write(STDERR_FILENO, "exit\n", 6);
 	if (only_digits(arg[1]))
-		exit_code = atoi(arg[1]);
+		exit_code = ft_atoi(arg[1]);
 	else
 	{
 		error_and_exit("exit", ERR_EXIT, 0);

@@ -21,7 +21,7 @@ char	*update_shlvl(char *shlvl_value)
 	char	*new_value;
 	int		value;
 
-	value = atoi(shlvl_value);
+	value = ft_atoi(shlvl_value);
 	if (value < 0)
 		value = 0;
 	else
@@ -53,7 +53,7 @@ void	init_shlvl(char ***envp)
 		if (!key_value)
 			error_and_exit(NULL, NULL, 1);
 		free(value);
-		find_variable("SHLVL", strlen("SHLVL"), key_value, *envp);
+		find_variable("SHLVL", ft_strlen("SHLVL"), key_value, *envp);
 	}
 	free(shlvl_value);
 	free(key_value);

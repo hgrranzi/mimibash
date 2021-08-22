@@ -65,7 +65,7 @@ char	*check_cmd_path(char *cmd_name, char **possible_path)
 	if (possible_path[i] == NULL)
 	{
 		error_and_exit(cmd_name, ERR_CMD, 0);
-		cmd_path = strdup("\0");
+		cmd_path = ft_strdup("\0");
 	}
 	return (cmd_path);
 }

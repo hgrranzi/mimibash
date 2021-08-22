@@ -23,7 +23,7 @@ char	**copy_arr(char **arr)
 		error_and_exit(NULL, NULL, 1);
 	while (arr[i])
 	{
-		arr_copy[i] = strdup(arr[i]);
+		arr_copy[i] = ft_strdup(arr[i]);
 		if (!arr_copy[i])
 			error_and_exit(NULL, NULL, 1);
 		i++;

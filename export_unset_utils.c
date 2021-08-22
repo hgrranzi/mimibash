@@ -10,7 +10,7 @@ int	find_variable(char *var, int var_len, char *arg, char **envp)
 		if (strncmp(envp[i], var, var_len) == 0 && envp[i][var_len] == '=')
 		{
 			free(envp[i]);
-			envp[i] = strdup(arg);
+			envp[i] = ft_strdup(arg);
 			if (!envp[i])
 				error_and_exit(NULL, NULL, 1);
 			return (1);
@@ -30,7 +30,7 @@ int	find_place(char *arg, char **envp)
 		if (!envp[i][0])
 		{
 			free(envp[i]);
-			envp[i] = strdup(arg);
+			envp[i] = ft_strdup(arg);
 			if (!envp[i])
 				error_and_exit(NULL, NULL, 1);
 			return (1);
@@ -52,13 +52,13 @@ int	new_place(char *arg, char ***envp)
 	*envp = malloc((new_envp_size + 1) * sizeof(char *));
 	if (!*envp)
 		error_and_exit(NULL, NULL, 1);
-	(*envp)[0] = strdup(arg);
+	(*envp)[0] = ft_strdup(arg);
 	if (!(*envp)[0])
 		error_and_exit(NULL, NULL, 1);
 	i = 1;
 	while (tmp_arr[i - 1])
 	{
-		(*envp)[i] = strdup(tmp_arr[i - 1]);
+		(*envp)[i] = ft_strdup(tmp_arr[i - 1]);
 		if (!(*envp)[i])
 			error_and_exit(NULL, NULL, 1);
 		i++;
@@ -75,13 +75,13 @@ void	remove_variable(char *arg, char **envp)
 	int	arg_len;
 
 	i = 0;
-	arg_len = strlen(arg);
+	arg_len = ft_strlen(arg);
 	while (envp[i])
 	{
 		if (strncmp(envp[i], arg, arg_len) == 0 && envp[i][arg_len] == '=')
 		{
 			free(envp[i]);
-			envp[i] = strdup("\0");
+			envp[i] = ft_strdup("\0");
 			if (!envp[i])
 				error_and_exit(NULL, NULL, 1);
 			break ;
