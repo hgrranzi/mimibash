@@ -62,6 +62,11 @@ typedef struct s_redir
 	char	**env;
 }				t_redir;
 
+/* mimibash.c */
+
+void	mimibash_loop(int new_in, int (**builtins)(int *, char **, char ***), char ***envp);
+char	*read_cmd(int new_in);
+
 /* handle_signal.c */
 
 int		handle_signal(void);
