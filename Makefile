@@ -1,6 +1,6 @@
 NAME = mimibash
 
-COMPILE = gcc -lreadline # -Wall -Wextra -Werror
+COMPILE = gcc -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include # -Wall -Wextra -Werror
 
 SRCS = main.c init.c handle_signal.c exec_cmd.c builtins.c print_sorted_env.c arr.c error.c \
 		export_unset_utils.c exec_cmd_utils.c split_line.c take_cmd_path.c utils.c update_underscore.c \

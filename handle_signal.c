@@ -14,15 +14,16 @@ void	handle_sigquit(int sig_number)
 
 void	handle_sigint(int sig_number) // Ctrl + C
 {
-	write(1, "\b\b", 2); // temporary
-	write(1, "sigint\n", 7);
-	exit (0);
+	write(2, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 int	handle_signal(void)
 {
 	signal(SIGTERM, SIG_IGN);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
 	return (0);
 }

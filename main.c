@@ -11,6 +11,8 @@ int	main(int argc, char **argv, char **envp)
 	int		stdin_copy;
 	int		new_in_copy;
 
+	rl_catch_signals = 0;
+	rl_outstream = stderr;
 	handle_signal();
 	init_builtins(builtins);
 	envp_copy = copy_arr(envp);
@@ -28,10 +30,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		stdin_copy = dup(STDIN_FILENO);
 		dup2(new_in, STDIN_FILENO);
-		input = readline (PROMPT);
+		input = readline(PROMPT);
 		dup2(stdin_copy, STDIN_FILENO);
 		close(stdin_copy);
-		if (!input) // or "exit"
+		if (!input)
+			//input = strdup("exit");
 		{
 			head_data = malloc(sizeof(t_data));
 			head_data->builtin = EXIT;
