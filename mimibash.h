@@ -65,6 +65,9 @@ typedef struct s_redir
 /* handle_signal.c */
 
 int		handle_signal(void);
+void	handle_sigint(int sig_number);
+int		handle_signal_pipe(void);
+void	handle_sig_pipe(int sig_number);
 
 /* builtins.c */
 

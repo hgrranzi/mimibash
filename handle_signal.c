@@ -1,20 +1,21 @@
 #include "mimibash.h"
 
-void	handle_sigterm(int sig_number) // Ctrl + D
+void	handle_sig_pipe(int sig_number) // Ctrl + C
 {
-	// smth with readline
-	return ;
+	write(STDERR_FILENO, "\n", 1);
+
 }
 
-void	handle_sigquit(int sig_number)
+int	handle_signal_pipe(void)
 {
-	write(1, "\b\b", 2); // temporary
-	write(1, "sigquit\n", 8);
+	signal(SIGQUIT, handle_sig_pipe);
+	signal(SIGINT, handle_sig_pipe);
+	return (0);
 }
 
 void	handle_sigint(int sig_number) // Ctrl + C
 {
-	write(2, "\n", 1);
+	write(STDERR_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -22,7 +23,6 @@ void	handle_sigint(int sig_number) // Ctrl + C
 
 int	handle_signal(void)
 {
-	signal(SIGTERM, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
 	return (0);
