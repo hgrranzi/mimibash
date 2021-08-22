@@ -66,6 +66,7 @@ typedef struct s_redir
 
 void	mimibash_loop(int new_in, int (**builtins)(int *, char **, char ***), char ***envp);
 char	*read_cmd(int new_in);
+void	error_and_exit(char *reason, char *error_message, int end);
 
 /* handle_signal.c */
 
@@ -145,10 +146,6 @@ void	distribute_fd(t_data **head_data, int **pipe_fd);
 void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count);
 void	duplicate_fd(int *fd);
 int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
-
-/* error.c */
-
-void	error_and_exit(char *reason, char *error_message, int end);
 
 /* utils.c */
 
