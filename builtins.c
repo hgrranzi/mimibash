@@ -30,7 +30,7 @@ char	*take_var(char **envp, char *var)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(var, envp[i], ft_strlen(var)) == 0 && envp[i][strlen(var)] == '=')
+		if (ft_strncmp(var, envp[i], ft_strlen(var)) == 0 && envp[i][strlen(var)] == '=')
 		{
 			value = ft_strdup(&(envp[i][strlen(var) + 1]));
 			if (!value)
@@ -101,7 +101,7 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 		new_wd = getcwd(NULL, 0);
 		while (new_wd && (*envp)[i])
 		{
-			if (strncmp((*envp)[i], "PWD=", 4) == 0)
+			if (ft_strncmp((*envp)[i], "PWD=", 4) == 0)
 				return (update_wd_var(envp, new_wd, i));
 			i++;
 		}
@@ -152,7 +152,7 @@ int	exec_export(int *fd, char **arg, char ***envp)
 	{
 		if (!arg[i][0])
 			exit_code = 1;
-		else if (strchr(arg[i], '='))
+		else if ft_strchr(arg[i], '='))
 		{
 			var_len = index_char(arg[i], '=');
 			var = strndup(arg[i], var_len);

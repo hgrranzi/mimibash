@@ -27,7 +27,7 @@ char	**take_env_path(char **envp)
 	env_path = NULL;
 	while (envp[i])
 	{
-		if (strncmp(envp[i], "PATH=", 5) == 0)
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
 			env_path = split_line(&envp[i][5], ':');
 			if (!env_path)

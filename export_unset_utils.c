@@ -7,7 +7,7 @@ int	find_variable(char *var, int var_len, char *arg, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(envp[i], var, var_len) == 0 && envp[i][var_len] == '=')
+		if (ft_strncmp(envp[i], var, var_len) == 0 && envp[i][var_len] == '=')
 		{
 			free(envp[i]);
 			envp[i] = ft_strdup(arg);
@@ -78,7 +78,7 @@ void	remove_variable(char *arg, char **envp)
 	arg_len = ft_strlen(arg);
 	while (envp[i])
 	{
-		if (strncmp(envp[i], arg, arg_len) == 0 && envp[i][arg_len] == '=')
+		if (ft_strncmp(envp[i], arg, arg_len) == 0 && envp[i][arg_len] == '=')
 		{
 			free(envp[i]);
 			envp[i] = ft_strdup("\0");
