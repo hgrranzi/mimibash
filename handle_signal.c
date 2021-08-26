@@ -2,8 +2,7 @@
 
 void	handle_sig_pipe(int sig_number) // Ctrl + C
 {
-	write(STDERR_FILENO, "\n", 1);
-
+	return ;
 }
 
 int	handle_signal_pipe(void)
@@ -23,7 +22,7 @@ void	handle_sigint(int sig_number) // Ctrl + C
 
 int	handle_signal(void)
 {
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, handle_sig_pipe);
 	signal(SIGINT, handle_sigint);
 	return (0);
 }

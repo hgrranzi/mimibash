@@ -29,9 +29,6 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 			error_and_exit(NULL, NULL, 0);
 		if (info->pid[i] == IS_CHILD)
 		{
-			signal(SIGTERM, SIG_DFL);
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
 			if (head_data_p->builtin)
