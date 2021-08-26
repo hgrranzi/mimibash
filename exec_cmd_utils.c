@@ -92,7 +92,10 @@ int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 		waitpid(pid[i], &pid[i], 0);
 		i++;
 	}
-	if WIFEXITED(pid[i - 1])
+	if (WIFSIGNALED(pid[i - 1])) {
+		exit_status = 128 + WTERMSIG(pid[i - 1]);
+	}
+	else if (WIFEXITED(pid[i - 1]))
 		exit_status = WEXITSTATUS(pid[i - 1]);
 	else
 		exit_status = 1;
