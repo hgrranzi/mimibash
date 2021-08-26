@@ -152,7 +152,7 @@ int	exec_export(int *fd, char **arg, char ***envp)
 	{
 		if (!arg[i][0])
 			exit_code = 1;
-		else if ft_strchr(arg[i], '='))
+		else if (ft_strchr(arg[i], '='))
 		{
 			var_len = index_char(arg[i], '=');
 			var = strndup(arg[i], var_len);
