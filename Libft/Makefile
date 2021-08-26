@@ -1,14 +1,4 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tmiranda <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/24 15:24:07 by tmiranda          #+#    #+#              #
-#    Updated: 2020/11/24 18:03:24 by tmiranda         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME	= libft.a
 
 SRCS	= ft_memset.c \
 		  ft_bzero.c \
@@ -51,12 +41,11 @@ SRCS	= ft_memset.c \
 		  ft_lstadd_back.c \
 		  ft_lstdelone.c \
 		  ft_lstclear.c \
-		  ft_lstiter.c 
+		  ft_lstiter.c
 
 OBJSB	= ${BONUS:.c=.o}
-OBJS	= ${SRCS:.c=.o}
 
-NAME	= libft.a
+OBJS	= ${SRCS:.c=.o}
 
 GCC		= gcc
 
@@ -64,17 +53,14 @@ RM		= rm -f
 
 CFLAGS	= -Wall -Wextra -Werror
 
-%.o : %.c	libft.h 
+%.o : %.c	libft.h
 			${GCC} ${CFLAGS} -c $< -o ${<:.c=.o}
-
-#.c.o:		libft.h
-#			${GCC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS} # libft.h
 			ar rcs ${NAME} ${OBJS}
 
 .PHONY: all
-all:		${NAME}	
+all:		${NAME}
 
 
 .PHONY: bonus
@@ -82,7 +68,7 @@ bonus:		all ${OBJSB} # libft.h
 			ar rcs ${NAME} ${OBJSB}
 
 .PHONY: clean
-clean:	
+clean:
 			${RM} ${OBJS}
 			${RM} ${OBJSB}
 .PHONY: fclean
@@ -90,5 +76,3 @@ fclean:		clean
 			${RM} ${NAME}
 .PHONY: re
 re:			fclean all
-
-	
