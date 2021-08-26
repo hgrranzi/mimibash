@@ -14,10 +14,10 @@ int	exec_echo(int *fd, char **arg, char ***envp)
 			write(fd[OUT], " ", 1);
 		i++;
 	}
-	if (fd[IN] != IN)
-		close(fd[IN]);
-	if (fd[OUT] != OUT)
-		close(fd[OUT]);
+	// if (fd[IN] != IN)
+	// 	close(fd[IN]);
+	// if (fd[OUT] != OUT)
+	// 	close(fd[OUT]);
 	return (0);
 }
 
@@ -130,10 +130,10 @@ int	exec_pwd(int *fd, char **arg, char ***envp)
 	write(fd[OUT], "\n", 1);
 	free(wd);
 	wd = NULL;
-	if (fd[IN] != IN)
-		close(fd[IN]);
-	if (fd[OUT] != OUT)
-		close(fd[OUT]);
+	// if (fd[IN] != IN)
+	// 	close(fd[IN]);
+	// if (fd[OUT] != OUT)
+	// 	close(fd[OUT]);
 	return (0);
 }
 

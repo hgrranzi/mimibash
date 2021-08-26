@@ -18,6 +18,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 {
 	t_data	*head_data_p;
 	int		i;
+	int		exit_status;
 
 	head_data_p = *head_data;
 	i = 0;
@@ -34,10 +35,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
 			if (head_data_p->builtin)
-			{
-				builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp);
-				exit (0);
-			}
+				exit (exec_builtins(head_data_p, builtins, envp));
 			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
 				exit (1);
 			else if (is_error(head_data_p->args))
@@ -79,15 +77,28 @@ int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), c
 	return (exit_status);
 }
 
+int	exec_builtins(t_data *head_data, int (**builtins)(int *, char **, char ***), char ***envp)
+{
+	int	exit_status;
+
+	exit_status = (builtins[head_data->builtin](head_data->fd, head_data->args, envp));
+	if (head_data->fd[IN] != STDIN_FILENO)
+		close(head_data->fd[IN]);
+	if (head_data->fd[OUT] != STDOUT_FILENO)
+		close(head_data->fd[OUT]);
+	return (exit_status);
+}
+
 int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_data	*head_data_p;
 	char	**possible_path;
+	int		exit_status;
 
 	head_data_p = *head_data;
 	update_underscore(head_data, envp);
 	if (head_data_p->builtin && !head_data_p->next)
-		return ((builtins[head_data_p->builtin](head_data_p->fd, head_data_p->args, envp)));
+		return (exec_builtins(*head_data, builtins, envp));
 	possible_path = take_env_path(*envp);
 	take_cmd_path(head_data, possible_path);
 	free_arr(possible_path);

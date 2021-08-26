@@ -136,6 +136,7 @@ char	*check_cmd_path(char *cmd_name, char **possible_path);
 /* exec_cmd.c */
 
 int		exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp);
+int		exec_builtins(t_data *head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
 
