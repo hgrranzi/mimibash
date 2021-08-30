@@ -10,6 +10,8 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 # include "Libft/libft.h"
 

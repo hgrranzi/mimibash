@@ -47,8 +47,9 @@ char	**take_env_path(char **envp)
 
 char	*check_cmd_path(char *cmd_name, char **possible_path)
 {
-	int		i;
-	char	*cmd_path;
+	int			i;
+	char		*cmd_path;
+	struct stat	buf;
 
 	i = 0;
 	while (possible_path[i])
@@ -56,7 +57,7 @@ char	*check_cmd_path(char *cmd_name, char **possible_path)
 		cmd_path = aka_strjoin(possible_path[i], cmd_name);
 		if (!cmd_path)
 			error_and_exit(NULL, NULL, 1);
-		if (access(cmd_path, F_OK) == 0)
+		if (stat(cmd_path, &buf) == 0)
 			break ;
 		else
 			free(cmd_path);
