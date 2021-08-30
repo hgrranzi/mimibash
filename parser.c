@@ -52,7 +52,7 @@ void	fill_struct(t_data *data)
 	data->builtin = 1;
 	data->args = ft_calloc(3, sizeof(char *));
 	data->args[0] = ft_strdup("echo");
-	data->args[1] = ft_strdup("\n");
+	// data->args[1] = ft_strdup("\n");
 	data->args[2] = NULL;
 }
 
