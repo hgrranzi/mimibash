@@ -7,7 +7,7 @@ void	skipper(char *str, int *i)
 		if (str[(*i)] && str[(*i)] == ' ')
 		{
 			while (str[(*i)] == ' ' && str[(*i)] != '\0' )
-				i++;
+				(*i)++;
 		}
 	}
 }

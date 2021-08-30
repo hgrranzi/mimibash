@@ -197,7 +197,7 @@ char	*make_same(char *str);
 
 /* check_builtins.c */
 
-void	check_builtins(t_data *data);
+void	check_builtins(t_data *data, int exit_status);
 void	check_unset(char **args);
 void	check_export(char **args);
 
@@ -238,7 +238,7 @@ char	*parse_slash(char *str, int *i);
 
 /* heredoc.c */
 
-char	*heredoc(t_redir *red);
+void	heredoc(t_redir *red);
 void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
 void	fill_heredoc(t_redir *red, char *delimiter);

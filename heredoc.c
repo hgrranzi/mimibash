@@ -73,11 +73,10 @@ void	make_heredoc(t_redir *red, int j, int n)
 	free(tmp4);
 }
 
-char	*heredoc(t_redir *red)
+void	heredoc(t_redir *red)
 {
 	int		j;
 	int		n;
-	char	*tmp;
 
 	j = (red->i);
 	red->i += 2;
@@ -87,10 +86,10 @@ char	*heredoc(t_redir *red)
 	{
 		write(1, "syntax error near unexpected token \'newline\'", 44);
 		(red->i) = 2;
-		return (ft_strdup("echo"));
+		red->str = ft_strdup("echo");
+		return ;
 	}
 	parse_heredoc(red);
 	make_heredoc(red, j, n);
 	red->i = j - 1;
-	return (tmp);
 }
