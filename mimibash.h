@@ -37,7 +37,8 @@ typedef enum e_builtin
 	EXPORT,
 	UNSET,
 	ENV,
-	EXIT
+	EXIT,
+	ERROR_BUILTIN
 }			t_builtin;
 
 typedef struct s_data
