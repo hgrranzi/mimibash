@@ -1,6 +1,5 @@
 #include "mimibash.h"
 
-/*
 void print_struct(t_data **data) // tmp
 {
 	t_data *tmp;
@@ -18,7 +17,7 @@ void print_struct(t_data **data) // tmp
 		}
 		tmp = tmp->next;
 	}
-} */
+} 
 
 int	ft_key(char c)
 {
@@ -81,9 +80,9 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
 		check_echo_n(last);
-		check_builtins(last);
+		check_builtins(last, exit_status);
 		i++;
 	}
 	free(str);
-	//print_struct(data);
+	print_struct(data);
 }

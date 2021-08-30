@@ -68,6 +68,7 @@ char	*redir(t_redir *red, int flag)
 	char	*tmp1;
 
 	j = (red->i);
+	red->i++;
 	skip_space(red);
 	n = (red->i);
 	if (red->str[(red->i)] == '\0')
@@ -106,8 +107,9 @@ char	*parse_redir(char *str, int *fd, char **envp)
 		if (red.str[red.i] == '<' && red.str[red.i + 1] != '<')
 			red.str = redir(&red, 3);
 		if (red.str[red.i] == '<' && red.str[red.i + 1] == '<')
-			red.str = heredoc(&red);
+			heredoc(&red);
 		red.i++;
 	}
 	return (red.str);
+	
 }

@@ -51,10 +51,35 @@ void	check_unset(char **args)
 	}
 }
 
-void	check_builtins(t_data *data)
+void check_exit(char ***args, int exit_status)
+{
+	char **tmp;
+	int i;
+	int j;
+
+	if ((*args)[1] == NULL)
+	{
+		tmp = malloc(sizeof(char *) * 3);
+		if (tmp)
+		{
+			tmp[0] = ft_strdup(*args[0]);
+			free((*args)[0]);
+			tmp[1] = ft_itoa(exit_status);
+			tmp[2] = NULL;
+			*args = tmp;
+		}
+		else
+			error_and_exit(NULL, NULL, 1);
+	}
+
+}
+
+void	check_builtins(t_data *data, int exit_status)
 {
 	if (data->builtin == 4)
 		check_export(data->args);
 	if (data->builtin == 5)
 		check_unset(data->args);
+	if (data->builtin == 7)
+		check_exit(&data->args, exit_status);
 }

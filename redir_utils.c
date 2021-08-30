@@ -2,7 +2,6 @@
 
 void	skip_space(t_redir *red)
 {
-	red->i++;
 	while (red->str[red->i] == ' ')
 		red->i++;
 }
