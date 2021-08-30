@@ -89,6 +89,7 @@ int		exec_export(int *fd, char **arg, char ***envp);
 int		exec_unset(int *fd, char **arg, char ***envp);
 int		exec_env(int *fd, char **arg, char ***envp);
 int		exec_exit(int *fd, char **arg, char ***envp);
+int		exec_error(int *fd, char **arg, char ***envp);
 
 /* print_sorted_env.c */
 

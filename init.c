@@ -69,7 +69,7 @@ void	init_shlvl(char ***envp)
 
 void	init_builtins(int (**builtins)(int *, char **, char ***))
 {
-	builtins[NO_BUILTIN] = NULL;
+	builtins[NO_BUILTIN] = exec_error;
 	builtins[ECHO] = exec_echo;
 	builtins[CD] = exec_cd;
 	builtins[PWD] = exec_pwd;

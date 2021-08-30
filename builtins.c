@@ -232,3 +232,10 @@ int	exec_exit(int *fd, char **arg, char ***envp)
 	close(fd[OUT]);
 	exit((exit_code + 256) % 256);
 }
+
+int exec_error(int *fd, char **arg, char ***envp)
+{
+	if (fd && arg && envp)
+		;
+	return (1);
+}
