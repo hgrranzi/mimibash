@@ -35,6 +35,9 @@ void	fill_heredoc(t_redir *red, char *delimiter)
 		write(red->fd[0], "\n", 1);
 		free(str);
 	}
+	close(red->fd[0]);
+	red->fd[0] = open(".heredoc", O_RDONLY, 0644);
+	unlink(".heredoc");
 }
 
 void	parse_heredoc(t_redir *red)
