@@ -155,7 +155,7 @@ int	exec_export(int *fd, char **arg, char ***envp)
 		else if (ft_strchr(arg[i], '='))
 		{
 			var_len = index_char(arg[i], '=');
-			var = strndup(arg[i], var_len);
+			var = ft_strndup(arg[i], var_len);
 			if (!var)
 				error_and_exit(NULL, NULL, 1);
 			find_variable(var, var_len, arg[i], *envp) || find_place(arg[i], *envp) || new_place(arg[i], envp);

@@ -15,7 +15,7 @@ char	*take_last_arg(t_data **head_data)
 			if (i == 0)
 				last_arg = ft_strdup((*head_data)->args[i]);
 			else
-				last_arg = strndup((*head_data)->args[i], index_char((*head_data)->args[i], '='));
+				last_arg = ft_strndup((*head_data)->args[i], index_char((*head_data)->args[i], '='));
 		}
 		else if ((*head_data)->args[i][0] != '\n')
 			last_arg = ft_strdup((*head_data)->args[i]);

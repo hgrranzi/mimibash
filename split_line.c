@@ -100,7 +100,7 @@ char	**split_line(char *s, char c)
 	arr = calloc(arr_len + 1, sizeof(char *));
 	while (arr && i < arr_len)
 	{
-		arr[i] = strndup(&new_str[start], index_char(&new_str[start], c));
+		arr[i] = ft_strndup(&new_str[start], index_char(&new_str[start], c));
 		if (!arr)
 			return (free_arr(arr));
 		start = start + ft_strlen(arr[i]);
