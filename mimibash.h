@@ -19,6 +19,7 @@
 # define ERR_UNSET "not a valid identifier"
 # define ERR_EXIT "numeric argument required"
 # define ERR_HOME "HOME not set"
+# define ERR_SHLVL "shell level too high, resetting to 1"
 # define ENV_PREFIX "declare -x"
 # define IN 0
 # define OUT 1

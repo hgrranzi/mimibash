@@ -26,7 +26,15 @@ char	*update_shlvl(char *shlvl_value)
 		value = 0;
 	else
 		value++;
-	new_value = ft_itoa(value);
+	if (value == 1000)
+		new_value = ft_strdup("");
+	else if (value > 1000)
+	{
+		error_and_exit("warning", ERR_SHLVL, 0);
+		new_value = ft_strdup("1");
+	}
+	else
+		new_value = ft_itoa(value);
 	if (!new_value)
 		error_and_exit(NULL, NULL, 1);
 	return (new_value);
@@ -61,7 +69,7 @@ void	init_shlvl(char ***envp)
 
 void	init_builtins(int (**builtins)(int *, char **, char ***))
 {
-	builtins[NO_BUILTIN] = NULL; // probably need an empty or error function
+	builtins[NO_BUILTIN] = NULL;
 	builtins[ECHO] = exec_echo;
 	builtins[CD] = exec_cd;
 	builtins[PWD] = exec_pwd;
