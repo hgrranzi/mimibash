@@ -215,10 +215,17 @@ int	exec_exit(int *fd, char **arg, char ***envp)
 	if (fd[IN] == STDIN_FILENO)
 		write(STDERR_FILENO, "exit\n", 6);
 	if (only_digits(arg[1]))
+	{
+		if (arg[2])
+		{
+			error_and_exit("exit", ERR_EXIT_MANY_ARGS, 0);
+			return (1);
+		}
 		exit_code = ft_atoi(arg[1]);
+	}
 	else
 	{
-		error_and_exit("exit", ERR_EXIT, 0);
+		error_and_exit("exit", ERR_EXIT_NO_DIGITS, 0);
 		exit_code = 255;
 	}
 	close(fd[IN]);
