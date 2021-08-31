@@ -61,14 +61,12 @@ void	duplicate_fd(int *fd)
 		close(STDIN_FILENO);
 		if (dup2(fd[IN], STDIN_FILENO) == -1)
 			error_and_exit(NULL, NULL, 0);
-		close(fd[IN]);
 	}
 	if (fd[OUT] != STDOUT_FILENO && fd[OUT] != -1)
 	{
 		close(STDOUT_FILENO);
 		if (dup2(fd[OUT], STDOUT_FILENO) == -1)
 			error_and_exit(NULL, NULL, 0);
-		close(fd[OUT]);
 	}
 	return ;
 }
