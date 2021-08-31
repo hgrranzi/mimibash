@@ -1,23 +1,23 @@
 #include "mimibash.h"
 
-// void print_struct(t_data **data) // tmp
-// {
-// 	t_data *tmp;
-// 	tmp = *data;
-// 	while (tmp !=NULL)
-// 	{
-// 		printf("builtin: %d\n", tmp->builtin);
-// 		printf("fd[0]: %d\n", tmp->fd[0]);
-// 		printf("fd[1]: %d\n", tmp->fd[1]);
-// 		int i = 0;
-// 		while(tmp->args[i] != NULL)
-// 		{
-// 			printf("args[%d]: %s\n", i, tmp->args[i]);
-// 			i++;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
+void print_struct(t_data **data) // tmp
+{
+	t_data *tmp;
+	tmp = *data;
+	while (tmp !=NULL)
+	{
+		printf("builtin: %d\n", tmp->builtin);
+		printf("fd[0]: %d\n", tmp->fd[0]);
+		printf("fd[1]: %d\n", tmp->fd[1]);
+		int i = 0;
+		while(tmp->args[i] != NULL)
+		{
+			printf("args[%d]: %s\n", i, tmp->args[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
 
 int	ft_key(char c)
 {
@@ -71,6 +71,7 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		last = add_back_lst(data, newlst());
 		str[i] = parse_redir(str[i], last->fd, envp);
 		tmp = new_split(str[i], ' ');
+		tmp = parse_star(tmp);
 		if (tmp[0] == NULL)
 		{
 			fill_struct(last);
@@ -84,5 +85,5 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		i++;
 	}
 	free(str);
-	//print_struct(data);
+	print_struct(data);
 }

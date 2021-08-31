@@ -81,10 +81,7 @@ char	*parse_exitcode(char *str, int *i, int exit_code)
 	free(str);
 	return (tmp1);
 }
-// char *parse_star(char *str, int *i)
-// {
 
-// }
 char	**shielding(char **str, char **env, int exit_status)
 {
 	int		i;
@@ -97,8 +94,6 @@ char	**shielding(char **str, char **env, int exit_status)
 		j = 0;
 		while (str[i][j] != '\0')
 		{
-			// if (str[i][j] == '*')
-			// 	str[i] = parse_star(str[i], &j);
 			if (str[i][j] == '$' && str[i][j + 1] == '?')
 				str[i] = parse_exitcode(str[i], &j, exit_status);
 			if (str[i][j] == '$' && ft_key(str[i][j + 1]))

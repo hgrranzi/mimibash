@@ -256,5 +256,11 @@ void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
 void	fill_heredoc(t_redir *red, char *delimiter);
 int		create_heredoc(int *old_fd);
+/* parse_star.c */
 
+char **parse_star(char **str);
+char	**masjoin(char **str1, char *str2);
+char **new_star_massive(char **massive, int i, char **old_tmp);
+int massive_size(char **mas);
+int check_quotes(char *str);
 #endif
