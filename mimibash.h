@@ -212,6 +212,7 @@ char	*make_same(char *str);
 
 void	check_builtins(t_data *data, int exit_status);
 void	check_unset(t_data *data);
+void	check_exit(char ***args, int exit_status);
 void	check_export(t_data *data);
 
 /* add_back_lst.c */
@@ -263,4 +264,8 @@ char	**masjoin(char **str1, char *str2);
 char **new_star_massive(char **massive, int i, char **old_tmp);
 int massive_size(char **mas);
 int check_quotes(char *str);
+
+/* check_builtins_utils.c */
+void	print_export_error(t_data *data, int i);
+void	print_unset_error(t_data *data, int i);
 #endif

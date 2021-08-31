@@ -1,28 +1,9 @@
 #include "mimibash.h"
-void print_export_error(t_data *data, int i)
-{
-	data->builtin = 8;
-	write(1, "export: `", 9);
-	write(1, data->args[i], ft_strlen(data->args[i]));
-	write(1, "': not a valid identifier\n", 26);
-	free(data->args[i]);
-	data->args[i] = ft_strdup("\0");
-}
-
-void print_unset_error(t_data *data, int i)
-{
-	data->builtin = 8;
-	write(1, "unset: `", 8);
-	write(1, data->args[i], ft_strlen(data->args[i]));
-	write(1, "': not a valid identifier\n", 26);
-	free(data->args[i]);
-	data->args[i] = ft_strdup("\0");
-}
 
 void	check_export(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (data->args[i] != NULL)
@@ -30,7 +11,8 @@ void	check_export(t_data *data)
 		j = 0;
 		if (ft_isdigit(data->args[i][0]) || data->args[i][0] == '=' )
 			print_export_error(data, i);
-		while (data->args[i] && data->args[i][j] != '\0' && data->args[i][j] != '=')
+		while (data->args[i] && data->args[i][j] != '\0'
+			&& data->args[i][j] != '=')
 		{
 			if (!ft_key(data->args[i][j]))
 			{
@@ -69,11 +51,11 @@ void	check_unset(t_data *data)
 	}
 }
 
-void check_exit(char ***args, int exit_status)
+void	check_exit(char ***args, int exit_status)
 {
-	char **tmp;
-	int i;
-	int j;
+	char	**tmp;
+	int		i;
+	int		j;
 
 	if ((*args)[1] == NULL)
 	{
@@ -89,7 +71,6 @@ void check_exit(char ***args, int exit_status)
 		else
 			error_and_exit(NULL, NULL, 1);
 	}
-
 }
 
 void	check_builtins(t_data *data, int exit_status)
