@@ -204,8 +204,8 @@ char	*make_same(char *str);
 /* check_builtins.c */
 
 void	check_builtins(t_data *data, int exit_status);
-void	check_unset(char **args);
-void	check_export(char **args);
+void	check_unset(t_data *data);
+void	check_export(t_data *data);
 
 /* add_back_lst.c */
 
