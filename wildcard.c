@@ -33,7 +33,6 @@ t_list	*find_equals(char *str, DIR *opened_wd)
 			ft_lstadd_back(&equals, ft_lstnew(filename));
 		}
 	}
-	closedir(opened_wd);
 	return (equals);
 }
 
@@ -51,6 +50,7 @@ t_list	*check_wildcard(char *str)
 	if (!opened_wd)
 		error_and_exit(NULL, NULL, 1);
 	equals = find_equals(str, opened_wd);
+	closedir(opened_wd);
 	return (equals);
 }
 
