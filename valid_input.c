@@ -63,7 +63,7 @@ void	valid_input(char **str)
 		free(*str);
 		*str = ft_strdup("echo -n");
 	}
-	if ((*str)[i] && (*str)[i] == '|' && ((*str)[i + 1] != '|' || (*str)[i + 1] == '\0'))
+	if ((*str)[i] && (*str)[i] == '|' && ((*str)[i + 1] != '|'))
 	{
 		write(1, "syntax error near unexpected token `|'\n", 40);
 		free(*str);
