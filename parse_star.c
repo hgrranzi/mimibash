@@ -91,5 +91,11 @@ char **parse_star(char **str)
 		}
 		i++;
 	}
-	return (tmp);
+	if (tmp)
+	{
+		free_arr(str);
+		return (tmp);
+	}
+	else
+		return (str);
 }

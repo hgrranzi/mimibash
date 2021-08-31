@@ -1,23 +1,23 @@
 #include "mimibash.h"
 
-void print_struct(t_data **data) // tmp
-{
-	t_data *tmp;
-	tmp = *data;
-	while (tmp !=NULL)
-	{
-		printf("builtin: %d\n", tmp->builtin);
-		printf("fd[0]: %d\n", tmp->fd[0]);
-		printf("fd[1]: %d\n", tmp->fd[1]);
-		int i = 0;
-		while(tmp->args[i] != NULL)
-		{
-			printf("args[%d]: %s\n", i, tmp->args[i]);
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
+// void print_struct(t_data **data) // tmp
+// {
+// 	t_data *tmp;
+// 	tmp = *data;
+// 	while (tmp !=NULL)
+// 	{
+// 		printf("builtin: %d\n", tmp->builtin);
+// 		printf("fd[0]: %d\n", tmp->fd[0]);
+// 		printf("fd[1]: %d\n", tmp->fd[1]);
+// 		int i = 0;
+// 		while(tmp->args[i] != NULL)
+// 		{
+// 			printf("args[%d]: %s\n", i, tmp->args[i]);
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
 
 int	ft_key(char c)
 {
@@ -52,7 +52,7 @@ void	fill_struct(t_data *data)
 	data->builtin = 1;
 	data->args = ft_calloc(2, sizeof(char *));
 	data->args[0] = ft_strdup("echo");
-	// data->args[1] = ft_strdup("\n");
+	// data->args[1] = ft_strdup("\0");
 	data->args[1] = NULL;
 }
 
@@ -64,6 +64,9 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 	t_data	*last;
 
 	i = 0;
+	str = NULL;
+	tmp = NULL;
+	last = NULL;
 	valid_input(input);
 	str = pipesplit(*input);
 	while (str[i] != NULL)
@@ -85,5 +88,5 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		i++;
 	}
 	free(str);
-	print_struct(data);
+	// print_struct(data);
 }
