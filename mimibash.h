@@ -10,8 +10,9 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <dirent.h>
 
 # include "Libft/libft.h"
 
@@ -163,6 +164,12 @@ int		only_digits(char *str);
 
 void	update_underscore(t_data **head_data, char ***envp);
 char	*take_last_arg(t_data **head_data);
+
+/* wildcard.c */
+
+t_list	*check_wildcard(char *str);
+t_list	*find_equals(char *str, DIR *opened_wd);
+int		are_equal(char *s1, char *s2);
 
 /* parser.c */
 
