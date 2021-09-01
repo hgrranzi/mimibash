@@ -116,7 +116,6 @@ int		exec_error(int *fd, char **arg, char ***envp);
 
 /* init.c */
 
-//t_data	*init_data(void);
 void	init_shlvl(char ***envp);
 char	*update_shlvl(char *shlvl_value);
 void	init_builtins(int (**builtins)(int *, char **, char ***));
