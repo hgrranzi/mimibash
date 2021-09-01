@@ -19,11 +19,15 @@ void	check_valid(char **str)
 	i = 0;
 	while ((*str)[i] != '\0')
 	{
-		if ((*str)[i] && (*str)[i + 1] && (*str)[i] == ';' && (*str)[i + 1] == ';')
+		if ((*str)[i] == '\"')
+			skip_quote((*str), &i, '\"');
+		if ((*str)[i] == '\'')
+			skip_quote((*str), &i, '\'');
+		if ((*str)[i] && (*str)[i] == ';' )
 		{
 			error_and_exit(NULL, ERR_SYNTAX, 0);
 			free(*str);
-			*str = ft_strdup("echo -n");
+			*str = ft_strdup("258");
 		}
 		i++;
 	}
@@ -36,15 +40,19 @@ void	check_pipe(char **str)
 	i = 0;
 	while ((*str)[i] != '\0')
 	{
-		if ((*str)[i] && (*str)[i + 1] && (*str)[i] == '|' && (*str)[i + 1] != '|')
+		if ((*str)[i] == '\"')
+			skip_quote((*str), &i, '\"');
+		if ((*str)[i] == '\'')
+			skip_quote((*str), &i, '\'');
+		if ((*str)[i] == '|')
 		{
 			i++;
-			skipper((*str), &i);
-			if ((*str)[i] && (*str)[i] == '|')
+			skipper(*str, &i);
+			if ((*str)[i] == '|')
 			{
 				error_and_exit(NULL, ERR_SYNTAX, 0);
 				free(*str);
-				*str = ft_strdup("echo -n");
+				*str = ft_strdup("258");
 			}
 		}
 		i++;
@@ -67,14 +75,8 @@ void	valid_input(char **str)
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		free(*str);
-		*str = ft_strdup("echo -n");
+		*str = ft_strdup("258");
 	}
-	if ((*str)[i] && (*str)[i + 1] && (*str)[i] == '|' && (*str)[i + 1] == '|')
-	{
-		error_and_exit(NULL, ERR_SYNTAX, 0);
-		free(*str);
-		*str = ft_strdup("echo -n");
-	}
-	// check_pipe(str);
+	check_pipe(str);
 	check_valid(str);
 }

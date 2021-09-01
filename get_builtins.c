@@ -37,5 +37,7 @@ void	get_builtins(char **str, int *built)
 		*built = 6;
 	if (!ft_strncmp(tmp, "exit", n + 1))
 		*built = 7;
+	if (!ft_strncmp(tmp, "258", n + 1))
+		*built = 8;
 	free(tmp);
 }

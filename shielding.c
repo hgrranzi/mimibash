@@ -69,10 +69,8 @@ char	*parse_dollar(char *str, int *i, char **env)
 	tmp2 = ft_substr(str, 0, (*i));
 	tmp4 = ft_strdup(str + j);
 	tmp3 = ft_strjoin(tmp1, "=");
-	printf("%p\n", tmp3);
 	free(tmp1);
 	tmp2 = unpack(&tmp3, env, tmp2, i);
-	// printf("%p\n", tmp2);
 	tmp3 = ft_strjoin(tmp2, tmp4);
 	(*i)--;
 	spec_free(&tmp2, &tmp4, &str);

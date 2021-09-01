@@ -32,7 +32,8 @@ char	*append_output(t_redir *red, int flag)
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
-		return (ft_strdup("echo"));
+		free (red->str);
+		return (ft_strdup("258"));
 	}
 	parse_red(red);
 	tmp = fill_redir(flag, j, n, red);
@@ -76,7 +77,8 @@ char	*redir(t_redir *red, int flag)
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
-		return (ft_strdup("echo"));
+		free (red->str);
+		return (ft_strdup("258"));
 	}
 	parse_red(red);
 	tmp1 = fill_redir(flag, j, n, red);
