@@ -67,12 +67,19 @@ char	*parse_double_quote(char *str, int *i, char **env, int exit_status)
 	j = (*i);
 	while (str[++(*i)] != '\0')
 	{
-		if (str[(*i)] == '\\' && ((str[(*i) + 1] == '\'') || (str[(*i) + 1] == '\"') || (str[(*i) + 1] == '$') || (str[(*i) + 1] == '\\')))
-			str = parse_slash(str, i);
+
+		// if (str[(*i)] == '\\' && ((str[(*i) + 1] == '\'') || (str[(*i) + 1] == '\"') || (str[(*i) + 1] == '$') || (str[(*i) + 1] == '\\')))
+		// 	str = parse_slash(str, i);
 		if (str[(*i)] == '$' && str[(*i) + 1] == '?')
+		{
 			str = parse_exitcode(str, i, exit_status);
+			continue;
+		}
 		if (str[(*i)] == '$' && ft_key(str[(*i) + 1]))
+		{
 			str = parse_dollar(str, i, env);
+			continue;
+		}
 		if (str[(*i)] == '\"')
 			break ;
 	}

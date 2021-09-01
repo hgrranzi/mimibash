@@ -81,7 +81,6 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 			break ;
 		}
 		free(str[i]);
-
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
 		check_echo_n(last);

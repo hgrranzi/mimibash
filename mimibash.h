@@ -241,7 +241,7 @@ char	**add_n(char **args, int builtin);
 char	**shielding(char **str, char **env, int exit_status);
 char	*parse_exitcode(char *str, int *i, int exit_code);
 char	*parse_dollar(char *str, int *i, char **env);
-char	*unpack(char *str, char **env, char *str2);
+char	*unpack(char **str, char **env, char *str2, int *j);
 void	spec_free(char **str1, char **str2, char **str3);
 
 /* shielding_utils.c */

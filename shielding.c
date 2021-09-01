@@ -19,7 +19,7 @@ void	spec_free(char **str1, char **str2, char **str3)
 	}
 }
 
-char	*unpack(char *str, char **env, char *str2)
+char	*unpack(char **str, char **env, char *str2, int *j)
 {
 	int		n;
 	int		i;
@@ -27,23 +27,24 @@ char	*unpack(char *str, char **env, char *str2)
 	char	*getstr;
 
 	i = 0;
-	n = ft_strlen(str);
+	n = ft_strlen((*str));
 	getstr = NULL;
 	while (env[i] != NULL)
 	{
-		tmp = ft_strnstr(env[i], str, n);
+		tmp = ft_strnstr(env[i], (*str), n);
 		if (tmp)
 		{
-			free(getstr);
 			getstr = ft_strjoin(str2, tmp + n);
+			free(tmp);
 			free(str2);
 			str2 = NULL;
-			free(str);
 			str = NULL;
+			(*j) += ft_strlen(tmp + n) - 1;
 			break ;
 		}
 		i++;
 	}
+	free((*str));
 	if (!getstr)
 		return(str2);
 	return (getstr);
@@ -58,19 +59,22 @@ char	*parse_dollar(char *str, int *i, char **env)
 	int		j;
 
 	j = (*i);
-	while (str[++(*i)] != '\0' )
+	while (str[++j] != '\0' )
 	{
-		if (!ft_key(str[(*i)]))
+		if (!ft_key(str[j]))
 			break ;
 	}
-	tmp1 = ft_substr(str, j + 1, (*i) - j - 1);
-	tmp2 = ft_substr(str, 0, j);
-	tmp4 = ft_strdup(str + (*i));
+	tmp1 = ft_substr(str, (*i) + 1, (j) - (*i) - 1);
+	
+	tmp2 = ft_substr(str, 0, (*i));
+	tmp4 = ft_strdup(str + j);
 	tmp3 = ft_strjoin(tmp1, "=");
+	printf("%p\n", tmp3);
 	free(tmp1);
-	tmp2 = unpack(tmp3, env, tmp2);
-	(*i) = ft_strlen(tmp2) - 1;
+	tmp2 = unpack(&tmp3, env, tmp2, i);
+	// printf("%p\n", tmp2);
 	tmp3 = ft_strjoin(tmp2, tmp4);
+	(*i)--;
 	spec_free(&tmp2, &tmp4, &str);
 	return (tmp3);
 }
