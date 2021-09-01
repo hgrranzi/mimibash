@@ -94,5 +94,7 @@ int	exec_error(int *fd, char **arg, char ***envp)
 {
 	if (fd && arg && envp)
 		;
+	if (arg && ft_atoi(arg[0]) == 258)
+		return (258);
 	return (1);
 }
