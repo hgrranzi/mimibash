@@ -48,7 +48,7 @@ char	*parse_single_quote(char *str, int *i)
 	}
 	if (str[(*i)] == '\0')
 	{
-		write(1, "syntax error: single quotes are not closed\n", 43);
+		error_and_exit(NULL, ERR_SYNTAX, 0);
 		free(str);
 		return (ft_strdup("\0"));
 	}
@@ -78,7 +78,7 @@ char	*parse_double_quote(char *str, int *i, char **env, int exit_status)
 	}
 	if (str[(*i)] == '\0')
 	{
-		write(1, "syntax error: double quotes are not closed\n", 43);
+		error_and_exit(NULL, ERR_SYNTAX, 0);
 		free(str);
 		return (ft_strdup("\0"));
 	}

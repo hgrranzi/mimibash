@@ -20,6 +20,8 @@ void	fill_heredoc(t_redir *red, char *delimiter)
 	while (1)
 	{
 		str = readline("> ");
+		if (!str)
+			break ;
 		if (!ft_strncmp(delimiter, str, (ft_strlen(delimiter) + 1)))
 		{
 			free(str);
@@ -87,7 +89,7 @@ void	heredoc(t_redir *red)
 	n = (red->i);
 	if (red->str[(red->i)] == '\0')
 	{
-		write(1, "syntax error near unexpected token \'newline\'", 44);
+		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
 		red->str = ft_strdup("echo");
 		return ;
