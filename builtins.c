@@ -42,21 +42,23 @@ int	update_wd_var(char ***envp, char *new_wd, int i)
 {
 	char	*old_wd;
 	char	*oldpwd;
+	char	*newwd;
 
 	old_wd = ft_strdup(&(*envp)[i][4]);
 	if (!old_wd)
 		error_and_exit(NULL, NULL, 1);
 	oldpwd = aka_strjoin("OLDPWD=", old_wd);
-	if (!oldpwd)
+	newwd = aka_strjoin("PWD=", new_wd);
+	if (!oldpwd || !newwd)
 		error_and_exit(NULL, NULL, 1);
 	free(old_wd);
+	free(new_wd);
 	find_variable("OLDPWD", 6, oldpwd, *envp) || find_place(oldpwd, *envp) || new_place(oldpwd, envp);
 	free(oldpwd);
-	free((*envp)[i]);
-	(*envp)[i] = aka_strjoin("PWD=", new_wd);
+	find_variable("PWD", 3, newwd, *envp) || find_place(newwd, *envp) || new_place(newwd, envp);
+	free(newwd);
 	if (!(*envp)[i])
 		error_and_exit(NULL, NULL, 1);
-	free(new_wd);
 	return (0);
 }
 
