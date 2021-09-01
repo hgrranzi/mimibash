@@ -240,8 +240,7 @@ void	skipper(char *str, int *i);
 
 /* remove_n.c */
 
-char	**remove_n( char **args, int built);
-char	**add_n(char **args, int builtin);
+char	**add_n(char **args);
 
 /* shielding.c */
 

@@ -26,7 +26,7 @@ void	check_echo_n(t_data *data)
 	if (data->builtin == 1 && data->args[1] && !ft_strncmp(data->args[1], "-n", 2))
 		check_echo(data);
 	else if (data->builtin == 1 )
-		data->args = add_n(data->args, data->builtin);
+		data->args = add_n(data->args);
 }
 
 void	fill_struct(t_data *data)

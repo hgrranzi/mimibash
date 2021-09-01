@@ -77,7 +77,6 @@ char	*parse_dollar(char *str, int *i, char **env)
 
 char	*parse_exitcode(char *str, int *i, int exit_code)
 {
-	int		j;
 	char	*tmp1;
 	char	*tmp2;
 	char	*tmp3;
@@ -100,7 +99,6 @@ char	**shielding(char **str, char **env, int exit_status)
 {
 	int		i;
 	int		j;
-	char	**tmp;
 
 	i = 0;
 	while (str[i] != NULL)

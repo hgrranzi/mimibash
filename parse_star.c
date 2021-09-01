@@ -1,7 +1,6 @@
 #include "mimibash.h"
 int check_quotes(char *str)
 {
-	int i;
 	int j;
 
 	j = 0;
@@ -75,7 +74,6 @@ char	**masjoin(char **str1, char *str2)
 char **parse_star(char **str)
 {
 	int i;
-	int j;
 	char **tmp;
 
 	i = 0;

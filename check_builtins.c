@@ -51,8 +51,6 @@ void	check_unset(t_data *data)
 void	check_exit(char ***args, int exit_status)
 {
 	char	**tmp;
-	int		i;
-	int		j;
 
 	if ((*args)[1] == NULL)
 	{

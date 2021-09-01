@@ -21,7 +21,7 @@ char	*append_output(t_redir *red, int flag)
 {
 	int		j;
 	int		n;
-	char	*tmp;
+	char 	*tmp;
 
 	j = red->i;
 	red->i+=2;
@@ -88,7 +88,6 @@ char	*redir(t_redir *red, int flag)
 char	*parse_redir(char *str, int *fd, char **envp, int exit_status)
 {
 	t_redir	red;
-	char	*tmp;
 
 	red.i = 0;
 	red.str = str;

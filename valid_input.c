@@ -62,7 +62,6 @@ void	check_pipe(char **str)
 void	valid_input(char **str)
 {
 	int	i;
-	int	m;
 
 	i = 0;
 	skipper(*str, &i);

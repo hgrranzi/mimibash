@@ -63,7 +63,6 @@ void	make_heredoc(t_redir *red, int j, int n)
 	char	*tmp2;
 	char	*tmp3;
 	char	*tmp4;
-	char	*str;
 
 	tmp1 = ft_substr(red->str, 0, j);
 	tmp2 = ft_substr(red->str, n, red->i - n);

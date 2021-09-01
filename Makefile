@@ -4,7 +4,7 @@ READLINE_LIB = -lreadline -L ~/.brew/opt/readline/lib
 
 READLINE_INCLUDE = -I ~/.brew/opt/readline/include
 
-COMPILE = gcc #-Wall -Wextra -Werror
+COMPILE = gcc -Wall -Wextra -Werror
 
 LIB_DIR = Libft/libft.a
 
