@@ -16,7 +16,7 @@
 
 # include "Libft/libft.h"
 
-# define PROMPT "mimibash 💬 "
+# define PROMPT "✅ mimibash 💬 "
 # define ERR_CMD "command not found"
 # define ERR_SYNTAX "syntax error"
 # define ERR_UNSET "not a valid identifier"

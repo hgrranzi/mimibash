@@ -202,7 +202,7 @@ int	exec_env(int *fd, char **arg, char ***envp)
 int	exec_exit(int *fd, char **arg, char ***envp)
 {
 	char	***no_need;
-	int		exit_code;
+	long		exit_code;
 
 	no_need = envp;
 	exit_code = 0;
