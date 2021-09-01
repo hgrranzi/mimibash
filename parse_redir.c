@@ -30,7 +30,7 @@ char	*append_output(t_redir *red, int flag)
 	n = red->i;
 	if (red->str[(red->i)] == '\0' || red->str[(red->i)] == '>')
 	{
-		write (1, "syntax error near unexpected token \'newline\'", 44);
+		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
 		return (ft_strdup("echo"));
 	}
@@ -74,7 +74,7 @@ char	*redir(t_redir *red, int flag)
 	n = (red->i);
 	if (red->str[(red->i)] == '\0')
 	{
-		write(1, "syntax error near unexpected token \'newline\'", 44);
+		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
 		return (ft_strdup("echo"));
 	}
@@ -113,5 +113,5 @@ char	*parse_redir(char *str, int *fd, char **envp, int exit_status)
 		red.i++;
 	}
 	return (red.str);
-	
+
 }

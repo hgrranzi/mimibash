@@ -1,14 +1,5 @@
 #include "libft.h"
 
-static int	val_ret(int z)
-{
-	if (z == -1)
-		return (0);
-	if (z == 1)
-		return (-1);
-	return (-1);
-}
-
 int	ft_atoi(const char *str)
 {
 	int			i;
@@ -29,8 +20,6 @@ int	ft_atoi(const char *str)
 	while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
 	{
 		d = str[i] - '0' + d * 10;
-		if (d > LONG_MAX / 10)
-			return (val_ret(z));
 		i++;
 	}
 	return (d * z);

@@ -1,21 +1,5 @@
 #include "mimibash.h"
 
-/*t_data	*init_data(void)
-{
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		error_and_exit(NULL, NULL, 1);
-	data->builtin = NO_BUILTIN;
-	data->args = NULL;
-	data->fd[IN] = IN;
-	data->fd[OUT] = OUT;
-	data->exit_status = 0;
-	data->next = NULL;
-	return (data);
-} */
-
 char	*update_shlvl(char *shlvl_value)
 {
 	char	*new_value;

@@ -16,7 +16,7 @@
 
 # include "Libft/libft.h"
 
-# define PROMPT "mimibash 💬 "
+# define PROMPT "✅ mimibash 💬 "
 # define ERR_CMD "command not found"
 # define ERR_SYNTAX "syntax error"
 # define ERR_UNSET "not a valid identifier"
@@ -66,7 +66,7 @@ typedef struct s_redir
 	int		*fd;
 	int		i;
 	char	**env;
-	int exit_status;
+	int		exit_status;
 }				t_redir;
 
 /* mimibash.c */
@@ -84,17 +84,19 @@ void	handle_sig_pipe(int sig_number);
 
 /* builtins.c */
 
-int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_cd(int *fd, char **arg, char ***envp);
 char	*check_dir(char *arg, char **envp);
 char	*take_var(char **envp, char *var);
 int		update_wd_var(char ***envp, char *new_wd, int i);
 int		exec_pwd(int *fd, char **arg, char ***envp);
+
+/* builtins_again.c */
+
+int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_export(int *fd, char **arg, char ***envp);
 int		exec_unset(int *fd, char **arg, char ***envp);
 int		exec_env(int *fd, char **arg, char ***envp);
 int		exec_exit(int *fd, char **arg, char ***envp);
-int		exec_error(int *fd, char **arg, char ***envp);
 
 /* print_sorted_env.c */
 
@@ -110,10 +112,10 @@ int		find_variable(char *var, int var_len, char *arg, char **envp);
 int		find_place(char *arg, char **envp);
 int		new_place(char *arg, char ***envp);
 void	remove_variable(char *arg, char **envp);
+int		exec_error(int *fd, char **arg, char ***envp);
 
 /* init.c */
 
-//t_data	*init_data(void);
 void	init_shlvl(char ***envp);
 char	*update_shlvl(char *shlvl_value);
 void	init_builtins(int (**builtins)(int *, char **, char ***));
@@ -147,6 +149,7 @@ int		exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), ch
 int		exec_builtins(t_data *head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
+void	exec_exec(t_data *head_data_p, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
 
 /* exec_cmd_utils.c */
 
@@ -154,12 +157,16 @@ int		count_cmd(t_data **head_data);
 void	distribute_fd(t_data **head_data, int **pipe_fd);
 void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count);
 void	duplicate_fd(int *fd);
+int		is_error(char **args);
+
+/* exec_cmd_finish.c */
+
 int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
+void	close_pipes(int **pipe_fd, int cmd_count);
 
 /* utils.c */
 
 int		only_digits(char *str);
-// void	free_data(t_data **data);
 
 /* update_underscore.c */
 
@@ -258,15 +265,18 @@ void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
 void	fill_heredoc(t_redir *red, char *delimiter);
 int		create_heredoc(int *old_fd);
+
 /* parse_star.c */
 
-char **parse_star(char **str);
+char	**parse_star(char **str);
 char	**masjoin(char **str1, char *str2);
-char **new_star_massive(char **massive, int i, char **old_tmp);
-int massive_size(char **mas);
-int check_quotes(char *str);
+char	**new_star_massive(char **massive, int i, char **old_tmp);
+int		massive_size(char **mas);
+int		check_quotes(char *str);
 
 /* check_builtins_utils.c */
+
 void	print_export_error(t_data *data, int i);
 void	print_unset_error(t_data *data, int i);
+
 #endif
