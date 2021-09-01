@@ -40,6 +40,7 @@ char	**free_arr(char **arr)
 	while (arr && arr[i])
 	{
 		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
 	free(arr);

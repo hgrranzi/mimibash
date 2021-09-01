@@ -189,7 +189,7 @@ int		ft_key(char c);
 
 /* parse_redir.c */
 
-char	*parse_redir(char *str, int *fd, char **envp, int exit_status);
+char	*parse_redir(char **str, int *fd, char **envp, int exit_status);
 char	*redir(t_redir *red, int flag);
 char	*fill_redir(int flag, int j, int n, t_redir *red);
 char	*append_output(t_redir *red, int flag);
@@ -267,7 +267,7 @@ int		create_heredoc(int *old_fd);
 
 /* parse_star.c */
 
-char	**parse_star(char **str);
+char	**parse_star(char ***str);
 char	**masjoin(char **str1, char *str2);
 char	**new_star_massive(char **massive, int i, char **old_tmp);
 int		massive_size(char **mas);

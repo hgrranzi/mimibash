@@ -15,10 +15,10 @@ char	**add_n(char **args)
 	while (i < n)
 	{
 		tmp[i] = ft_strdup(args[i]);
-		free(args[i]);
 		i++;
 	}
-	free(args);
+	free_arr(args);
+	args = NULL;
 	tmp[i++] = ft_strdup("\n");
 	tmp[i] = NULL;
 	return (tmp);

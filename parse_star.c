@@ -40,6 +40,7 @@ char **new_star_massive(char **massive, int i, char **old_tmp)
 		j++;
 	}
 	free_arr(old_tmp);
+	old_tmp = NULL;
 	while (data != NULL)
 	{
 		tmp[j] = ft_strdup(data->content);
@@ -68,34 +69,36 @@ char	**masjoin(char **str1, char *str2)
 	j++;
 	tmp[j] = NULL;
 	free_arr(str1);
+	str1 = NULL;
 	return (tmp);
 }
 
-char **parse_star(char **str)
+char **parse_star(char ***str)
 {
 	int i;
 	char **tmp;
 
 	i = 0;
 	tmp = NULL;
-	while (str[i] != NULL)
+	while ((*str)[i] != NULL)
 	{
-		if (check_quotes(str[i]))
+		if (check_quotes((*str)[i]))
 		{
-			if (ft_strchr(str[i], '*'))
-				tmp = new_star_massive(str, i, tmp);
+			if (ft_strchr((*str)[i], '*'))
+				tmp = new_star_massive(*str, i, tmp);
 			else
-				tmp = masjoin(tmp, str[i]);	
+				tmp = masjoin(tmp, (*str)[i]);	
 		}
 		else
-			tmp = masjoin(tmp, str[i]);
+			tmp = masjoin(tmp, (*str)[i]);
 		i++;
 	}
 	if (tmp)
 	{
-		free_arr(str);
+		free_arr(*str);
+		(*str) = NULL;
 		return (tmp);
 	}
 	else
-		return (str);
+		return (*str);
 }

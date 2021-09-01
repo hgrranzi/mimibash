@@ -73,6 +73,8 @@ void	make_heredoc(t_redir *red, int j, int n)
 	free(tmp3);
 	red->fd[0] = create_heredoc(&red->fd[0]);
 	fill_heredoc(red, tmp2);
+	free(tmp2);
+	tmp2 = NULL;
 	red->str = ft_strdup(tmp4);
 	free(tmp4);
 }

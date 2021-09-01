@@ -1,14 +1,14 @@
 #include "libft.h"
 
-static int	check_alloc(char **strj, int n)
-{
-	*strj = malloc (n + 1);
-	if (!*strj)
-		return (0);
-	return (1);
-}
+// static int	check_alloc(char **strj, int n)
+// {
+// 	*strj = malloc (n + 1);
+// 	if (!*strj)
+// 		return (0);
+// 	return (1);
+// }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*strj;
 	int		i;
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	n = ft_strlen(s1) + ft_strlen(s2);
 	if (s1 == NULL || s2 == NULL)
 		return (0);
-	if (!check_alloc(&strj, n))
+	if (!(strj = malloc(n + 1)))
 		return (NULL);
 	while (s1[i] != '\0')
 	{

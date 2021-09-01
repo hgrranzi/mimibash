@@ -87,11 +87,16 @@ char	*parse_exitcode(char *str, int *i, int exit_code)
 	tmp3 = ft_itoa(exit_code);
 	tmp4 = ft_strjoin(tmp1, tmp3);
 	free(tmp1);
+	tmp1 = NULL;
 	free(tmp3);
+	tmp3 = NULL;
 	tmp1 = ft_strjoin(tmp4, tmp2);
 	free(tmp4);
+	tmp4 = NULL;
 	free(tmp2);
+	tmp2 = NULL;
 	free(str);
+	str = NULL;
 	return (tmp1);
 }
 
