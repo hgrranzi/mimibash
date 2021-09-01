@@ -69,7 +69,24 @@ void	check_exit(char ***args, int exit_status)
 			error_and_exit(NULL, NULL, 1);
 	}
 }
+// int check_another_symbol()
+// void check_echo(t_data *data)
+// {
+// 	int i;
+// 	int j;
 
+// 	i = 1;
+// 	if (ft_strncmp(data->args[1], "-n", 2))
+// 	{
+// 		while (data->args[i] != NULL)
+// 		{
+// 			if (!ft_strncmp(data->args[i], "-n", 2))
+// 				break;
+// 			check_another_symbol(data->args[i]);
+// 		}
+// 	}
+
+// }
 void	check_builtins(t_data *data, int exit_status)
 {
 	if (data->builtin == 4)
@@ -78,4 +95,6 @@ void	check_builtins(t_data *data, int exit_status)
 		check_unset(data);
 	if (data->builtin == 7)
 		check_exit(&data->args, exit_status);
+	// if (data->builtin == 1)
+	// 	check_echo(data);
 }

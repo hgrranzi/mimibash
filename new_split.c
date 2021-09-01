@@ -39,9 +39,9 @@ static size_t	ft_wrdlen(char const *s, char c)
 			skip_quote(s, &i, '\"');
 		if (s[i] == '\'')
 			skip_quote(s, &i, '\'');
-		while (s[i] != c && s[i] != '\0')
-			i++;
-		return (i);
+		if (s[i] == c || s[i] == '\0')
+			break;
+		i++;
 	}
 	return (i);
 }
