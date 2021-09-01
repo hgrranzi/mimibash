@@ -149,6 +149,7 @@ int		exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), ch
 int		exec_builtins(t_data *head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
+void	exec_exec(t_data *head_data_p, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
 
 /* exec_cmd_utils.c */
 
@@ -156,6 +157,10 @@ int		count_cmd(t_data **head_data);
 void	distribute_fd(t_data **head_data, int **pipe_fd);
 void	close_unused_pipe_fd(int **pipe_fd, int i, int cmd_count);
 void	duplicate_fd(int *fd);
+int		is_error(char **args);
+
+/* exec_cmd_finish.c */
+
 int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
 
 /* utils.c */

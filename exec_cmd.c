@@ -1,24 +1,29 @@
 #include "mimibash.h"
 
-int	is_error(char **args)
+void	exec_exec(t_data *head_data_p, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp)
 {
-	int	i;
-
-	i = 0;
-	while (args[i])
+	if (head_data_p->builtin)
+		exit (exec_builtins(head_data_p, builtins, envp));
+	else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
+		exit (1);
+	else if (is_error(head_data_p->args))
+		exit (127);
+	else
 	{
-		if (args[i][0] == '\0')
-			return (1);
-		i++;
+		execve(head_data_p->args[CMD_PATH], head_data_p->args, *envp);
+		error_and_exit(head_data_p->args[CMD_PATH], NULL, 0);
+		if (errno == ENOENT)
+			exit (127);
+		else
+			exit (126);
 	}
-	return (0);
+	exit (1);
 }
 
 int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	t_data	*head_data_p;
 	int		i;
-	int		exit_status;
 
 	head_data_p = *head_data;
 	i = 0;
@@ -31,22 +36,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 		{
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
-			if (head_data_p->builtin)
-				exit (exec_builtins(head_data_p, builtins, envp));
-			else if (head_data_p->fd[IN] == -1 || head_data_p->fd[OUT] == -1)
-				exit (1);
-			else if (is_error(head_data_p->args))
-				exit (127);
-			else
-			{
-				execve(head_data_p->args[CMD_PATH], head_data_p->args, *envp);
-				error_and_exit(head_data_p->args[CMD_PATH], NULL, 0);
-				if (errno == ENOENT)
-					exit (127);
-				else
-					exit (126);
-			}
-			exit (1); // draft
+			exec_exec(head_data_p, info, builtins, envp);
 		}
 		if (head_data_p->fd[IN] != IN)
 			close(head_data_p->fd[IN]);

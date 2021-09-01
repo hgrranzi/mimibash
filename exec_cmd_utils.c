@@ -71,41 +71,16 @@ void	duplicate_fd(int *fd)
 	return ;
 }
 
-int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
+int	is_error(char **args)
 {
 	int	i;
-	int	exit_status;
 
 	i = 0;
-	exit_status = 0;
-	while (i < cmd_count)
+	while (args[i])
 	{
-		if (i > 0)
-			close(pipe_fd[i - 1][IN]);
-		if (i < cmd_count - 1)
-			close(pipe_fd[i][OUT]);
+		if (args[i][0] == '\0')
+			return (1);
 		i++;
 	}
-	i = 0;
-	while (i < cmd_count)
-	{
-		waitpid(pid[i], &pid[i], 0);
-		i++;
-	}
-	if (WIFSIGNALED(pid[i - 1])) {
-		exit_status = 128 + WTERMSIG(pid[i - 1]);
-	}
-	else if (WIFEXITED(pid[i - 1]))
-		exit_status = WEXITSTATUS(pid[i - 1]);
-	else
-		exit_status = 1;
-	i = 0;
-	while (i < cmd_count -1)
-	{
-		free(pipe_fd[i]);
-		i++;
-	}
-	free(pipe_fd);
-	free(pid);
-	return (exit_status);
+	return (0);
 }
