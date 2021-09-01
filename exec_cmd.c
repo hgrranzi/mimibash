@@ -59,6 +59,7 @@ int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), c
 	distribute_fd(head_data, info.pipe_fd);
 	handle_signal_pipe();
 	create_processes(head_data, &info, builtins, envp);
+	close_pipes(info.pipe_fd, info.cmd_count);
 	exit_status = wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
 	handle_signal();
 	return (exit_status);

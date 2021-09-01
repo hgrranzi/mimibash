@@ -1,12 +1,10 @@
 #include "mimibash.h"
 
-int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
+void	close_pipes(int **pipe_fd, int cmd_count)
 {
 	int	i;
-	int	exit_status;
 
 	i = 0;
-	exit_status = 0;
 	while (i < cmd_count)
 	{
 		if (i > 0)
@@ -16,6 +14,21 @@ int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 		i++;
 	}
 	i = 0;
+	while (i < cmd_count - 1)
+	{
+		free(pipe_fd[i]);
+		i++;
+	}
+	free(pipe_fd);
+}
+
+int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
+{
+	int	i;
+	int	exit_status;
+
+	i = 0;
+	exit_status = 0;
 	while (i < cmd_count)
 	{
 		waitpid(pid[i], &pid[i], 0);
@@ -27,13 +40,6 @@ int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
 		exit_status = WEXITSTATUS(pid[i - 1]);
 	else
 		exit_status = 1;
-	i = 0;
-	while (i < cmd_count - 1)
-	{
-		free(pipe_fd[i]);
-		i++;
-	}
-	free(pipe_fd);
 	free(pid);
 	return (exit_status);
 }

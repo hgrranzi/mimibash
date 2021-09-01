@@ -162,6 +162,7 @@ int		is_error(char **args);
 /* exec_cmd_finish.c */
 
 int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
+void	close_pipes(int **pipe_fd, int cmd_count);
 
 /* utils.c */
 
