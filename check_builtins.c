@@ -69,24 +69,57 @@ void	check_exit(char ***args, int exit_status)
 			error_and_exit(NULL, NULL, 1);
 	}
 }
-// int check_another_symbol()
-// void check_echo(t_data *data)
-// {
-// 	int i;
-// 	int j;
+int check_another_symbol(char *str)
+{
+	int i;
 
-// 	i = 1;
-// 	if (ft_strncmp(data->args[1], "-n", 2))
-// 	{
-// 		while (data->args[i] != NULL)
-// 		{
-// 			if (!ft_strncmp(data->args[i], "-n", 2))
-// 				break;
-// 			check_another_symbol(data->args[i]);
-// 		}
-// 	}
+	i = 1;
+	while (str[i] != '\0')
+	{
+		if (str[i] != 'n')
+			return (1);
+		i++;	
+	}
+	return (0);
+}
+void fill_massive(t_data *data, int i)
+{
+	char **tmp;
+	int j;
 
-// }
+	j = 1;
+	tmp = malloc(sizeof(char *) * (massive_size(data->args) - i + 2));
+	printf("m %d\n", i);
+	tmp[0] = ft_strdup(data->args[0]);
+	while ((data->args)[i] != NULL)
+	{
+		tmp[j] = ft_strdup(data->args[i]);
+		j++;
+		i++;
+	}
+	printf("j %d\n", j);
+	tmp[j] = NULL;
+	free_arr((data->args));
+	data->args = tmp;
+}
+void check_echo(t_data *data)
+{
+	int i;
+	int n;
+
+	i = 1;
+	n = 0;
+	while (data->args[i] != NULL)
+	{
+		if (ft_strncmp(data->args[i], "-n", 2) || check_another_symbol(data->args[i]))
+			break;
+		i++;
+		n++;
+	}
+	if (i != 1)
+		fill_massive(data, i);
+
+}
 void	check_builtins(t_data *data, int exit_status)
 {
 	if (data->builtin == 4)
@@ -95,6 +128,6 @@ void	check_builtins(t_data *data, int exit_status)
 		check_unset(data);
 	if (data->builtin == 7)
 		check_exit(&data->args, exit_status);
-	// if (data->builtin == 1)
-	// 	check_echo(data);
+	if (data->builtin == 1)
+		check_echo(data);
 }

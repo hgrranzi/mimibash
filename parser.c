@@ -1,23 +1,23 @@
 #include "mimibash.h"
 
-// void print_struct(t_data **data) // tmp
-// {
-// 	t_data *tmp;
-// 	tmp = *data;
-// 	while (tmp !=NULL)
-// 	{
-// 		printf("builtin: %d\n", tmp->builtin);
-// 		printf("fd[0]: %d\n", tmp->fd[0]);
-// 		printf("fd[1]: %d\n", tmp->fd[1]);
-// 		int i = 0;
-// 		while(tmp->args[i] != NULL)
-// 		{
-// 			printf("args[%d]: %s\n", i, tmp->args[i]);
-// 			i++;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
+void print_struct(t_data **data) // tmp
+{
+	t_data *tmp;
+	tmp = *data;
+	while (tmp !=NULL)
+	{
+		printf("builtin: %d\n", tmp->builtin);
+		printf("fd[0]: %d\n", tmp->fd[0]);
+		printf("fd[1]: %d\n", tmp->fd[1]);
+		int i = 0;
+		while(tmp->args[i] != NULL)
+		{
+			printf("args[%d]: %s\n", i, tmp->args[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
 
 int	ft_key(char c)
 {
@@ -41,8 +41,8 @@ void	check_empty(char **str)
 
 void	check_echo_n(t_data *data)
 {
-	if (data->builtin == 1 && data->args[1] && !ft_strncmp(data->args[1], "-n", 3))
-		data->args = remove_n(data->args, data->builtin);
+	if (data->builtin == 1 && data->args[1] && !ft_strncmp(data->args[1], "-n", 2))
+		check_echo(data);
 	else if (data->builtin == 1 )
 		data->args = add_n(data->args, data->builtin);
 }
@@ -74,13 +74,14 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		last = add_back_lst(data, newlst());
 		str[i] = parse_redir(str[i], last->fd, envp, exit_status);
 		tmp = new_split(str[i], ' ');
+
 		tmp = parse_star(tmp);
 		if (tmp[0] == NULL)
 		{
 			fill_struct(last);
 			break ;
 		}
-		free(str[i]);
+		free(str[i]);		
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
 		check_echo_n(last);
@@ -88,5 +89,5 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		i++;
 	}
 	free(str);
-	// print_struct(data);
+	print_struct(data);
 }
