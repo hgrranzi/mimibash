@@ -1,6 +1,12 @@
 NAME = mimibash
 
-COMPILE = gcc -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include # -Wall -Wextra -Werror
+READLINE_LIB = -lreadline -L ~/.brew/opt/readline/lib
+
+READLINE_INCLUDE = -I ~/.brew/opt/readline/include
+
+COMPILE = gcc #-Wall -Wextra -Werror
+
+LIB_DIR = Libft/libft.a
 
 SRCS = main.c mimibash.c init.c handle_signal.c exec_cmd.c builtins.c builtins_again.c print_sorted_env.c arr.c wildcard.c \
 		export_unset_utils.c exec_cmd_utils.c exec_cmd_finish.c split_line.c take_cmd_path.c utils.c update_underscore.c \
@@ -11,14 +17,12 @@ OBJS =	$(SRCS:.c=.o)
 
 all: $(NAME)
 
-lib:
-	cd Libft && make
-
-$(NAME): mimibash.h $(OBJS) lib
-	$(COMPILE) -g $(OBJS) Libft/libft.a -o $(NAME)
+$(NAME): mimibash.h $(OBJS)
+	$(MAKE) -C $(dir $(LIB_DIR))
+	$(COMPILE) $(READLINE_LIB) -g $(OBJS) $(LIB_DIR) -o $(NAME)
 
 %.o: %.c mimibash.h
-	$(COMPILE) -c -g $< -o $@
+	$(COMPILE) -c -g $< -o $@ $(READLINE_INCLUDE)
 
 clean:
 	cd Libft && make clean
