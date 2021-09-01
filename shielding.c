@@ -35,16 +35,15 @@ char	*unpack(char **str, char **env, char *str2, int *j)
 		if (tmp)
 		{
 			getstr = ft_strjoin(str2, tmp + n);
-			free(tmp);
 			free(str2);
 			str2 = NULL;
-			str = NULL;
 			(*j) += ft_strlen(tmp + n) - 1;
 			break ;
 		}
 		i++;
 	}
 	free((*str));
+	str = NULL;
 	if (!getstr)
 		return(str2);
 	return (getstr);
@@ -65,10 +64,10 @@ char	*parse_dollar(char *str, int *i, char **env)
 			break ;
 	}
 	tmp1 = ft_substr(str, (*i) + 1, (j) - (*i) - 1);
-	
 	tmp2 = ft_substr(str, 0, (*i));
 	tmp4 = ft_strdup(str + j);
 	tmp3 = ft_strjoin(tmp1, "=");
+	printf("1: %p\n", tmp1);
 	free(tmp1);
 	tmp2 = unpack(&tmp3, env, tmp2, i);
 	tmp3 = ft_strjoin(tmp2, tmp4);
