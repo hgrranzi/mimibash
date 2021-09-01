@@ -2,12 +2,21 @@
 
 void	spec_free(char **str1, char **str2, char **str3)
 {
-	free(*str1);
-	*str1 = NULL;
-	free(*str2);
-	*str2 = NULL;
-	free(*str3);
-	*str3 = NULL;
+	if (*str1)
+	{	
+		free(*str1);
+		*str1 = NULL;
+	}
+	if (*str2)
+	{
+		free(*str2);
+		*str2 = NULL;
+	}
+	if (*str3)
+	{
+		free(*str3);
+		*str3 = NULL;
+	}
 }
 
 char	*unpack(char *str, char **env, char *str2)
@@ -19,11 +28,13 @@ char	*unpack(char *str, char **env, char *str2)
 
 	i = 0;
 	n = ft_strlen(str);
+	getstr = NULL;
 	while (env[i] != NULL)
 	{
 		tmp = ft_strnstr(env[i], str, n);
 		if (tmp)
 		{
+			free(getstr);
 			getstr = ft_strjoin(str2, tmp + n);
 			free(str2);
 			str2 = NULL;
@@ -33,6 +44,8 @@ char	*unpack(char *str, char **env, char *str2)
 		}
 		i++;
 	}
+	if (!getstr)
+		return(str2);
 	return (getstr);
 }
 
@@ -56,6 +69,7 @@ char	*parse_dollar(char *str, int *i, char **env)
 	tmp3 = ft_strjoin(tmp1, "=");
 	free(tmp1);
 	tmp2 = unpack(tmp3, env, tmp2);
+	(*i) = ft_strlen(tmp2) - 1;
 	tmp3 = ft_strjoin(tmp2, tmp4);
 	spec_free(&tmp2, &tmp4, &str);
 	return (tmp3);
@@ -103,7 +117,7 @@ char	**shielding(char **str, char **env, int exit_status)
 			if (str[i][j] == '\'')
 				str[i] = parse_single_quote(str[i], &j);
 			if (str[i][j] == '\"')
-				str[i] = parse_double_quote(str[i], &j, env);
+				str[i] = parse_double_quote(str[i], &j, env, exit_status);
 			j++;
 		}
 		i++;

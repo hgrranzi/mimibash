@@ -72,7 +72,7 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 	while (str[i] != NULL)
 	{
 		last = add_back_lst(data, newlst());
-		str[i] = parse_redir(str[i], last->fd, envp);
+		str[i] = parse_redir(str[i], last->fd, envp, exit_status);
 		tmp = new_split(str[i], ' ');
 		tmp = parse_star(tmp);
 		if (tmp[0] == NULL)
@@ -81,6 +81,7 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 			break ;
 		}
 		free(str[i]);
+
 		last->args = shielding(tmp, envp, exit_status);
 		get_builtins(&last->args[0], &last->builtin);
 		check_echo_n(last);

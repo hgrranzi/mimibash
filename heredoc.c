@@ -45,7 +45,7 @@ void	parse_heredoc(t_redir *red)
 	while (red->str[(red->i)] != '\0' )
 	{
 		if (red->str[(red->i)] == '\"')
-			red->str = parse_double_quote(red->str, &red->i, red->env);
+			red->str = parse_double_quote(red->str, &red->i, red->env, red->exit_status);
 		if (red->str[(red->i)] == '\'')
 			red->str = parse_single_quote(red->str, &red->i);
 		if (red->str[(red->i)] == ' ' || red->str[(red->i)] == '\0'

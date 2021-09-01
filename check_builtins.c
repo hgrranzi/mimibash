@@ -11,14 +11,12 @@ void	check_export(t_data *data)
 		j = 0;
 		if (ft_isdigit(data->args[i][0]) || data->args[i][0] == '=' )
 			print_export_error(data, i);
-		while (data->args[i] && data->args[i][j] != '\0'
-			&& data->args[i][j] != '=')
+		while (data->args[i][j] != '\0' && data->args[i][j] != '=')
 		{
 			if (!ft_key(data->args[i][j]))
 			{
 				print_export_error(data, i);
-				i++;
-				j = -1;
+				break;
 			}
 			j++;
 		}
@@ -37,13 +35,12 @@ void	check_unset(t_data *data)
 		j = 0;
 		if (ft_isdigit(data->args[i][0]))
 			print_unset_error(data, i);
-		while (data->args[i] && data->args[i][j] != '\0')
+		while (data->args[i][j] != '\0')
 		{
 			if (!ft_key(data->args[i][j]))
 			{
 				print_export_error(data, i);
-				i++;
-				j = -1;
+				break;
 			}
 			j++;
 		}

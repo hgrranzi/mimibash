@@ -7,7 +7,7 @@ void	parse_red(t_redir *red)
 		if (red->str[(red->i)] == '$')
 			red->str = parse_dollar(red->str, &red->i, red->env);
 		if (red->str[(red->i)] == '\"')
-			red->str = parse_double_quote(red->str, &red->i, red->env);
+			red->str = parse_double_quote(red->str, &red->i, red->env, red->exit_status);
 		if (red->str[(red->i)] == '\'')
 			red->str = parse_single_quote(red->str, &red->i);
 		if (red->str[(red->i)] == ' ' || red->str[(red->i)] == '\0'
@@ -83,7 +83,7 @@ char	*redir(t_redir *red, int flag)
 	return (tmp1);
 }
 
-char	*parse_redir(char *str, int *fd, char **envp)
+char	*parse_redir(char *str, int *fd, char **envp, int exit_status)
 {
 	t_redir	red;
 	char	*tmp;
@@ -92,6 +92,7 @@ char	*parse_redir(char *str, int *fd, char **envp)
 	red.str = str;
 	red.fd = fd;
 	red.env = envp;
+	red.exit_status = exit_status;
 	while (red.str[red.i] != '\0' && red.fd[0] != -1 && red.fd[1] != -1)
 	{
 		if (red.str[red.i] && red.str[red.i] == '\"')

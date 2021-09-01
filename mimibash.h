@@ -66,6 +66,7 @@ typedef struct s_redir
 	int		*fd;
 	int		i;
 	char	**env;
+	int exit_status;
 }				t_redir;
 
 /* mimibash.c */
@@ -181,7 +182,7 @@ int		ft_key(char c);
 
 /* parse_redir.c */
 
-char	*parse_redir(char *str, int *fd, char **envp);
+char	*parse_redir(char *str, int *fd, char **envp, int exit_status);
 char	*redir(t_redir *red, int flag);
 char	*fill_redir(int flag, int j, int n, t_redir *red);
 char	*append_output(t_redir *red, int flag);
@@ -245,7 +246,7 @@ void	spec_free(char **str1, char **str2, char **str3);
 
 /* shielding_utils.c */
 
-char	*parse_double_quote(char *str, int *i, char **env);
+char	*parse_double_quote(char *str, int *i, char **env, int exit_status);
 char	*parse_single_quote(char *str, int *i);
 char	*getstr(char *str, int i, int j);
 char	*parse_slash(char *str, int *i);

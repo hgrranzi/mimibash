@@ -87,8 +87,10 @@ char **parse_star(char **str)
 			if (ft_strchr(str[i], '*'))
 				tmp = new_star_massive(str, i, tmp);
 			else
-				tmp = masjoin(tmp, str[i]);
+				tmp = masjoin(tmp, str[i]);	
 		}
+		else
+			tmp = masjoin(tmp, str[i]);
 		i++;
 	}
 	if (tmp)

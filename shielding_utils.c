@@ -59,7 +59,7 @@ char	*parse_single_quote(char *str, int *i)
 	return (tmp1);
 }
 
-char	*parse_double_quote(char *str, int *i, char **env)
+char	*parse_double_quote(char *str, int *i, char **env, int exit_status)
 {
 	int		j;
 	char	*tmp1;
@@ -69,6 +69,8 @@ char	*parse_double_quote(char *str, int *i, char **env)
 	{
 		if (str[(*i)] == '\\' && ((str[(*i) + 1] == '\'') || (str[(*i) + 1] == '\"') || (str[(*i) + 1] == '$') || (str[(*i) + 1] == '\\')))
 			str = parse_slash(str, i);
+		if (str[(*i)] == '$' && str[(*i) + 1] == '?')
+			str = parse_exitcode(str, i, exit_status);
 		if (str[(*i)] == '$' && ft_key(str[(*i) + 1]))
 			str = parse_dollar(str, i, env);
 		if (str[(*i)] == '\"')
