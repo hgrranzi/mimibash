@@ -89,7 +89,6 @@ void fill_massive(t_data *data, int i)
 
 	j = 1;
 	tmp = malloc(sizeof(char *) * (massive_size(data->args) - i + 2));
-	printf("m %d\n", i);
 	tmp[0] = ft_strdup(data->args[0]);
 	while ((data->args)[i] != NULL)
 	{
@@ -97,7 +96,6 @@ void fill_massive(t_data *data, int i)
 		j++;
 		i++;
 	}
-	printf("j %d\n", j);
 	tmp[j] = NULL;
 	free_arr((data->args));
 	data->args = tmp;

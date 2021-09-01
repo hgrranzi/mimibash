@@ -53,30 +53,3 @@ t_list	*check_wildcard(char *str)
 	closedir(opened_wd);
 	return (equals);
 }
-
-/*
-int	main(int argc, char **argv)
-{
-	t_list	*equals;
-	t_list	*equals_p;
-
-	if (argc != 2)
-		return (1);
-	equals = check_wildcard(argv[1]);
-	if (!equals)
-		printf("No files equal argv[1]");
-	else
-	{
-		equals_p = equals;
-		while (equals_p)
-		{
-			printf("%s", equals_p->content);
-			if (equals_p->next)
-				printf(" ");
-			equals_p = equals_p->next;
-		}
-		printf("\n");
-	}
-	return (0);
-}
-*/

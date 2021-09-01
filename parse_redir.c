@@ -23,7 +23,6 @@ char	*append_output(t_redir *red, int flag)
 	int		n;
 	char	*tmp;
 
-	// printf("%s\n", red->str);
 	j = red->i;
 	red->i+=2;
 	skip_space(red);
