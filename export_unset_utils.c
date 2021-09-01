@@ -89,3 +89,10 @@ void	remove_variable(char *arg, char **envp)
 		i++;
 	}
 }
+
+int	exec_error(int *fd, char **arg, char ***envp)
+{
+	if (fd && arg && envp)
+		;
+	return (1);
+}

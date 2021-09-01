@@ -66,7 +66,7 @@ typedef struct s_redir
 	int		*fd;
 	int		i;
 	char	**env;
-	int exit_status;
+	int		exit_status;
 }				t_redir;
 
 /* mimibash.c */
@@ -84,17 +84,19 @@ void	handle_sig_pipe(int sig_number);
 
 /* builtins.c */
 
-int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_cd(int *fd, char **arg, char ***envp);
 char	*check_dir(char *arg, char **envp);
 char	*take_var(char **envp, char *var);
 int		update_wd_var(char ***envp, char *new_wd, int i);
 int		exec_pwd(int *fd, char **arg, char ***envp);
+
+/* builtins_again.c */
+
+int		exec_echo(int *fd, char **arg, char ***envp);
 int		exec_export(int *fd, char **arg, char ***envp);
 int		exec_unset(int *fd, char **arg, char ***envp);
 int		exec_env(int *fd, char **arg, char ***envp);
 int		exec_exit(int *fd, char **arg, char ***envp);
-int		exec_error(int *fd, char **arg, char ***envp);
 
 /* print_sorted_env.c */
 
@@ -110,6 +112,7 @@ int		find_variable(char *var, int var_len, char *arg, char **envp);
 int		find_place(char *arg, char **envp);
 int		new_place(char *arg, char ***envp);
 void	remove_variable(char *arg, char **envp);
+int		exec_error(int *fd, char **arg, char ***envp);
 
 /* init.c */
 
@@ -258,15 +261,18 @@ void	make_heredoc(t_redir *red, int j, int n);
 void	parse_heredoc(t_redir *red);
 void	fill_heredoc(t_redir *red, char *delimiter);
 int		create_heredoc(int *old_fd);
+
 /* parse_star.c */
 
-char **parse_star(char **str);
+char	**parse_star(char **str);
 char	**masjoin(char **str1, char *str2);
-char **new_star_massive(char **massive, int i, char **old_tmp);
-int massive_size(char **mas);
-int check_quotes(char *str);
+char	**new_star_massive(char **massive, int i, char **old_tmp);
+int		massive_size(char **mas);
+int		check_quotes(char *str);
 
 /* check_builtins_utils.c */
+
 void	print_export_error(t_data *data, int i);
 void	print_unset_error(t_data *data, int i);
+
 #endif
