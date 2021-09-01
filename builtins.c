@@ -89,7 +89,10 @@ int	exec_cd(int *fd, char **arg, char ***envp)
 		remove_variable("OLDPWD", *envp);
 	}
 	else
+	{
+		free(go_to);
 		error_and_exit("cd", NULL, 0);
+	}
 	return (1);
 }
 

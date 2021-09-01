@@ -1,7 +1,6 @@
 #include "mimibash.h"
 void	print_export_error(t_data *data, int i)
 {
-	data->builtin = 8;
 	write(1, "export: `", 9);
 	write(1, data->args[i], ft_strlen(data->args[i]));
 	write(1, "': not a valid identifier\n", 26);
@@ -11,7 +10,6 @@ void	print_export_error(t_data *data, int i)
 
 void	print_unset_error(t_data *data, int i)
 {
-	data->builtin = 8;
 	write(1, "unset: `", 8);
 	write(1, data->args[i], ft_strlen(data->args[i]));
 	write(1, "': not a valid identifier\n", 26);
