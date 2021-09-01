@@ -149,7 +149,7 @@ int		exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), ch
 int		exec_builtins(t_data *head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), char ***envp);
 int		create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
-void	exec_exec(t_data *head_data_p, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp);
+void	exec_exec(t_data *head_data_p, int (**builtins)(int *, char **, char ***), char ***envp);
 
 /* exec_cmd_utils.c */
 
@@ -161,7 +161,7 @@ int		is_error(char **args);
 
 /* exec_cmd_finish.c */
 
-int		wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count);
+int		wait_and_close(pid_t *pid, int cmd_count);
 void	close_pipes(int **pipe_fd, int cmd_count);
 
 /* utils.c */

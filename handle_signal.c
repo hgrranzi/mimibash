@@ -2,7 +2,8 @@
 
 void	handle_sig_pipe(int sig_number) // Ctrl + C
 {
-	return ;
+	if (sig_number)
+		;
 }
 
 int	handle_signal_pipe(void)
@@ -18,6 +19,8 @@ void	handle_sigint(int sig_number) // Ctrl + C
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	if (sig_number)
+		;
 }
 
 int	handle_signal(void)

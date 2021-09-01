@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-void	exec_exec(t_data *head_data_p, t_info *info, int (**builtins)(int *, char **, char ***), char ***envp)
+void	exec_exec(t_data *head_data_p, int (**builtins)(int *, char **, char ***), char ***envp)
 {
 	if (head_data_p->builtin)
 		exit (exec_builtins(head_data_p, builtins, envp));
@@ -36,7 +36,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 		{
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
 			duplicate_fd(head_data_p->fd);
-			exec_exec(head_data_p, info, builtins, envp);
+			exec_exec(head_data_p, builtins, envp);
 		}
 		if (head_data_p->fd[IN] != IN)
 			close(head_data_p->fd[IN]);
@@ -60,7 +60,7 @@ int	exec_pipes(t_data **head_data, int (**builtins)(int *, char **, char ***), c
 	handle_signal_pipe();
 	create_processes(head_data, &info, builtins, envp);
 	close_pipes(info.pipe_fd, info.cmd_count);
-	exit_status = wait_and_close(info.pid, info.pipe_fd, info.cmd_count);
+	exit_status = wait_and_close(info.pid, info.cmd_count);
 	handle_signal();
 	return (exit_status);
 }
@@ -83,7 +83,6 @@ int	exec_cmd(t_data **head_data, int (**builtins)(int *, char **, char ***), cha
 {
 	t_data	*head_data_p;
 	char	**possible_path;
-	int		exit_status;
 
 	head_data_p = *head_data;
 	update_underscore(head_data, envp);

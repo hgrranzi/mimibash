@@ -22,7 +22,7 @@ void	close_pipes(int **pipe_fd, int cmd_count)
 	free(pipe_fd);
 }
 
-int	wait_and_close(pid_t *pid, int **pipe_fd, int cmd_count)
+int	wait_and_close(pid_t *pid, int cmd_count)
 {
 	int	i;
 	int	exit_status;
