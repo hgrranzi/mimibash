@@ -92,5 +92,5 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		i++;
 	}
 	free_arr(str);
-	print_struct(data);
+	// print_struct(data);
 }
