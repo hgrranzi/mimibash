@@ -58,7 +58,7 @@ char	*parse_single_quote(char *str, int *i)
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		free(str);
 		str = NULL;
-		return (ft_strdup("\0"));
+		return (ft_strdup("258"));
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
@@ -96,7 +96,7 @@ char	*parse_double_quote(char *str, int *i, char **env, int exit_status)
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		free(str);
 		str = NULL;
-		return (ft_strdup("\0"));
+		return (ft_strdup("258"));
 	}
 	else
 		tmp1 = getstr(str, j, (*i));
