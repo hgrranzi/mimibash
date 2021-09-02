@@ -278,10 +278,13 @@ int		check_quotes(char *str);
 void	print_export_error(t_data *data, int i);
 void	print_unset_error(t_data *data, int i);
 
-void	check_echo(t_data *data);
-void	fill_massive(t_data *data, int i);
-int		check_another_symbol(char *str);
-void	check_fd(int *fd, int j, char **bzero);
+
+void check_echo(t_data *data);
+void fill_massive(t_data *data, int i);
+int check_another_symbol(char *str);
+void check_fd(int *fd, int j, char **bzero);
 
 char	*getstrquote(char *str, int i, int j);
+void	check_dollar(char **str, char **env);
+char *parse_dollar_quote(char *str, int *i);
 #endif

@@ -71,6 +71,7 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 	while (str[i] != NULL)
 	{
 		last = add_back_lst(data, newlst());
+		check_dollar(&str[i], envp);
 		str[i] = parse_redir(&str[i], last->fd, envp, exit_status);
 		tmp = new_split(str[i], ' ');
 		tmp = parse_star(&tmp);

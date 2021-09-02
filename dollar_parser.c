@@ -21,3 +21,49 @@ char	*getstrquote(char *str, int i, int j)
 	tmp3 = NULL;
 	return (tmp1);
 }
+
+char *parse_dollar_quote(char *str, int *i)
+{
+	int		j;
+	char	*tmp1;
+
+
+	j = (*i);
+	(*i)+= 2;
+	while (str[++(*i)] != '\0')
+	{
+		if (str[(*i)] == '\"')
+			break ;
+	}
+	if (str[(*i)] == '\0')
+	{
+		error_and_exit(NULL, ERR_SYNTAX, 0);
+		free(str);
+		str = NULL;
+		return (ft_strdup("\0"));
+	}
+	else
+		tmp1 = getstrquote(str, j, (*i));
+	free(str);
+	str = NULL;
+	(*i) = (*i) - 2;
+	return (tmp1);
+
+}
+
+void check_dollar(char **str, char **env)
+{
+	int i;
+
+	i = 0;
+	while ((*str)[i] != '\0')
+	{
+		if ((*str)[i] == '\'')
+			skip_quote(*str, &i, '\'');
+		if ((*str)[i] == '$' && ft_key((*str)[i + 1]))
+			(*str) = parse_dollar((*str), &i, env);
+		if ((*str)[i] == '$' && (*str)[i + 1] == '\"')
+			(*str) = parse_dollar_quote((*str), &i);
+		i++;
+	}
+}
