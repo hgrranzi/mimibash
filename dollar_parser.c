@@ -22,14 +22,13 @@ char	*getstrquote(char *str, int i, int j)
 	return (tmp1);
 }
 
-char *parse_dollar_quote(char *str, int *i)
+char	*parse_dollar_quote(char *str, int *i)
 {
 	int		j;
 	char	*tmp1;
 
-
 	j = (*i);
-	(*i)+= 2;
+	(*i) += 2;
 	while (str[++(*i)] != '\0')
 	{
 		if (str[(*i)] == '\"')
@@ -48,12 +47,11 @@ char *parse_dollar_quote(char *str, int *i)
 	str = NULL;
 	(*i) = (*i) - 2;
 	return (tmp1);
-
 }
 
-void check_dollar(char **str, char **env)
+void	check_dollar(char **str, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((*str)[i] != '\0')

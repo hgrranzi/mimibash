@@ -21,11 +21,10 @@ char	*append_output(t_redir *red, int flag)
 {
 	int		j;
 	int		n;
-	char 	*tmp;
-
+	char	*tmp;
 
 	j = red->i;
-	red->i+=2;
+	red->i += 2;
 	skip_space(red);
 	n = red->i;
 	if (red->str[(red->i)] == '\0' || red->str[(red->i)] == '>' || red->str[(red->i)] == '<')
@@ -101,7 +100,7 @@ char	*redir(t_redir *red, int flag)
 char	*parse_redir(char **str, int *fd, char **envp, int exit_status)
 {
 	t_redir	*red;
-	char *newstr;
+	char	*newstr;
 
 	red = malloc(sizeof(t_redir));
 	red->i = 0;
@@ -117,7 +116,7 @@ char	*parse_redir(char **str, int *fd, char **envp, int exit_status)
 		if (red->str[red->i] && red->str[red->i] == '\'')
 			skip_quote(red->str, &red->i, '\'');
 		if ((red->fd[0] != -1 && red->fd[1] != -1) && (red->str[red->i] && red->str[red->i] == '>'
-			&& red->str[(red->i + 1)] == '>'))
+				&& red->str[(red->i + 1)] == '>'))
 			red->str = append_output(red, 1);
 		if ((red->fd[0] != -1 && red->fd[1] != -1) && red->str[red->i] == '>' && red->str[(red->i + 1)] != '>')
 			red->str = redir(red, 2);
@@ -133,5 +132,4 @@ char	*parse_redir(char **str, int *fd, char **envp, int exit_status)
 	free(red);
 	red = NULL;
 	return (newstr);
-
 }

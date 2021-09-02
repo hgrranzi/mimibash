@@ -1,10 +1,11 @@
 #include "mimibash.h"
 
-void print_struct(t_data **data) // tmp
+void	print_struct(t_data **data) // tmp
 {
-	t_data *tmp;
+	t_data	*tmp;
+
 	tmp = *data;
-	while (tmp !=NULL)
+	while (tmp != NULL)
 	{
 		printf("builtin: %d\n", tmp->builtin);
 		printf("fd[0]: %d\n", tmp->fd[0]);
@@ -92,5 +93,5 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		i++;
 	}
 	free_arr(str);
-	// print_struct(data);
+	print_struct(data);
 }

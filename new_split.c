@@ -40,7 +40,7 @@ static size_t	ft_wrdlen(char const *s, char c)
 		if (s[i] == '\'')
 			skip_quote(s, &i, '\'');
 		if (s[i] == c || s[i] == '\0')
-			break;
+			break ;
 		i++;
 	}
 	return (i);

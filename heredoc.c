@@ -92,7 +92,9 @@ void	heredoc(t_redir *red)
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
-		red->str = ft_strdup("echo");
+		free (red->str);
+		red->str = NULL;
+		red->str = ft_strdup("258");
 		return ;
 	}
 	parse_heredoc(red);

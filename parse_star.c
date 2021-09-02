@@ -1,37 +1,39 @@
 #include "mimibash.h"
-int check_quotes(char *str)
+int	check_quotes(char *str)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (str[j] != '\0')
 	{
 		if (str[j] == '\"' || str[j] == '\'' || str[j] == '\\' || str[j] == '$')
-			return(0);	
+			return (0);
 		j++;
 	}
 	return (1);
 }
-int massive_size(char **mas)
+
+int	massive_size(char **mas)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (mas && mas[i] != NULL)
 		i++;
-	return(i);
+	return (i);
 }
-char **new_star_massive(char **massive, int i, char **old_tmp)
+
+char	**new_star_massive(char **massive, int i, char **old_tmp)
 {
-	char **tmp;
-	t_list *data;
-	t_list *ptr;
-	int j;
+	char	**tmp;
+	t_list	*data;
+	t_list	*ptr;
+	int		j;
 
 	j = 0;
 	data = check_wildcard(massive[i]);
 	if (data == NULL)
-		return(masjoin(old_tmp, massive[i]));
+		return (masjoin(old_tmp, massive[i]));
 	ptr = data;
 	tmp = malloc(sizeof(char *) * (ft_lstsize(data) + massive_size(old_tmp) + 1));
 	while (old_tmp && old_tmp[j])
@@ -49,14 +51,13 @@ char **new_star_massive(char **massive, int i, char **old_tmp)
 	}
 	tmp[j] = NULL;
 	ft_lstclear(&ptr, free);
-	return(tmp);
+	return (tmp);
 }
-
 
 char	**masjoin(char **str1, char *str2)
 {
-	char **tmp;
-	int j;
+	char	**tmp;
+	int		j;
 
 	j = 0;
 	tmp = malloc(sizeof(char *) * (massive_size(str1) + 2));
@@ -73,10 +74,10 @@ char	**masjoin(char **str1, char *str2)
 	return (tmp);
 }
 
-char **parse_star(char ***str)
+char	**parse_star(char ***str)
 {
-	int i;
-	char **tmp;
+	int		i;
+	char	**tmp;
 
 	i = 0;
 	tmp = NULL;
@@ -87,7 +88,7 @@ char **parse_star(char ***str)
 			if (ft_strchr((*str)[i], '*'))
 				tmp = new_star_massive(*str, i, tmp);
 			else
-				tmp = masjoin(tmp, (*str)[i]);	
+				tmp = masjoin(tmp, (*str)[i]);
 		}
 		else
 			tmp = masjoin(tmp, (*str)[i]);

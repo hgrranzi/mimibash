@@ -45,7 +45,7 @@ char	*unpack(char **str, char **env, char *str2, int *j)
 	free((*str));
 	str = NULL;
 	if (!getstr)
-		return(str2);
+		return (str2);
 	return (getstr);
 }
 
@@ -99,7 +99,6 @@ char	*parse_exitcode(char *str, int *i, int exit_code)
 	str = NULL;
 	return (tmp1);
 }
-
 
 char	**shielding(char **str, char **env, int exit_status)
 {

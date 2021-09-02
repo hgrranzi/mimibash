@@ -16,7 +16,7 @@ void	check_export(t_data *data)
 			if (!ft_key(data->args[i][j]))
 			{
 				print_export_error(data, i);
-				break;
+				break ;
 			}
 			j++;
 		}
@@ -40,7 +40,7 @@ void	check_unset(t_data *data)
 			if (!ft_key(data->args[i][j]))
 			{
 				print_export_error(data, i);
-				break;
+				break ;
 			}
 			j++;
 		}
@@ -67,23 +67,25 @@ void	check_exit(char ***args, int exit_status)
 			error_and_exit(NULL, NULL, 1);
 	}
 }
-int check_another_symbol(char *str)
+
+int	check_another_symbol(char *str)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (str[i] != '\0')
 	{
 		if (str[i] != 'n')
 			return (1);
-		i++;	
+		i++;
 	}
 	return (0);
 }
-void fill_massive(t_data *data, int i)
+
+void	fill_massive(t_data *data, int i)
 {
-	char **tmp;
-	int j;
+	char	**tmp;
+	int		j;
 
 	j = 1;
 	tmp = malloc(sizeof(char *) * (massive_size(data->args) - i + 2));
@@ -98,24 +100,25 @@ void fill_massive(t_data *data, int i)
 	free_arr((data->args));
 	data->args = tmp;
 }
-void check_echo(t_data *data)
+
+void	check_echo(t_data *data)
 {
-	int i;
-	int n;
+	int	i;
+	int	n;
 
 	i = 1;
 	n = 0;
 	while (data->args[i] != NULL)
 	{
 		if (ft_strncmp(data->args[i], "-n", 2) || check_another_symbol(data->args[i]))
-			break;
+			break ;
 		i++;
 		n++;
 	}
 	if (i != 1)
 		fill_massive(data, i);
-
 }
+
 void	check_builtins(t_data *data, int exit_status)
 {
 	if (data->builtin == 4)
