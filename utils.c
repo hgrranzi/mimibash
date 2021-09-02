@@ -8,13 +8,16 @@ int	only_digits(char *str)
 	i = 0;
 	if (str[0] == '-' || str[0] == '+')
 		i++;
+	if (((ft_isdigit(str[0]) || str[0] == '+') && (strcmp(&str[i], LONG_P) > 0))
+		|| (str[0] == '-' && (strcmp(&str[i], LONG_N) > 0)))
+		return (0);
 	n = 0;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]) || n > 19)
+		n++;
+		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
-		n++;
 	}
 	return (1);
 }

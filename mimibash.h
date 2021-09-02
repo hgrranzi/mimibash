@@ -25,6 +25,8 @@
 # define ERR_HOME "HOME not set"
 # define ERR_SHLVL "shell level too high, resetting to 1"
 # define ENV_PREFIX "declare -x"
+# define LONG_P "9223372036854775807"
+# define LONG_N "9223372036854775808"
 # define IN 0
 # define OUT 1
 # define CMD_PATH 0
