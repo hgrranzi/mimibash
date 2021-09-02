@@ -64,7 +64,7 @@ char	**take_variables(char **arr)
 	{
 		if (new_arr[i][0])
 		{
-			ptr =ft_strchr(new_arr[i], '=');
+			ptr = ft_strchr(new_arr[i], '=');
 			*ptr = '\0';
 		}
 		i++;

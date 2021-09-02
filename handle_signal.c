@@ -1,6 +1,6 @@
 #include "mimibash.h"
 
-void	handle_sig_pipe(int sig_number) // Ctrl + C
+void	handle_sig_pipe(int sig_number)
 {
 	if (sig_number)
 		;
@@ -13,7 +13,7 @@ int	handle_signal_pipe(void)
 	return (0);
 }
 
-void	handle_sigint(int sig_number) // Ctrl + C
+void	handle_sigint(int sig_number)
 {
 	write(STDERR_FILENO, "\n", 1);
 	rl_replace_line("", 0);
