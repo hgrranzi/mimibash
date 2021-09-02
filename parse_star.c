@@ -1,4 +1,5 @@
 #include "mimibash.h"
+
 int	check_quotes(char *str)
 {
 	int	j;
@@ -100,6 +101,5 @@ char	**parse_star(char ***str)
 		(*str) = NULL;
 		return (tmp);
 	}
-	else
-		return (*str);
+	return (*str);
 }

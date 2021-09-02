@@ -20,9 +20,7 @@ void	fill_heredoc(t_redir *red, char *delimiter)
 	while (1)
 	{
 		str = readline("> ");
-		if (!str)
-			break ;
-		if (!ft_strncmp(delimiter, str, (ft_strlen(delimiter) + 1)))
+		if (!str || (!ft_strncmp(delimiter, str, (ft_strlen(delimiter) + 1))))
 		{
 			free(str);
 			break ;

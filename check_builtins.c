@@ -1,53 +1,5 @@
 #include "mimibash.h"
 
-void	check_export(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (data->args[i] != NULL)
-	{
-		j = 0;
-		if (ft_isdigit(data->args[i][0]) || data->args[i][0] == '=' )
-			print_export_error(data, i);
-		while (data->args[i][j] != '\0' && data->args[i][j] != '=')
-		{
-			if (!ft_key(data->args[i][j]))
-			{
-				print_export_error(data, i);
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	check_unset(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (data->args[i] != NULL)
-	{
-		j = 0;
-		if (ft_isdigit(data->args[i][0]))
-			print_unset_error(data, i);
-		while (data->args[i][j] != '\0')
-		{
-			if (!ft_key(data->args[i][j]))
-			{
-				print_export_error(data, i);
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
 void	check_exit(char ***args, int exit_status)
 {
 	char	**tmp;

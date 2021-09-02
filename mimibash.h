@@ -219,9 +219,17 @@ char	*make_same(char *str);
 /* check_builtins.c */
 
 void	check_builtins(t_data *data, int exit_status);
-void	check_unset(t_data *data);
+void	check_echo(t_data *data);
+void	fill_massive(t_data *data, int i);
+int		check_another_symbol(char *str);
 void	check_exit(char ***args, int exit_status);
+
+/* check_builtins_utils.c */
+
 void	check_export(t_data *data);
+void	check_unset(t_data *data);
+void	print_export_error(t_data *data, int i);
+void	print_unset_error(t_data *data, int i);
 
 /* add_back_lst.c */
 
@@ -273,18 +281,14 @@ char	**new_star_massive(char **massive, int i, char **old_tmp);
 int		massive_size(char **mas);
 int		check_quotes(char *str);
 
-/* check_builtins_utils.c */
+/* check_fd.c */
 
-void	print_export_error(t_data *data, int i);
-void	print_unset_error(t_data *data, int i);
+void	check_fd(int *fd, int j, char **bzero);
 
-
-void check_echo(t_data *data);
-void fill_massive(t_data *data, int i);
-int check_another_symbol(char *str);
-void check_fd(int *fd, int j, char **bzero);
+/* dollar_parser.c */
 
 char	*getstrquote(char *str, int i, int j);
 void	check_dollar(char **str, char **env);
-char *parse_dollar_quote(char *str, int *i);
+char	*parse_dollar_quote(char *str, int *i);
+
 #endif

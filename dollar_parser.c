@@ -1,4 +1,5 @@
 #include "mimibash.h"
+
 char	*getstrquote(char *str, int i, int j)
 {
 	char	*tmp1;
