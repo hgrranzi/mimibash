@@ -69,7 +69,7 @@ int	exec_builtins(t_data *head_data, int (**builtins)(int *, char **, char ***),
 {
 	int	exit_status;
 
-	if (head_data->builtin == ERROR_BUILTIN)
+	if (head_data->builtin == ERROR_BUILTIN || head_data->fd[IN] == -1 || head_data->fd[OUT] == -1)
 		head_data->builtin = NO_BUILTIN;
 	exit_status = (builtins[head_data->builtin](head_data->fd, head_data->args, envp));
 	if (head_data->fd[IN] != STDIN_FILENO)
