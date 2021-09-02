@@ -282,5 +282,7 @@ void	print_unset_error(t_data *data, int i);
 void check_echo(t_data *data);
 void fill_massive(t_data *data, int i);
 int check_another_symbol(char *str);
+void check_fd(int *fd, int j, char **bzero);
 
+char	*getstrquote(char *str, int i, int j);
 #endif

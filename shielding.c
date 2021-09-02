@@ -100,6 +100,34 @@ char	*parse_exitcode(char *str, int *i, int exit_code)
 	return (tmp1);
 }
 
+char *parse_dollar_quote(char *str, int *i)
+{
+	int		j;
+	char	*tmp1;
+
+
+	j = (*i);
+	(*i)+= 2;
+	while (str[++(*i)] != '\0')
+	{
+		if (str[(*i)] == '\"')
+			break ;
+	}
+	if (str[(*i)] == '\0')
+	{
+		error_and_exit(NULL, ERR_SYNTAX, 0);
+		free(str);
+		str = NULL;
+		return (ft_strdup("\0"));
+	}
+	else
+		tmp1 = getstrquote(str, j, (*i));
+	free(str);
+	str = NULL;
+	(*i) = (*i) - 2;
+	return (tmp1);
+
+}
 char	**shielding(char **str, char **env, int exit_status)
 {
 	int		i;
@@ -115,6 +143,8 @@ char	**shielding(char **str, char **env, int exit_status)
 				str[i] = parse_exitcode(str[i], &j, exit_status);
 			if (str[i][j] == '$' && ft_key(str[i][j + 1]))
 				str[i] = parse_dollar(str[i], &j, env);
+			if (str[i][j] == '$' && str[i][j + 1] == '\"')
+				str[i] = parse_dollar_quote(str[i], &j);
 			if (str[i][j] == '\\')
 				str[i] = parse_slash(str[i], &j);
 			if (str[i][j] == '\'')

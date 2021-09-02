@@ -32,7 +32,7 @@ void	check_valid(char **str)
 		i++;
 	}
 }
-
+ 
 void	check_pipe(char **str)
 {
 	int	i;

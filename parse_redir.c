@@ -28,7 +28,7 @@ char	*append_output(t_redir *red, int flag)
 	red->i+=2;
 	skip_space(red);
 	n = red->i;
-	if (red->str[(red->i)] == '\0' || red->str[(red->i)] == '>')
+	if (red->str[(red->i)] == '\0' || red->str[(red->i)] == '>' || red->str[(red->i)] == '<')
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
@@ -82,7 +82,7 @@ char	*redir(t_redir *red, int flag)
 	red->i++;
 	skip_space(red);
 	n = (red->i);
-	if (red->str[(red->i)] == '\0')
+	if (red->str[(red->i)] == '\0' || red->str[(red->i)] == '>' || red->str[(red->i)] == '<' )
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;
@@ -91,6 +91,7 @@ char	*redir(t_redir *red, int flag)
 	}
 	parse_red(red);
 	tmp1 = fill_redir(flag, j, n, red);
+	check_fd(red->fd, j, &tmp1);
 	(red->i) = j - 1;
 	free(red->str);
 	red->str = NULL;
@@ -115,14 +116,14 @@ char	*parse_redir(char **str, int *fd, char **envp, int exit_status)
 			skip_quote(red->str, &red->i, '\"');
 		if (red->str[red->i] && red->str[red->i] == '\'')
 			skip_quote(red->str, &red->i, '\'');
-		if (red->str[red->i] && red->str[red->i] == '>'
-			&& red->str[(red->i + 1)] == '>')
+		if ((red->fd[0] != -1 && red->fd[1] != -1) && (red->str[red->i] && red->str[red->i] == '>'
+			&& red->str[(red->i + 1)] == '>'))
 			red->str = append_output(red, 1);
-		if (red->str[red->i] == '>' && red->str[(red->i + 1)] != '>')
+		if ((red->fd[0] != -1 && red->fd[1] != -1) && red->str[red->i] == '>' && red->str[(red->i + 1)] != '>')
 			red->str = redir(red, 2);
-		if (red->str[red->i] == '<' && red->str[red->i + 1] != '<')
+		if ((red->fd[0] != -1 && red->fd[1] != -1) && red->str[red->i] == '<' && red->str[red->i + 1] != '<')
 			red->str = redir(red, 3);
-		if (red->str[red->i] == '<' && red->str[red->i + 1] == '<')
+		if ((red->fd[0] != -1 && red->fd[1] != -1) && red->str[red->i] == '<' && red->str[red->i + 1] == '<')
 			heredoc(red);
 		red->i++;
 	}

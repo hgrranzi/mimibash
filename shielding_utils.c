@@ -64,7 +64,7 @@ char	*parse_single_quote(char *str, int *i)
 		tmp1 = getstr(str, j, (*i));
 	free(str);
 	str = NULL;
-	(*i) = (*i) - 2;
+	(*i)--;
 	return (tmp1);
 }
 
