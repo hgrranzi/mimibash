@@ -40,13 +40,19 @@ The objective of this project is to create a simple shell.
 											malloc, free, write, open, read, close, fork,
 											waitpid, signal, kill, exit, getcwd, chdir, stat, unlink, execve, dup, dup2, pipe, opendir, readdir, closedir, strerror, </td>
   </tr>
+    <tr>
+    <td> <b>Pipes</b> </td> <td>
+                                               <b>|</b> the output of each command in the pipeline is connected via a pipe to the input of the next command </td>
+  </tr>
+    <tr>
+    <td> <b>Environment variables</b> </td> <td>
+                                               <b>$</b> followed by characters expand to their values <br>
+                                               <b>$?</b> expands to the exit status of the most recently executed foreground </td>
+  </tr>
+  <tr>
+    <td> <b>Wildcard</b> </td> <td>
+                                               <b>*</b> works for the current working directory </td>
+  </tr>
 </table>
 
-The output of each command in the pipeline is connected via a pipe to the
-input of the next command. <br>
-$? expands to the exit status of the most recently executed foreground
-pipeline. <br>
-Environment variables ($ followed by characters) expand to their values. <br>
-The wildcard * works for the current working directory. <br>
-<br>
 Mimibash does not interpret unclosed quotes or unspecified special characters like \ or ; and generally in those cases the behavior is undefined. Sometimes the program may treat it as syntax errors.
