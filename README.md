@@ -34,12 +34,6 @@ The objective of this project is to create a simple shell.
                                                <b>ctrl-D</b> exits the shell <br>
                                                <b>ctrl-\</b> does nothing </td>
   </tr>
-  <tr>
-    <td> <b>External functions</b> </td> <td> readline, rl_clear_history, rl_on_new_line,
-											rl_replace_line, rl_redisplay, add_history, printf,
-											malloc, free, write, open, read, close, fork,
-											waitpid, signal, kill, exit, getcwd, chdir, stat, unlink, execve, dup, dup2, pipe, opendir, readdir, closedir, strerror, </td>
-  </tr>
     <tr>
     <td> <b>Pipes</b> </td> <td>
                                                <b>|</b> the output of each command in the pipeline is connected via a pipe to the input of the next command </td>
@@ -52,6 +46,12 @@ The objective of this project is to create a simple shell.
   <tr>
     <td> <b>Wildcard</b> </td> <td>
                                                <b>*</b> works for the current working directory </td>
+  </tr>
+  <tr>
+    <td> <b>External functions</b> </td> <td> readline, rl_clear_history, rl_on_new_line,
+											rl_replace_line, rl_redisplay, add_history, printf,
+											malloc, free, write, open, read, close, fork,
+											waitpid, signal, kill, exit, getcwd, chdir, stat, unlink, execve, dup, dup2, pipe, opendir, readdir, closedir, strerror, </td>
   </tr>
 </table>
 
