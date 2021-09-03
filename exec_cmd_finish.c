@@ -43,3 +43,16 @@ int	wait_and_close(pid_t *pid, int cmd_count)
 	free(pid);
 	return (exit_status);
 }
+
+void kill_all(pid_t *pid, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		kill(pid[j], SIGTERM);
+		j++;
+	}
+	error_and_exit(NULL, NULL, 1);
+}

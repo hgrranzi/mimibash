@@ -165,6 +165,7 @@ int		is_error(char **args);
 
 int		wait_and_close(pid_t *pid, int cmd_count);
 void	close_pipes(int **pipe_fd, int cmd_count);
+void	kill_all(pid_t *pid, int i);
 
 /* utils.c */
 

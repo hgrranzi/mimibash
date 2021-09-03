@@ -31,7 +31,7 @@ int	create_processes(t_data **head_data, t_info *info, int (**builtins)(int *, c
 	{
 		info->pid[i] = fork();
 		if (info->pid[i] == -1)
-			error_and_exit(NULL, NULL, 0);
+			kill_all(info->pid, i);
 		if (info->pid[i] == IS_CHILD)
 		{
 			close_unused_pipe_fd(info->pipe_fd, i, info->cmd_count);
