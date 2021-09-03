@@ -16,7 +16,7 @@ void	error_and_exit(char *reason, char *error_message, int end)
 		write(STDERR_FILENO, system_message, ft_strlen(system_message));
 	write(STDERR_FILENO, "\n", 1);
 	if (end)
-		exit(0);
+		exit(1);
 }
 
 char	*read_cmd(int new_in)
