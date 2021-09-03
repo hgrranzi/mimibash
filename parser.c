@@ -80,9 +80,9 @@ void	parser(char **input, char **envp, t_data **data, int exit_status)
 		{
 			fill_struct(last);
 			free(str[i]);
-			str[i] = NULL;
+			str[i++] = NULL;
 			free_arr(tmp);
-			break ;
+			continue ;
 		}
 		free(str[i]);
 		str[i] = NULL;

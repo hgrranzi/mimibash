@@ -29,7 +29,7 @@ char	*parse_dollar_quote(char *str, int *i)
 	char	*tmp1;
 
 	j = (*i);
-	(*i) += 2;
+	(*i) += 1;
 	while (str[++(*i)] != '\0')
 	{
 		if (str[(*i)] == '\"')
@@ -59,6 +59,8 @@ void	check_dollar(char **str, char **env)
 	{
 		if ((*str)[i] == '\'')
 			skip_quote(*str, &i, '\'');
+		if ((*str)[i] == '\"')
+			skip_quote(*str, &i, '\"');
 		if ((*str)[i] == '$' && ft_key((*str)[i + 1]))
 			(*str) = parse_dollar((*str), &i, env);
 		if ((*str)[i] == '$' && (*str)[i + 1] == '\"')
