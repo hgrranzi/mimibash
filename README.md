@@ -34,16 +34,6 @@ The objective of this project is to create a simple shell.
                                                <b>ctrl-D</b> exits the shell <br>
                                                <b>ctrl-\</b> does nothing </td>
   </tr>
-</table>
-
-The output of each command in the pipeline is connected via a pipe to the
-input of the next command. <br>
-$? expands to the exit status of the most recently executed foreground
-pipeline. <br>
-Environment variables ($ followed by characters) expand to their values. <br>
-The wildcard * works for the current working directory.
-
-<table>
   <tr>
     <td> <b>External functions</b> </td> <td> readline, rl_clear_history, rl_on_new_line,
 											rl_replace_line, rl_redisplay, add_history, printf,
@@ -52,4 +42,11 @@ The wildcard * works for the current working directory.
   </tr>
 </table>
 
+The output of each command in the pipeline is connected via a pipe to the
+input of the next command. <br>
+$? expands to the exit status of the most recently executed foreground
+pipeline. <br>
+Environment variables ($ followed by characters) expand to their values. <br>
+The wildcard * works for the current working directory. <br>
+<br>
 Mimibash does not interpret unclosed quotes or unspecified special characters like \ or ; and generally in those cases the behavior is undefined. Sometimes the program may treat it as syntax errors.
