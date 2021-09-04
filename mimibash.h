@@ -51,7 +51,6 @@ typedef struct s_data
 	int				builtin;
 	char			**args;
 	int				fd[2];
-	int				exit_status;
 	struct s_data	*next;
 }				t_data;
 
