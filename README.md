@@ -59,4 +59,6 @@ Mimibash does not interpret unclosed quotes or unspecified special characters li
 
 The programm needs the readline library:
 
-  brew install readline
+```
+brew install readline
+```
