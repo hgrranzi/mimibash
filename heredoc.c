@@ -45,7 +45,8 @@ void	parse_heredoc(t_redir *red)
 	while (red->str[(red->i)] != '\0' )
 	{
 		if (red->str[(red->i)] == '\"')
-			red->str = parse_double_quote(red->str, &red->i, red->env, red->exit_status);
+			red->str = parse_double_quote(red->str,
+					&red->i, red->env, red->exit_status);
 		if (red->str[(red->i)] == '\'')
 			red->str = parse_single_quote(red->str, &red->i);
 		if (red->str[(red->i)] == ' ' || red->str[(red->i)] == '\0'
@@ -86,7 +87,8 @@ void	heredoc(t_redir *red)
 	red->i += 2;
 	skip_space(red);
 	n = (red->i);
-	if (red->str[(red->i)] == '\0' || red->str[(red->i)] == '<' || red->str[(red->i)] == '>')
+	if (red->str[(red->i)] == '\0'
+		|| red->str[(red->i)] == '<' || red->str[(red->i)] == '>')
 	{
 		error_and_exit(NULL, ERR_SYNTAX, 0);
 		(red->i) = 2;

@@ -7,21 +7,31 @@ int	check_quotes(char *str)
 	j = 0;
 	while (str[j] != '\0')
 	{
-		if (str[j] == '\"' || str[j] == '\'' || str[j] == '\\' || str[j] == '$')
+		if (str[j] == '\"' || str[j] == '\''
+			|| str[j] == '\\' || str[j] == '$')
 			return (0);
 		j++;
 	}
 	return (1);
 }
 
-int	massive_size(char **mas)
+void	fill_star_massive(char ***tmp, char **old_tmp, t_list *data)
 {
 	int	i;
 
 	i = 0;
-	while (mas && mas[i] != NULL)
+	while (old_tmp && old_tmp[i])
+	{
+		(*tmp)[i] = ft_strdup(old_tmp[i]);
 		i++;
-	return (i);
+	}
+	while (data != NULL)
+	{
+		(*tmp)[i] = ft_strdup(data->content);
+		data = data->next;
+		i++;
+	}
+	(*tmp)[i] = NULL;
 }
 
 char	**new_star_massive(char **massive, int i, char **old_tmp)
@@ -29,28 +39,16 @@ char	**new_star_massive(char **massive, int i, char **old_tmp)
 	char	**tmp;
 	t_list	*data;
 	t_list	*ptr;
-	int		j;
 
-	j = 0;
 	data = check_wildcard(massive[i]);
 	if (data == NULL)
 		return (masjoin(old_tmp, massive[i]));
 	ptr = data;
-	tmp = malloc(sizeof(char *) * (ft_lstsize(data) + massive_size(old_tmp) + 1));
-	while (old_tmp && old_tmp[j])
-	{
-		tmp[j] = ft_strdup(old_tmp[j]);
-		j++;
-	}
+	tmp = malloc(sizeof(char *) * (ft_lstsize(data)
+				+ massive_size(old_tmp) + 1));
+	fill_star_massive(&tmp, old_tmp, data);
 	free_arr(old_tmp);
 	old_tmp = NULL;
-	while (data != NULL)
-	{
-		tmp[j] = ft_strdup(data->content);
-		data = data->next;
-		j++;
-	}
-	tmp[j] = NULL;
 	ft_lstclear(&ptr, free);
 	return (tmp);
 }

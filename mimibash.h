@@ -169,6 +169,10 @@ void	kill_all(pid_t *pid, int i);
 /* utils.c */
 
 int		only_digits(char *str);
+void	fill_quote_str(char *new_str, char *str, int quote_index, int new_len);
+int		massive_size(char **mas);
+void	fill_struct(t_data *data);
+int		ft_key(char c);
 
 /* update_underscore.c */
 
@@ -186,8 +190,8 @@ int		are_equal(char *s1, char *s2);
 void	parser(char **input, char **envp, t_data **data, int exit_status);
 void	fill_struct(t_data *data);
 void	check_echo_n(t_data *data);
-void	check_empty(char **str);
-int		ft_key(char c);
+char	**get_array(char **str, char **envp, t_data *last, int exit_status);
+void	fix_empty(t_data *last, char **str, char ***tmp);
 
 /* parse_redir.c */
 
@@ -208,6 +212,7 @@ void	skip_quote(char const *str, int *i, char c);
 
 int		create_fd(char *str, int flag, int *old_fd);
 void	skip_space(t_redir *red);
+void	check_redir(t_redir *red);
 
 /* new_split.c */
 
@@ -263,9 +268,10 @@ void	spec_free(char **str1, char **str2, char **str3);
 /* shielding_utils.c */
 
 char	*parse_double_quote(char *str, int *i, char **env, int exit_status);
-char	*parse_single_quote(char *str, int *i);
 char	*getstr(char *str, int i, int j);
 char	*parse_slash(char *str, int *i);
+int		check_spec_symbols(char **str, int *i, int exit_status, char **env);
+void	messagetoclose(char **tmp);
 
 /* heredoc.c */
 
@@ -292,5 +298,11 @@ void	check_fd(int *fd, int j, char **bzero);
 char	*getstrquote(char *str, int i, int j);
 void	check_dollar(char **str, char **env);
 char	*parse_dollar_quote(char *str, int *i);
+char	*remove_symbols(char *str, int *i);
+
+/* parser_quotes.c */
+
+int		get_from_env(char **getstr, char *env, char *str, char **str2);
+char	*parse_single_quote(char *str, int *i);
 
 #endif

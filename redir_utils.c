@@ -32,3 +32,16 @@ int	create_fd(char *str, int flag, int *old_fd)
 		error_and_exit(str, NULL, 0);
 	return (fd);
 }
+
+void	check_redir(t_redir *red)
+{
+	if ((red->str[red->i] && red->str[red->i] == '>'
+			&& red->str[(red->i + 1)] == '>'))
+		red->str = append_output(red, 1);
+	if (red->str[red->i] == '>' && red->str[(red->i + 1)] != '>')
+		red->str = redir(red, 2);
+	if (red->str[red->i] == '<' && red->str[red->i + 1] != '<')
+		red->str = redir(red, 3);
+	if (red->str[red->i] == '<' && red->str[red->i + 1] == '<')
+		heredoc(red);
+}

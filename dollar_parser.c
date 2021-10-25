@@ -23,6 +23,29 @@ char	*getstrquote(char *str, int i, int j)
 	return (tmp1);
 }
 
+char	*getstrdigit(char *str, int i, int j)
+{
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
+	char	*tmp4;
+
+	tmp1 = ft_substr(str, 0, i);
+	tmp2 = ft_substr(str, i + 2, j - i - 2);
+	tmp3 = ft_strdup(str + j);
+	tmp4 = ft_strjoin(tmp1, tmp2);
+	free(tmp1);
+	tmp1 = NULL;
+	free(tmp2);
+	tmp2 = NULL;
+	tmp1 = ft_strjoin(tmp4, tmp3);
+	free(tmp4);
+	tmp4 = NULL;
+	free(tmp3);
+	tmp3 = NULL;
+	return (tmp1);
+}
+
 char	*parse_dollar_quote(char *str, int *i)
 {
 	int		j;
@@ -50,6 +73,25 @@ char	*parse_dollar_quote(char *str, int *i)
 	return (tmp1);
 }
 
+char	*remove_symbols(char *str, int *i)
+{
+	int		j;
+	char	*tmp1;
+
+	j = (*i);
+	(*i) += 1;
+	while (str[++(*i)] != '\0')
+	{
+		if (!ft_key(str[(*i)]))
+			break ;
+	}
+	tmp1 = getstrdigit(str, j, (*i));
+	free(str);
+	str = NULL;
+	(*i) = (*i) - 3;
+	return (tmp1);
+}
+
 void	check_dollar(char **str, char **env)
 {
 	int	i;
@@ -61,10 +103,14 @@ void	check_dollar(char **str, char **env)
 			skip_quote(*str, &i, '\'');
 		if ((*str)[i] == '\"')
 			skip_quote(*str, &i, '\"');
-		if ((*str)[i] == '$' && ft_key((*str)[i + 1]))
+		if ((*str)[i] == '$'
+			&& (ft_isalpha((*str)[i + 1]) || (*str)[i + 1] == '_' ))
 			(*str) = parse_dollar((*str), &i, env);
 		if ((*str)[i] == '$' && (*str)[i + 1] == '\"')
 			(*str) = parse_dollar_quote((*str), &i);
+		if ((*str)[i] == '$' && (ft_isdigit((*str)[i + 1])
+			|| (*str)[i + 1] == '*'))
+			(*str) = remove_symbols((*str), &i);
 		i++;
 	}
 }

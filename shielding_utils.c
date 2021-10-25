@@ -42,30 +42,32 @@ char	*getstr(char *str, int i, int j)
 	return (tmp1);
 }
 
-char	*parse_single_quote(char *str, int *i)
+int	check_spec_symbols(char **str, int *i, int exit_status, char **env)
 {
-	int		j;
-	char	*tmp1;
+	if ((*str)[(*i)] == '$' && (*str)[(*i) + 1] == '?')
+	{
+		(*str) = parse_exitcode((*str), i, exit_status);
+		return (1);
+	}
+	if ((*str)[(*i)] == '$' && (ft_isalpha((*str)[(*i) + 1])
+			|| ((*str)[(*i) + 1]) == '_'))
+	{
+		(*str) = parse_dollar((*str), i, env);
+		return (1);
+	}
+	if ((*str)[(*i)] == '$' && (ft_isdigit((*str)[(*i) + 1])
+		|| (*str)[(*i) + 1] == '*' || (*str)[(*i) + 1] == '\\'))
+	{
+		(*str) = remove_symbols((*str), i);
+		return (1);
+	}
+	return (0);
+}
 
-	j = (*i);
-	while (str[++(*i)] != '\0')
-	{
-		if (str[(*i)] == '\'')
-			break ;
-	}
-	if (str[(*i)] == '\0')
-	{
-		error_and_exit(NULL, ERR_SYNTAX, 0);
-		free(str);
-		str = NULL;
-		return (ft_strdup("258"));
-	}
-	else
-		tmp1 = getstr(str, j, (*i));
-	free(str);
-	str = NULL;
-	(*i)--;
-	return (tmp1);
+void	messagetoclose(char **tmp)
+{
+	error_and_exit(NULL, ERR_SYNTAX, 0);
+	*tmp = ft_strdup("258");
 }
 
 char	*parse_double_quote(char *str, int *i, char **env, int exit_status)
@@ -76,28 +78,17 @@ char	*parse_double_quote(char *str, int *i, char **env, int exit_status)
 	j = (*i);
 	while (str[++(*i)] != '\0')
 	{
-		if (str[(*i)] == '\\' && ((str[(*i) + 1] == '\'') || (str[(*i) + 1] == '\"') || (str[(*i) + 1] == '$') || (str[(*i) + 1] == '\\')))
+		if (str[(*i)] == '\\' && ((str[(*i) + 1] == '\'')
+				|| (str[(*i) + 1] == '\"') || (str[(*i) + 1] == '$')
+				|| (str[(*i) + 1] == '\\')))
 			str = parse_slash(str, i);
-		if (str[(*i)] == '$' && str[(*i) + 1] == '?')
-		{
-			str = parse_exitcode(str, i, exit_status);
+		if (check_spec_symbols(&str, i, exit_status, env))
 			continue ;
-		}
-		if (str[(*i)] == '$' && ft_key(str[(*i) + 1]))
-		{
-			str = parse_dollar(str, i, env);
-			continue ;
-		}
 		if (str[(*i)] == '\"')
 			break ;
 	}
 	if (str[(*i)] == '\0')
-	{
-		error_and_exit(NULL, ERR_SYNTAX, 0);
-		free(str);
-		str = NULL;
-		return (ft_strdup("258"));
-	}
+		messagetoclose(&tmp1);
 	else
 		tmp1 = getstr(str, j, (*i));
 	free(str);

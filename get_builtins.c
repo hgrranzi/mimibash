@@ -19,25 +19,25 @@ void	get_builtins(char **str, int *built)
 	int		n;
 	char	*tmp;
 
-	*built = 0;
+	*built = NO_BUILTIN;
 	tmp = ft_strdup(*str);
 	tmp = make_same(tmp);
 	n = ft_strlen(*str);
 	if (!ft_strncmp(tmp, "echo", n + 1))
-		*built = 1;
+		*built = ECHO;
 	if (!ft_strncmp(tmp, "cd", n + 1))
-		*built = 2;
+		*built = CD;
 	if (!ft_strncmp(tmp, "pwd", n + 1))
-		*built = 3;
+		*built = PWD;
 	if (!ft_strncmp(tmp, "export", n + 1))
-		*built = 4;
+		*built = EXPORT;
 	if (!ft_strncmp(tmp, "unset", n + 1))
-		*built = 5;
+		*built = UNSET;
 	if (!ft_strncmp(tmp, "env", n + 1))
-		*built = 6;
+		*built = ENV;
 	if (!ft_strncmp(tmp, "exit", n + 1))
-		*built = 7;
+		*built = EXIT;
 	if (!ft_strncmp(tmp, "258", n + 1))
-		*built = 8;
+		*built = ERROR_BUILTIN;
 	free(tmp);
 }

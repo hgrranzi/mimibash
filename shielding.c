@@ -3,7 +3,7 @@
 void	spec_free(char **str1, char **str2, char **str3)
 {
 	if (*str1)
-	{	
+	{
 		free(*str1);
 		*str1 = NULL;
 	}
@@ -23,21 +23,16 @@ char	*unpack(char **str, char **env, char *str2, int *j)
 {
 	int		n;
 	int		i;
-	char	*tmp;
 	char	*getstr;
 
 	i = 0;
-	n = ft_strlen((*str));
 	getstr = NULL;
 	while (env[i] != NULL)
 	{
-		tmp = ft_strnstr(env[i], (*str), n);
-		if (tmp)
+		n = get_from_env(&getstr, env[i], (*str), &str2);
+		if (n)
 		{
-			getstr = ft_strjoin(str2, tmp + n);
-			free(str2);
-			str2 = NULL;
-			(*j) += ft_strlen(tmp + n) - 1;
+			(*j) += n;
 			break ;
 		}
 		i++;
