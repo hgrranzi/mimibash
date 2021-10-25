@@ -57,7 +57,7 @@ The objective of this project is to create a simple shell.
 
 Mimibash does not interpret unclosed quotes or unspecified special characters like \ or ; and generally in those cases the behavior is undefined. Sometimes the program may treat it as syntax errors. <br>
 
-The programm needs the readline library:
+The program needs the readline library:
 
 ```
 brew install readline
