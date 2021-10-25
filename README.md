@@ -5,7 +5,7 @@ Working in a team
 
 ## Status
 
-IN PROGRESS
+COMPLETED
 
 ## Description
 
